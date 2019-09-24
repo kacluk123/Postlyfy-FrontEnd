@@ -34,12 +34,20 @@ const RegisterComponent = () => {
         isError: false,
         messages: []
     })
+    
+    const [buttonPending, setButtonPending] = React.useState<boolean>(false)
+
 
     const createUserOnButtonClick = async () => {
+        setButtonPending(true)
+        
         const response = await API.createUser(formValues)
+        
         setApiResponseMessage(response)
+        setButtonPending(false)
     }
 
+    const isDisabled = isButtonDisabled || buttonPending
 
     return (
         <Styled.Register>
@@ -65,8 +73,10 @@ const RegisterComponent = () => {
                 label="Password" 
             />
             <Button 
-                disabled={isButtonDisabled}
-                onClick={onButtonClick(createUserOnButtonClick)}>
+                disabled={isDisabled}
+                onClick={onButtonClick(createUserOnButtonClick)}
+                isPending={buttonPending}
+            >
                 Register
             </Button>
             <ServerMessageViewComponent 

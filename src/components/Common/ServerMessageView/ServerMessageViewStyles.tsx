@@ -11,6 +11,11 @@ export const ServerMessageSingleMessage = styled.li.attrs({
     className: 'ServerMessageSingleMessage'
 })`
     ${(props: { isError: boolean }) => props.isError && css`
-        color: var(--red-orange)
+        color: var(--red-orange);
     `}
+    
+    ${(props: { isError: boolean }) => !props.isError && css`
+        color: var(--green);
+    `}
+    
 `
