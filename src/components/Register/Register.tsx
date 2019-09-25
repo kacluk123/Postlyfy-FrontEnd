@@ -69,6 +69,7 @@ const RegisterComponent = () => {
                 value={formValues.formPassword} 
                 errorMessage={errorValues.formPassword} 
                 name='formPassword' 
+                type="password"
                 onChange={handleChangeFormValues} 
                 label="Password" 
             />
@@ -79,10 +80,12 @@ const RegisterComponent = () => {
             >
                 Register
             </Button>
-            <ServerMessageViewComponent 
-                isError={apiResponseMessage.isError} 
-                messages={apiResponseMessage.messages} 
-            />
+            <Styled.RegisterServerMessages>
+                <ServerMessageViewComponent 
+                    isError={apiResponseMessage.isError} 
+                    messages={apiResponseMessage.messages} 
+                />
+            </Styled.RegisterServerMessages>
         </Styled.Register>
     )
 }

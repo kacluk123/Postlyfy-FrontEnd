@@ -12,3 +12,11 @@ export const Register = styled.div.attrs({
     grid-row-gap: 30px;
     background: var(--medium-grey)
 `
+
+export const RegisterServerMessages = styled.div.attrs({
+    className: 'RegisterServerMessages'
+})`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`
