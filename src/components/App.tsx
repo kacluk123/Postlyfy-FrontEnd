@@ -16,9 +16,9 @@ const App = () => {
            <NavbarWithRouter />
            <Styled.AppContent>
             <Switch>
-                    <Route exact path="/" component={PostList} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/register" component={Register} />
+                <Route exact path="/" component={PostList} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
             </Switch>
            </Styled.AppContent>
        </Styled.App>

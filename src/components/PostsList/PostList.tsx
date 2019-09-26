@@ -9,6 +9,7 @@ import  fetchPosts  from '../../redux/async/fetchPosts'
 import { useDispatch } from 'react-redux'
 import * as io from 'socket.io-client'
 import { MAIN_API_URL } from '../../api/axios-instances'
+import { addPosts } from '../../api/endpoints/posts/posts'
 
 export interface HelloProps { 
     fetchPosts: () => Promise<void> 
@@ -21,25 +22,45 @@ const PostListComponent = ({ fetchPosts }: HelloProps) => {
     const products = useSelector(getProducts)
     const pending = useSelector(getProductsPending)
     const dispatch = useDispatch()
-
+    const [text, setText] = React.useState("")
     console.log(products)
     useEffect(() => {
         fetchPosts()
         socket.on(POST, data => {
+            console.log(data)
             dispatch(addNewPost(data.post))
         })
     }, [])
 
+    const handleChange = (event) => {
+        const value = event.target.value
+
+        setText(value)
+    }
+
+    const handleClick = async () => {
+        await addPosts({
+            post: text,
+            userName: 'elo'
+        })
+    }
+
     return (
-        pending 
-        ? <span>Loading...</span> 
-        : (
-            <div>
-                {products.map((product, index) => {
-                    return <div key={index}>{product.addedAt}</div>
-                })}
-            </div>
-        )
+        <div>
+            <input type="text" onChange={handleChange}/>
+            <button onClick={handleClick}>KLIKNIJ</button>
+            {
+                pending 
+                ? <span>Loading...</span> 
+                : (
+                    <div>
+                        {products.map((product, index) => {
+                            return <div key={index}>{product.postContent}</div>
+                        })}
+                    </div>
+                )
+            }
+        </div>
     )
 };
 
