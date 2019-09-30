@@ -1,5 +1,8 @@
 {
   "name": "szkolna17-front-end",
+  "quokka": {
+    "babel": true
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

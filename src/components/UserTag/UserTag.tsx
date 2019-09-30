@@ -20,7 +20,7 @@ export interface HelloProps {
 const socket = io(MAIN_API_URL);
 const POST = "post";
 
-const PostListComponent = ({ fetchPosts }: HelloProps) => {
+const UserTagComponent = ({ fetchPosts }: HelloProps) => {
   const products = useSelector(getProducts);
   const pending = useSelector(getProductsPending);
   const dispatch = useDispatch();
@@ -71,4 +71,4 @@ const mapDispatch = {
 export default connect(
   null,
   mapDispatch
-)(PostListComponent);
+)(UserTagComponent);
