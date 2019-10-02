@@ -52,15 +52,18 @@ function reducer(state, action) {
 const useForm = (form: Types.useFormParams) => {
   const firstUpdate = React.useRef(true);
 
-  const initialState = {
-    formValues: {
-      ...form.initialValues
-    },
-    errorValues: {
-      ...form.initialValues
-    },
-    isButtonDisabled: false
-  };
+  const initialState = React.useMemo(
+    () => ({
+      formValues: {
+        ...form.initialValues
+      },
+      errorValues: {
+        ...form.initialValues
+      },
+      isButtonDisabled: false
+    }),
+    []
+  );
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
@@ -75,7 +78,7 @@ const useForm = (form: Types.useFormParams) => {
     } else {
       dispatch({ type: "ENABLE_BUTTON" });
     }
-  }, [state.errorValues]);
+  }, [JSON.stringify(state.errorValues)]);
 
   const handleChangeFormValues = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

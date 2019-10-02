@@ -3,12 +3,13 @@ import { useSelector } from "react-redux";
 import {
   getProducts,
   getProductsPending
-} from "../../redux/reducers/postReducer";
-import fetchPosts from "../../../redux/async/fetchPosts";
+} from "../../../redux/reducers/postReducer";
+import fetchPostsDispatch from "../../../redux/async/fetchPosts";
+import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
 import * as React from "react";
-import * as Styled from "./PostsListStyled";
+import SinglePost from "./SinglePost";
 
-const PostsListComponent = () => {
+const PostsListComponent = ({ fetchPosts }) => {
   const products = useSelector(getProducts);
   const pending = useSelector(getProductsPending);
 
@@ -16,7 +17,28 @@ const PostsListComponent = () => {
     fetchPosts();
   }, []);
 
-  return <Styled.PostsList></Styled.PostsList>;
+  if (pending) {
+    return <span>Loading...</span>;
+  }
+  console.log(products);
+  return products.map(
+    ({ postId, author, content, createdAt }: SingleUIPostsResponse) => (
+      <SinglePost
+        key={postId}
+        postId={postId}
+        author={author}
+        content={content}
+        createdAt={createdAt}
+      />
+    )
+  );
 };
 
-export default PostsListComponent;
+const mapDispatch = {
+  fetchPosts: fetchPostsDispatch
+};
+
+export default connect(
+  null,
+  mapDispatch
+)(PostsListComponent);

@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from "axios";
 
-export const MAIN_API_URL = 'http://localhost:3000/'
+export const MAIN_API_URL = "http://localhost:3000/";
 
 export const mainApi = axios.create({
-    baseURL: MAIN_API_URL,
+  baseURL: MAIN_API_URL
 });
