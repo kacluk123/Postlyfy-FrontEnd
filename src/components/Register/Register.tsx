@@ -45,12 +45,6 @@ const RegisterComponent = () => {
 
   const [buttonPending, setButtonPending] = React.useState<boolean>(false);
 
-  if (true) {
-    React.useEffect(() => {
-      console.log("elo");
-    });
-  }
-
   const createUserOnButtonClick = async () => {
     setButtonPending(true);
 

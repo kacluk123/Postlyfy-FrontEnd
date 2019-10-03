@@ -29,11 +29,12 @@ export function productsReducer(state = initialState, action) {
     }
 
     case FETCH_PRODUCTS_SUCCESS: {
+      console.log(action);
       return {
         ...state,
         pending: false,
-        posts: action.payload.posts,
-        total: action.payload.total
+        posts: action.payload.postsList,
+        total: action.payload.totalNumberOfPosts
       };
     }
 

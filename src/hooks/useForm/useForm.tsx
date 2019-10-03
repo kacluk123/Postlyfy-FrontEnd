@@ -78,7 +78,7 @@ const useForm = (form: Types.useFormParams) => {
     } else {
       dispatch({ type: "ENABLE_BUTTON" });
     }
-  }, [JSON.stringify(state.errorValues)]);
+  }, [state.errorValues]);
 
   const handleChangeFormValues = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

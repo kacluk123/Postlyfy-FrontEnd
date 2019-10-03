@@ -8,7 +8,14 @@ const SinglePostComponent = ({
   content,
   createdAt
 }: SingleUIPostsResponse) => {
-  return <Styled.SinglePost>{content}</Styled.SinglePost>;
+  return (
+    <Styled.SinglePost>
+      <Styled.SingleUserName>{author}</Styled.SingleUserName>
+      <Styled.SinglePostUserAvatar>avek</Styled.SinglePostUserAvatar>
+      <Styled.SinglePostDate>{createdAt}</Styled.SinglePostDate>
+      <Styled.SinglePostContent>{content}</Styled.SinglePostContent>
+    </Styled.SinglePost>
+  );
 };
 
 export default SinglePostComponent;
