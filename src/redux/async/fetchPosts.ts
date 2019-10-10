@@ -1,18 +1,27 @@
 import {
   fetchProductsPending,
-  fetchProductsSuccess,
-  fetchProductsError
+  fetchProductsSuccess
 } from "../actions/postActions";
 import { getPosts } from "../../api/endpoints/posts/posts";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 
-function fetchPosts() {
-  return async dispatch => {
+interface FetchPostsParams {
+  offset: number;
+  limit: number;
+}
+
+const fetchPosts = ({
+  offset,
+  limit
+}: FetchPostsParams): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
+  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch(fetchProductsPending());
 
-    const data = await getPosts({ offset: 0, limit: 9999 });
+    const data = await getPosts({ offset, limit });
 
     dispatch(fetchProductsSuccess(data));
   };
-}
+};
 
 export default fetchPosts;

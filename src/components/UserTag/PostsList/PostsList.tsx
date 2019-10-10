@@ -21,7 +21,7 @@ const PostsListComponent = ({ fetchPosts }) => {
   if (pending) {
     return <span>Loading...</span>;
   }
-  // console.log(products.postsList);
+
   return (
     <Styled.PostsList>
       {products.map(

@@ -1,31 +1,38 @@
-export const FETCH_PRODUCTS_PENDING = "FETCH_PRODUCTS_PENDING";
-export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
-export const FETCH_PRODUCTS_ERROR = "FETCH_PRODUCTS_ERROR";
-export const ADD_NEW_POST = "ADD_NEW_POST";
+import {
+  UIPostsResponse,
+  SingleUIPostsResponse
+} from "../../api/endpoints/posts/postsTypes";
+
+export enum POSTS_ACTIONS {
+  FETCH_PRODUCTS_PENDING = "FETCH_PRODUCTS_PENDING",
+  FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS",
+  FETCH_PRODUCTS_ERROR = "FETCH_PRODUCTS_ERROR",
+  ADD_NEW_POST = "ADD_NEW_POST"
+}
 
 export function fetchProductsPending() {
   return {
-    type: FETCH_PRODUCTS_PENDING
+    type: POSTS_ACTIONS.FETCH_PRODUCTS_PENDING
   };
 }
 
-export function fetchProductsSuccess(products) {
+export function fetchProductsSuccess(products: UIPostsResponse) {
   return {
-    type: FETCH_PRODUCTS_SUCCESS,
+    type: POSTS_ACTIONS.FETCH_PRODUCTS_SUCCESS,
     payload: products
   };
 }
 
 export function fetchProductsError(error) {
   return {
-    type: FETCH_PRODUCTS_ERROR,
+    type: POSTS_ACTIONS.FETCH_PRODUCTS_ERROR,
     error: error
   };
 }
 
-export function addNewPost(post) {
+export function addNewPost(post: SingleUIPostsResponse) {
   return {
-    type: ADD_NEW_POST,
+    type: POSTS_ACTIONS.ADD_NEW_POST,
     payload: post
   };
 }

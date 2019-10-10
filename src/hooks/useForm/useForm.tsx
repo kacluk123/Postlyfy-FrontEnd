@@ -95,7 +95,7 @@ const useForm = (form: Types.useFormParams) => {
     });
   };
 
-  const validateAllInputs = () => {
+  const validateAllInputs = React.useCallback(() => {
     const validatedInputs = Object.keys(state.formValues).reduce(
       (prev, curr): Types.errorValues => {
         return {
@@ -113,7 +113,7 @@ const useForm = (form: Types.useFormParams) => {
       type: "VALIDATE_ALL_INPUTS",
       errorValues: validatedInputs
     });
-  };
+  }, []);
 
   const onButtonClick = (callback: Function) => () => {
     validateAllInputs();

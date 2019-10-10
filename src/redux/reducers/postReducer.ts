@@ -1,15 +1,16 @@
-import {
-  FETCH_PRODUCTS_PENDING,
-  FETCH_PRODUCTS_SUCCESS,
-  FETCH_PRODUCTS_ERROR,
-  ADD_NEW_POST
-} from "../actions/postActions";
+import { POSTS_ACTIONS } from "../actions/postActions";
+import { UIPostsResponse } from "../../api/endpoints/posts/postsTypes";
 
 interface InitialStateType {
   pending: boolean;
-  posts: [];
+  posts: UIPostsResponse[];
   error: null;
   total: number;
+}
+
+interface PostReducerAction {
+  type: POSTS_ACTIONS;
+  payload: UIPostsResponse;
 }
 
 export const initialState: InitialStateType = {
@@ -19,17 +20,19 @@ export const initialState: InitialStateType = {
   total: 0
 };
 
-export function productsReducer(state = initialState, action) {
+export function productsReducer(
+  state: InitialStateType = initialState,
+  action: PostReducerAction
+) {
   switch (action.type) {
-    case FETCH_PRODUCTS_PENDING: {
+    case POSTS_ACTIONS.FETCH_PRODUCTS_PENDING: {
       return {
         ...state,
         pending: true
       };
     }
 
-    case FETCH_PRODUCTS_SUCCESS: {
-      console.log(action);
+    case POSTS_ACTIONS.FETCH_PRODUCTS_SUCCESS: {
       return {
         ...state,
         pending: false,
@@ -38,15 +41,7 @@ export function productsReducer(state = initialState, action) {
       };
     }
 
-    case FETCH_PRODUCTS_ERROR: {
-      return {
-        ...state,
-        pending: false,
-        error: action.error
-      };
-    }
-
-    case ADD_NEW_POST: {
+    case POSTS_ACTIONS.ADD_NEW_POST: {
       return {
         ...state,
         posts: [...state.posts, action.payload]
@@ -59,6 +54,6 @@ export function productsReducer(state = initialState, action) {
   }
 }
 
-export const getProducts = state => state.posts;
-export const getProductsPending = state => state.pending;
-export const getProductsError = state => state.error;
+export const getProducts = (state: InitialStateType) => state.posts;
+export const getProductsPending = (state: InitialStateType) => state.pending;
+export const getProductsError = (state: InitialStateType) => state.error;
