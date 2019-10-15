@@ -6,7 +6,8 @@ export const postsMapper = (
   postsList: response.posts.map((post: Types.SingleServerPostsResponse) =>
     singlePostMapper(post)
   ),
-  totalNumberOfPosts: response.total
+  totalNumberOfPosts: response.total,
+  isError: response.isError
 });
 
 const singlePostMapper = (

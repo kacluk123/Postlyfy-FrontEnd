@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as Styled from "./PostStyles";
 import { useEffect } from "react";
 import { addNewPost } from "../../redux/actions/postActions";
 import { connect } from "react-redux";
@@ -12,7 +13,7 @@ import PostsList from "./PostsList";
 const socket = io(MAIN_API_URL);
 const POST = "post";
 
-const UserTagComponent = ({ fetchPosts }: HelloProps) => {
+const UserTagComponent = ({ fetchPosts }) => {
   const dispatch = useDispatch();
   const [text, setText] = React.useState("");
   useEffect(() => {
@@ -35,11 +36,11 @@ const UserTagComponent = ({ fetchPosts }: HelloProps) => {
   };
 
   return (
-    <div>
+    <Styled.UserTag>
       <input type="text" onChange={handleChange} />
       <button onClick={handleClick}>KLIKNIJ</button>
       <PostsList />
-    </div>
+    </Styled.UserTag>
   );
 };
 

@@ -5,14 +5,13 @@ export const App = styled.div.attrs({
 })`
   display: grid;
   grid-template-rows: 50px auto;
+  background: var(--dark);
 `;
 
 export const AppContent = styled.div.attrs({
   className: "AppContent"
 })`
-  background: var(--dark);
   width: 100%;
-  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;

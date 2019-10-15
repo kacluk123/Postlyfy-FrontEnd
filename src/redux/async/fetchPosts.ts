@@ -1,14 +1,23 @@
 import {
   fetchProductsPending,
-  fetchProductsSuccess
+  fetchProductsSuccess,
+  fetchProductsError
 } from "../actions/postActions";
 import { getPosts } from "../../api/endpoints/posts/posts";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
+import { UIPostsResponse } from "../../api/endpoints/posts/postsTypes";
+import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 
 interface FetchPostsParams {
   offset: number;
   limit: number;
+}
+
+function isApiResonseHasError(
+  data: UIPostsResponse | UIServerMessages
+): data is UIPostsResponse {
+  return !data.isError;
 }
 
 const fetchPosts = ({
@@ -20,7 +29,11 @@ const fetchPosts = ({
 
     const data = await getPosts({ offset, limit });
 
-    dispatch(fetchProductsSuccess(data));
+    if (isApiResonseHasError(data)) {
+      dispatch(fetchProductsSuccess(data));
+    } else {
+      dispatch(fetchProductsError(data));
+    }
   };
 };
 

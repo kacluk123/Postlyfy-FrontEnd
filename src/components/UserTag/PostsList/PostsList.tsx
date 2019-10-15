@@ -9,13 +9,18 @@ import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
 import * as React from "react";
 import SinglePost from "./SinglePost";
 import * as Styled from "./PostsListStyled";
+import useWindowScroll from "../../../hooks/useWindowScroll";
 
 const PostsListComponent = ({ fetchPosts }) => {
+  const { scrollPositionY } = useWindowScroll();
   const products = useSelector(getProducts);
   const pending = useSelector(getProductsPending);
 
   React.useEffect(() => {
-    fetchPosts();
+    fetchPosts({
+      offset: 0,
+      limit: 20
+    });
   }, []);
 
   if (pending) {

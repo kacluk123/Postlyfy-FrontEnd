@@ -18,11 +18,13 @@ export interface SingleUIPostsResponse {
 }
 
 export interface ServerPostsResponse {
+  isError: boolean;
   posts: SingleServerPostsResponse[];
   total: number;
 }
 
 export interface UIPostsResponse {
+  isError: boolean;
   postsList: SingleUIPostsResponse[];
   totalNumberOfPosts: number;
 }

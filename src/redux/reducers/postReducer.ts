@@ -1,9 +1,12 @@
 import { POSTS_ACTIONS } from "../actions/postActions";
-import { UIPostsResponse } from "../../api/endpoints/posts/postsTypes";
+import {
+  UIPostsResponse,
+  SingleUIPostsResponse
+} from "../../api/endpoints/posts/postsTypes";
 
 interface InitialStateType {
   pending: boolean;
-  posts: UIPostsResponse[];
+  posts: SingleUIPostsResponse[];
   error: null;
   total: number;
 }
