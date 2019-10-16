@@ -1,16 +1,29 @@
 import * as React from "react";
+import { UseWindowScrollParams } from "./useWindowScrollTypes";
 
-const useWindowScroll = (callback: () => void) => {
+const useWindowScroll = ({
+  offset,
+  limit,
+  callback,
+  additionalParams
+}: UseWindowScrollParams) => {
+  const itemsOffset = React.useRef(offset);
+
   const handleScroll = () => {
-    const isMaxScroll =
+    const isMaxScroll = !(
       window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight;
+      document.documentElement.offsetHeight
+    );
+
+    const increseCurrentOffset = () =>
+      (itemsOffset.current = itemsOffset.current + limit);
 
     if (isMaxScroll) {
-      callback();
+      increseCurrentOffset();
+      callback({ limit, offset: itemsOffset.current, ...additionalParams });
     }
   };
-  // const limit = document.body.offsetHeight - window.innerHeight;
+
   React.useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 

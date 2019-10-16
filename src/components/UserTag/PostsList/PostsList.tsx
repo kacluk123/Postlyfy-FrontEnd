@@ -1,27 +1,40 @@
 import { connect } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getProducts,
   getProductsPending
 } from "../../../redux/reducers/postReducer";
-import fetchPostsDispatch from "../../../redux/async/fetchPosts";
+import fetchPosts from "../../../redux/async/fetchPosts";
 import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
 import * as React from "react";
 import SinglePost from "./SinglePost";
 import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 
-const PostsListComponent = ({ fetchPosts }) => {
-  const { scrollPositionY } = useWindowScroll();
+const infiniteScrollMainParams = {
+  offset: 0,
+  limit: 20
+};
+
+const PostsListComponent = () => {
   const products = useSelector(getProducts);
   const pending = useSelector(getProductsPending);
+  const dispatch = useDispatch();
+
+  // const fetchPosts = () => useDispatch()(fetchPosts)
+
+  // const fetchPosts = () => dispatch(fetchPosts(infiniteScrollMainParams));
 
   React.useEffect(() => {
-    fetchPosts({
-      offset: 0,
-      limit: 20
-    });
+    dispatch(fetchPosts(infiniteScrollMainParams));
   }, []);
+
+  const x = React.useCallback(params => dispatch(fetchPosts(params)), []);
+
+  useWindowScroll({
+    ...infiniteScrollMainParams,
+    callback: x
+  });
 
   if (pending) {
     return <span>Loading...</span>;
@@ -44,11 +57,8 @@ const PostsListComponent = ({ fetchPosts }) => {
   );
 };
 
-const mapDispatch = {
-  fetchPosts: fetchPostsDispatch
-};
+// const mapDispatch = {
+//   fetchPosts: fetchPostsDispatch
+// };
 
-export default connect(
-  null,
-  mapDispatch
-)(PostsListComponent);
+export default PostsListComponent;

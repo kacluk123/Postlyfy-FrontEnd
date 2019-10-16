@@ -39,7 +39,7 @@ export function productsReducer(
       return {
         ...state,
         pending: false,
-        posts: action.payload.postsList,
+        posts: [...state.posts, ...action.payload.postsList],
         total: action.payload.totalNumberOfPosts
       };
     }
