@@ -10,18 +10,17 @@ const useWindowScroll = ({
   const itemsOffset = React.useRef(offset);
 
   const handleScroll = () => {
-    const isMaxScroll = !(
+    if (
       window.innerHeight + document.documentElement.scrollTop !==
       document.documentElement.offsetHeight
-    );
+    ) {
+      return;
+    }
 
     const increseCurrentOffset = () =>
       (itemsOffset.current = itemsOffset.current + limit);
-
-    if (isMaxScroll) {
-      increseCurrentOffset();
-      callback({ limit, offset: itemsOffset.current, ...additionalParams });
-    }
+    increseCurrentOffset();
+    callback({ limit, offset: itemsOffset.current });
   };
 
   React.useEffect(() => {

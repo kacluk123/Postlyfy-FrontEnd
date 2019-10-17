@@ -58,5 +58,6 @@ export function productsReducer(
 }
 
 export const getProducts = (state: InitialStateType) => state.posts;
+export const getTotalPosts = (state: InitialStateType) => state.total;
 export const getProductsPending = (state: InitialStateType) => state.pending;
 export const getProductsError = (state: InitialStateType) => state.error;
