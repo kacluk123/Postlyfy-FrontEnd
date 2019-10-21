@@ -5,7 +5,7 @@ import {
   getProductsPending,
   getTotalPosts
 } from "../../../redux/reducers/postReducer";
-
+import Loader from "../../Common/Loader";
 import fetchPostsTHUNK from "../../../redux/async/fetchPosts";
 import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
 import * as React from "react";
@@ -13,41 +13,44 @@ import SinglePost from "./SinglePost";
 import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 
-type InfiniteScrollMainParams = {
-  offset: number;
-  limit: number;
-};
-
-const infiniteScrollMainParams = {
-  offset: 0,
-  limit: 20
-};
-
 const PostsListComponent = () => {
   const products = useSelector(getProducts);
   const pending = useSelector(getProductsPending);
   const total = useSelector(getTotalPosts);
   const dispatch = useDispatch();
+  const isMaxScroll = useWindowScroll();
+
+  const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    dispatch(fetchPostsTHUNK(infiniteScrollMainParams));
+    dispatch(
+      fetchPostsTHUNK({
+        offset: 0,
+        limit: 20,
+        initial: true
+      })
+    );
   }, []);
 
-  const fetchPosts = (params: InfiniteScrollMainParams) => {
-    const isPostsListNotFull = products.length !== total;
-    console.log(isPostsListNotFull, products.length, total);
-    // if (isPostsListNotFull) {
-    dispatch(fetchPostsTHUNK(params));
-    // }
-  };
-  console.log(products.length, total);
-  useWindowScroll({
-    ...infiniteScrollMainParams,
-    callback: fetchPosts
-  });
+  React.useEffect(() => {
+    if (isMaxScroll && products.length !== total) {
+      setOnScrollPending(true);
+      try {
+        dispatch(
+          fetchPostsTHUNK({
+            limit: 20,
+            offset: products.length,
+            initial: false
+          })
+        );
+      } finally {
+        setOnScrollPending(false);
+      }
+    }
+  }, [isMaxScroll]);
 
   if (pending) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   return (
@@ -63,6 +66,7 @@ const PostsListComponent = () => {
           />
         )
       )}
+      {onScrollPending && <Loader />}
     </Styled.PostsList>
   );
 };

@@ -1,15 +1,10 @@
 import * as React from "react";
-import { UseWindowScrollParams } from "./useWindowScrollTypes";
 
-const useWindowScroll = ({
-  offset,
-  limit,
-  callback,
-  additionalParams
-}: UseWindowScrollParams) => {
-  const itemsOffset = React.useRef(offset);
-
+const useWindowScroll = () => {
+  const [isMaxScroll, setIsMaxScroll] = React.useState(false);
   const handleScroll = () => {
+    setIsMaxScroll(false);
+
     if (
       window.innerHeight + document.documentElement.scrollTop !==
       document.documentElement.offsetHeight
@@ -17,12 +12,8 @@ const useWindowScroll = ({
       return;
     }
 
-    const increseCurrentOffset = () =>
-      (itemsOffset.current = itemsOffset.current + limit);
-    increseCurrentOffset();
-    callback({ limit, offset: itemsOffset.current });
+    setIsMaxScroll(true);
   };
-
   React.useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -30,6 +21,8 @@ const useWindowScroll = ({
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  return isMaxScroll;
 };
 
 export default useWindowScroll;

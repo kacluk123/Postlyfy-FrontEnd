@@ -1,5 +1,4 @@
 export interface UseWindowScroll {
-  offset: number;
   limit: number;
   additionalParams?: any;
 }

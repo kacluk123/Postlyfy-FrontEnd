@@ -3,6 +3,7 @@ import {
   UIPostsResponse,
   SingleUIPostsResponse
 } from "../../api/endpoints/posts/postsTypes";
+import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 
 interface InitialStateType {
   pending: boolean;
@@ -48,6 +49,14 @@ export function productsReducer(
       return {
         ...state,
         posts: [...state.posts, action.payload]
+      };
+    }
+
+    case POSTS_ACTIONS.FETCH_PRODUCTS_ERROR: {
+      return {
+        ...state,
+        pending: false,
+        error: action.payload.error
       };
     }
 

@@ -12,6 +12,7 @@ import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 interface FetchPostsParams {
   offset: number;
   limit: number;
+  initial: boolean;
 }
 
 function isApiResonseHasError(
@@ -20,12 +21,15 @@ function isApiResonseHasError(
   return !data.isError;
 }
 
-const fetchPosts = ({
+export const fetchPosts = ({
   offset,
-  limit
+  limit,
+  initial
 }: FetchPostsParams): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-    dispatch(fetchProductsPending());
+    if (initial) {
+      dispatch(fetchProductsPending());
+    }
 
     const data = await getPosts({ offset, limit });
 
