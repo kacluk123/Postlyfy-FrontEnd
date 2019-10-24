@@ -16,6 +16,7 @@ export const getPosts = async (
 ): Promise<Types.UIPostsResponse | UIServerMessages> => {
   try {
     const { data } = await mainApi.post(getPostsUrl, payload);
+    console.log(data);
     return postsMapper(data);
   } catch (err) {
     return serverMessageUnpacker(err.response.data);

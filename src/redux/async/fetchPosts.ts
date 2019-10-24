@@ -31,8 +31,8 @@ export const fetchPosts = ({
       dispatch(fetchProductsPending());
     }
 
-    const data = await getPosts({ offset, limit });
-
+    const data = await getPosts({ offset, limit, tag: "asd" });
+    console.log(data);
     if (isApiResonseHasError(data)) {
       dispatch(fetchProductsSuccess(data));
     } else {
