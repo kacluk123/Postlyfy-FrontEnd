@@ -13,6 +13,7 @@ interface FetchPostsParams {
   offset: number;
   limit: number;
   initial: boolean;
+  tag: string;
 }
 
 function isApiResonseHasError(
@@ -24,7 +25,8 @@ function isApiResonseHasError(
 export const fetchPosts = ({
   offset,
   limit,
-  initial
+  initial,
+  tag
 }: FetchPostsParams): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     if (initial) {

@@ -8,6 +8,7 @@ const globalColors = css`
         --tiny-grey: #C1C0C5;
         --red-orange: #fc5226;
         --green: #5AB270;
+        --grey-special: #d6d4d2;
     }
 `;
 

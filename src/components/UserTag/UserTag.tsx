@@ -9,6 +9,7 @@ import io from "socket.io-client";
 import { MAIN_API_URL } from "../../api/axios-instances";
 import { addPosts } from "../../api/endpoints/posts/posts";
 import PostsList from "./PostsList";
+import PostInput from "./PostInput";
 
 const socket = io(MAIN_API_URL);
 const POST = "post";
@@ -37,7 +38,8 @@ const UserTagComponent = ({ fetchPosts }) => {
 
   return (
     <Styled.UserTag>
-      <input type="text" onChange={handleChange} />
+      <PostInput />
+      {/* <input type="text" onChange={handleChange} /> */}
       <button onClick={handleClick}>KLIKNIJ</button>
       <PostsList />
     </Styled.UserTag>
