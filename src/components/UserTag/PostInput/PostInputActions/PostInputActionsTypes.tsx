@@ -1,5 +1,5 @@
 export interface PostInputActions {
-  onSendPostButtonClick: (callback: Function) => void;
+  onSendPostButtonClick: () => void;
   postInputValue: string;
   isSendPostButtonDisabled: boolean;
 }

@@ -6,4 +6,4 @@ const StandardTextArea = ({ ...props }: Types.StandardTextArea) => {
   return <Styled.StandardTextArea {...props} />;
 };
 
-export default StandardTextArea;
+export default React.memo(StandardTextArea);

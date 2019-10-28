@@ -16,31 +16,29 @@ const POST = "post";
 
 const UserTagComponent = ({ fetchPosts }) => {
   const dispatch = useDispatch();
-  const [text, setText] = React.useState("");
-  useEffect(() => {
-    socket.on(POST, data => {
-      dispatch(addNewPost(data.post));
-    });
-  }, []);
+  // const [text, setText] = React.useState("");
+  // useEffect(() => {
+  //   socket.on(POST, data => {
+  //     dispatch(addNewPost(data.post));
+  //   });
+  // }, []);
 
-  const handleChange = event => {
-    const value = event.target.value;
+  // const handleChange = event => {
+  //   const value = event.target.value;
 
-    setText(value);
-  };
+  //   setText(value);
+  // };
 
-  const handleClick = async () => {
-    await addPosts({
-      post: text,
-      userName: "elo"
-    });
-  };
+  // const handleClick = async () => {
+  //   await addPosts({
+  //     post: text,
+  //     userName: "elo"
+  //   });
+  // };
 
   return (
     <Styled.UserTag>
       <PostInput />
-      {/* <input type="text" onChange={handleChange} /> */}
-      <button onClick={handleClick}>KLIKNIJ</button>
       <PostsList />
     </Styled.UserTag>
   );
