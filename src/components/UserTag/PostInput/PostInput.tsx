@@ -44,7 +44,7 @@ const PostInput = ({  }: Types.PostInput) => {
       tags: getHashTags(formValues.postInput)
     });
   };
-  console.log(deleteWhiteSpace(getHashTags(formValues.postInput)));
+
   return (
     <Styled.PostInput>
       <StandardTextArea

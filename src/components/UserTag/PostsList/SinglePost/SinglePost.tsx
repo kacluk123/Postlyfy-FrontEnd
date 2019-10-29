@@ -3,6 +3,20 @@ import * as Styled from "./SinglePostStyles";
 import { SingleUIPostsResponse } from "../../../../api/endpoints/posts/postsTypes";
 import * as Icon from "../../../Common/Icons/Icons";
 import moment from "moment";
+import reactStringReplace from "react-string-replace";
+
+const replaceHashTags = (content: string) =>
+  reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
+    console.log(match);
+    return (
+      <span>
+        #
+        <a key={match + i} href={match}>
+          {match}
+        </a>
+      </span>
+    );
+  });
 
 const SinglePostComponent = ({
   author,
@@ -19,7 +33,23 @@ const SinglePostComponent = ({
       <Styled.SinglePostDate>
         {moment(createdAt).format("MMM Do YY")}
       </Styled.SinglePostDate>
-      <Styled.SinglePostContent>{content}</Styled.SinglePostContent>
+      <Styled.SinglePostContent>
+        {reactStringReplace(
+          content,
+          /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm,
+          (match, i) => {
+            console.log(match);
+            return (
+              <span>
+                #
+                <a key={match + i} href={match}>
+                  {match}
+                </a>
+              </span>
+            );
+          }
+        )}
+      </Styled.SinglePostContent>
     </Styled.SinglePost>
   );
 };
