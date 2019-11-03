@@ -1,4 +1,12 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+export const HashtagLink = styled(Link).attrs({
+  className: "HashtagLink"
+})`
+  text-decoration: none;
+  color: #3f51b5;
+`;
 
 export const SinglePost = styled.div.attrs({
   className: "SinglePost"

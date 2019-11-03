@@ -1,11 +1,11 @@
 export interface NavbarStyles {
-    isActive: boolean
+  isActive: boolean;
 }
 
-export type routeNames = '/' | '/login' | '/register'
+export type routeNames = "/posts" | "/login" | "/register";
 
-export interface routeTypes  {
-    HOME: '/';
-    LOGIN: '/login';
-    REGISTER: '/register';
+export interface routeTypes {
+  HOME: "/posts";
+  LOGIN: "/login";
+  REGISTER: "/register";
 }

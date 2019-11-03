@@ -9,13 +9,15 @@ import { withRouter } from "react-router-dom";
 
 const NavbarWithRouter = withRouter(props => <Navbar {...props} />);
 
+const x = () => <span>ELO</span>;
+
 const App = () => {
   return (
     <Styled.App>
       <NavbarWithRouter />
       <Styled.AppContent>
         <Switch>
-          <Route exact path="/" component={UserTag} />
+          <Route exact path="/posts" component={UserTag} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
         </Switch>

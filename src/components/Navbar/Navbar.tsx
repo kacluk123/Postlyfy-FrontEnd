@@ -3,7 +3,7 @@ import * as Styled from "./NavbarStyles";
 import * as types from "./NavbarTypes";
 
 const routes: types.routeTypes = {
-  HOME: "/",
+  HOME: "/posts",
   REGISTER: "/register",
   LOGIN: "/login"
 };

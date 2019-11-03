@@ -4,18 +4,24 @@ import { SingleUIPostsResponse } from "../../../../api/endpoints/posts/postsType
 import * as Icon from "../../../Common/Icons/Icons";
 import moment from "moment";
 import reactStringReplace from "react-string-replace";
+import { Link } from "react-router-dom";
 
-const replaceHashTags = (content: string) =>
+const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
-    console.log(match);
     return (
       <span>
+        {" "}
         #
-        <a key={match + i} href={match}>
+        <Styled.HashtagLink to={match} key={match + i}>
           {match}
-        </a>
+        </Styled.HashtagLink>
       </span>
     );
+  });
+
+const addNewLine = (content: string | React.ReactNodeArray) =>
+  reactStringReplace(content, /(\r\n|\n|\r)/gm, (match, i) => {
+    return <br />;
   });
 
 const SinglePostComponent = ({
@@ -34,21 +40,7 @@ const SinglePostComponent = ({
         {moment(createdAt).format("MMM Do YY")}
       </Styled.SinglePostDate>
       <Styled.SinglePostContent>
-        {reactStringReplace(
-          content,
-          /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm,
-          (match, i) => {
-            console.log(match);
-            return (
-              <span>
-                #
-                <a key={match + i} href={match}>
-                  {match}
-                </a>
-              </span>
-            );
-          }
-        )}
+        {replaceHashTags(addNewLine(content))}
       </Styled.SinglePostContent>
     </Styled.SinglePost>
   );

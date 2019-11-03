@@ -12,6 +12,7 @@ import * as React from "react";
 import SinglePost from "./SinglePost";
 import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
+import { useParams } from "react-router";
 
 const PostsListComponent = () => {
   const products = useSelector(getProducts);
@@ -19,30 +20,37 @@ const PostsListComponent = () => {
   const total = useSelector(getTotalPosts);
   const dispatch = useDispatch();
   const isMaxScroll = useWindowScroll();
-
   const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
+  const { tag } = useParams();
 
   React.useEffect(() => {
-    dispatch(
-      fetchPostsTHUNK({
-        offset: 0,
-        limit: 20,
-        initial: true
-      })
-    );
+    console.log("ELO");
+    if (tag) {
+      dispatch(
+        fetchPostsTHUNK({
+          offset: 0,
+          limit: 20,
+          initial: true,
+          tag: tag
+        })
+      );
+    }
   }, []);
 
   React.useEffect(() => {
     if (isMaxScroll && products.length !== total) {
       setOnScrollPending(true);
       try {
-        dispatch(
-          fetchPostsTHUNK({
-            limit: 20,
-            offset: products.length,
-            initial: false
-          })
-        );
+        if (tag) {
+          dispatch(
+            fetchPostsTHUNK({
+              limit: 20,
+              offset: products.length,
+              initial: false,
+              tag: tag
+            })
+          );
+        }
       } finally {
         setOnScrollPending(false);
       }
