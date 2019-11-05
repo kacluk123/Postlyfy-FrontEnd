@@ -28,4 +28,5 @@ export interface UIPostsResponse {
   isError: boolean;
   postsList: SingleUIPostsResponse[];
   totalNumberOfPosts: number;
+  errors: string[];
 }

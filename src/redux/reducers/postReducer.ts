@@ -1,46 +1,47 @@
-import { POSTS_ACTIONS } from "../actions/postActions";
+import { POSTS_ACTIONS, PostsActions } from "../actions/postActions";
 import {
   UIPostsResponse,
   SingleUIPostsResponse
 } from "../../api/endpoints/posts/postsTypes";
+import { Reducer } from "redux";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 
 interface InitialStateType {
   pending: boolean;
   posts: SingleUIPostsResponse[];
-  error: null;
+  errors: UIServerMessages["messages"];
   total: number;
 }
 
-interface PostReducerAction {
-  type: POSTS_ACTIONS;
-  payload: UIPostsResponse;
-}
+// interface PostReducerAction {
+//   type: POSTS_ACTIONS;
+//   payload: UIPostsResponse;
+// }
 
 export const initialState: InitialStateType = {
   pending: false,
   posts: [],
-  error: null,
+  errors: [],
   total: 0
 };
 
 export function productsReducer(
-  state: InitialStateType = initialState,
-  action: PostReducerAction
-) {
+  state = initialState,
+  action
+): Reducer<InitialStateType, PostsActions> {
   switch (action.type) {
-    case POSTS_ACTIONS.FETCH_PRODUCTS_PENDING: {
+    case POSTS_ACTIONS.FETCH_POSTS_PENDING: {
       return {
         ...state,
-        pending: true
+        pending: false;
       };
     }
 
-    case POSTS_ACTIONS.FETCH_PRODUCTS_SUCCESS: {
+    case POSTS_ACTIONS.FETCH_POSTS_SUCCESS: {
       return {
         ...state,
         pending: false,
-        posts: [...state.posts, ...action.payload.postsList],
+        posts: [...state.posts, ...action.posts.postsList],
         total: action.payload.totalNumberOfPosts
       };
     }
@@ -48,15 +49,16 @@ export function productsReducer(
     case POSTS_ACTIONS.ADD_NEW_POST: {
       return {
         ...state,
-        posts: [...state.posts, action.payload]
+        posts: [...state.posts, action.post]
       };
     }
 
-    case POSTS_ACTIONS.FETCH_PRODUCTS_ERROR: {
+    case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
       return {
         ...state,
         pending: false,
-        error: action.payload.error
+
+        errors: action.error.messages
       };
     }
 
@@ -69,4 +71,4 @@ export function productsReducer(
 export const getProducts = (state: InitialStateType) => state.posts;
 export const getTotalPosts = (state: InitialStateType) => state.total;
 export const getProductsPending = (state: InitialStateType) => state.pending;
-export const getProductsError = (state: InitialStateType) => state.error;
+export const getProductsError = (state: InitialStateType) => state.errors;

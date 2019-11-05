@@ -1,13 +1,13 @@
-export interface singleServerMessage {
+export interface SingleServerMessage {
   value: string;
   msg: string;
   param: string;
   location: string;
 }
 
-export interface serverMessagesResponse {
+export interface ServerMessagesResponse {
   isError: boolean;
-  messages: singleServerMessage[];
+  messages: SingleServerMessage[];
 }
 
 export interface UIServerMessages {
@@ -16,12 +16,12 @@ export interface UIServerMessages {
 }
 
 export const serverMessageUnpacker = (
-  serverMessageList: serverMessagesResponse
+  serverMessageList: ServerMessagesResponse
 ): UIServerMessages => {
   return {
     isError: serverMessageList.isError,
     messages: serverMessageList.messages.map(
-      (message: singleServerMessage) => message.msg
+      (message: SingleServerMessage) => message.msg
     )
   };
 };

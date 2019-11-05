@@ -3,6 +3,9 @@ import {
   fetchProductsSuccess,
   fetchProductsError
 } from "../actions/postActions";
+
+import { addErrorToNotificationState } from "../actions/notificationActions";
+
 import { getPosts } from "../../api/endpoints/posts/posts";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
@@ -34,7 +37,7 @@ export const fetchPosts = ({
     }
 
     const data = await getPosts({ offset, limit, tag });
-    console.log(data);
+
     if (isApiResonseHasError(data)) {
       dispatch(fetchProductsSuccess(data));
     } else {
