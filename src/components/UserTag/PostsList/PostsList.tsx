@@ -1,4 +1,3 @@
-import { connect } from "react-redux";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getProducts,
@@ -31,7 +30,7 @@ const PostsListComponent = () => {
           offset: 0,
           limit: 20,
           initial: true,
-          tag: tag
+          tag
         })
       );
     }
@@ -47,7 +46,7 @@ const PostsListComponent = () => {
               limit: 20,
               offset: products.length,
               initial: false,
-              tag: tag
+              tag
             })
           );
         }

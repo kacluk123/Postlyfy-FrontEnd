@@ -4,8 +4,6 @@ import {
   fetchProductsError
 } from "../actions/postActions";
 
-import { addErrorToNotificationState } from "../actions/notificationActions";
-
 import { getPosts } from "../../api/endpoints/posts/posts";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";

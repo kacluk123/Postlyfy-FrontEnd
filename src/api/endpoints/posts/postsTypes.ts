@@ -1,4 +1,4 @@
-export interface getPostsPayload {
+export interface GetPostsPayload {
   limit: number;
   offset: number;
   tag: string;
@@ -28,5 +28,9 @@ export interface UIPostsResponse {
   isError: boolean;
   postsList: SingleUIPostsResponse[];
   totalNumberOfPosts: number;
-  errors: string[];
+}
+
+export interface IAddPostParams {
+  postContent: string;
+  tags: string[];
 }

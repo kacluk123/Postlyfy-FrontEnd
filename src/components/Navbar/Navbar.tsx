@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Styled from "./NavbarStyles";
 import * as types from "./NavbarTypes";
+import { useLocation } from "react-router";
 
 const routes: types.routeTypes = {
   HOME: "/posts",
@@ -8,7 +9,9 @@ const routes: types.routeTypes = {
   LOGIN: "/login"
 };
 
-const Navbar = ({ location }) => {
+const Navbar = () => {
+  const location = useLocation();
+
   const isRouteActive = (route: types.routeNames): boolean =>
     location.pathname === route;
 

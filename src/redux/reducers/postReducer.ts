@@ -1,63 +1,53 @@
-import { POSTS_ACTIONS, PostsActions } from "../actions/postActions";
-import {
-  UIPostsResponse,
-  SingleUIPostsResponse
-} from "../../api/endpoints/posts/postsTypes";
-import { Reducer } from "redux";
+import { POSTS_ACTIONS_NAMES, PostsActions } from "../actions/postActions";
+import { SingleUIPostsResponse } from "../../api/endpoints/posts/postsTypes";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 
 interface InitialStateType {
-  pending: boolean;
-  posts: SingleUIPostsResponse[];
-  errors: UIServerMessages["messages"];
-  total: number;
+  readonly pending: boolean;
+  readonly posts: SingleUIPostsResponse[];
+  readonly errors: UIServerMessages["messages"];
+  readonly total: number;
 }
 
-// interface PostReducerAction {
-//   type: POSTS_ACTIONS;
-//   payload: UIPostsResponse;
-// }
-
-export const initialState: InitialStateType = {
+export const initialState = {
   pending: false,
   posts: [],
   errors: [],
   total: 0
 };
 
-export function productsReducer(
-  state = initialState,
-  action
-): Reducer<InitialStateType, PostsActions> {
+export function postsReducer(
+  state: InitialStateType = initialState,
+  action: PostsActions
+) {
   switch (action.type) {
-    case POSTS_ACTIONS.FETCH_POSTS_PENDING: {
+    case POSTS_ACTIONS_NAMES.FETCH_POSTS_PENDING: {
       return {
         ...state,
-        pending: false;
+        pending: false
       };
     }
 
-    case POSTS_ACTIONS.FETCH_POSTS_SUCCESS: {
+    case POSTS_ACTIONS_NAMES.FETCH_POSTS_SUCCESS: {
       return {
         ...state,
         pending: false,
         posts: [...state.posts, ...action.posts.postsList],
-        total: action.payload.totalNumberOfPosts
+        total: action.posts.totalNumberOfPosts
       };
     }
 
-    case POSTS_ACTIONS.ADD_NEW_POST: {
+    case POSTS_ACTIONS_NAMES.ADD_NEW_POST: {
       return {
         ...state,
         posts: [...state.posts, action.post]
       };
     }
 
-    case POSTS_ACTIONS.FETCH_POSTS_ERROR: {
+    case POSTS_ACTIONS_NAMES.FETCH_POSTS_ERROR: {
       return {
         ...state,
         pending: false,
-
         errors: action.error.messages
       };
     }

@@ -4,7 +4,6 @@ import { SingleUIPostsResponse } from "../../../../api/endpoints/posts/postsType
 import * as Icon from "../../../Common/Icons/Icons";
 import moment from "moment";
 import reactStringReplace from "react-string-replace";
-import { Link } from "react-router-dom";
 
 const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
@@ -20,7 +19,7 @@ const replaceHashTags = (content: string | React.ReactNodeArray) =>
   });
 
 const addNewLine = (content: string | React.ReactNodeArray) =>
-  reactStringReplace(content, /(\r\n|\n|\r)/gm, (match, i) => {
+  reactStringReplace(content, /(\r\n|\n|\r)/gm, () => {
     return <br />;
   });
 

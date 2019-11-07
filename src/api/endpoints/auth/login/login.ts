@@ -1,16 +1,23 @@
-import { mainApi } from '../../../axios-instances'
-import { packLoginFormData } from './loginMapper'
-import { UILoginFormData } from './loginTypes'
-import { serverMessageUnpacker, UIServerMessages, serverMessagesResponse } from '../../common/errorDataUnpacker'
+import { mainApi } from "../../../axios-instances";
+import { packLoginFormData } from "./loginMapper";
+import { UILoginFormData } from "./loginTypes";
+import {
+  serverMessageUnpacker,
+  ServerMessagesResponse
+} from "../../common/errorDataUnpacker";
 
-const createUserUrl = '/login'
+const createUserUrl = "/login";
 
 export const login = async (payload: UILoginFormData) => {
-    try {
-        const { data } = await mainApi.post<serverMessagesResponse>(createUserUrl,  packLoginFormData(payload), {withCredentials: true})
-        console.log(data)
-        return data
-    } catch (err) {
-        return serverMessageUnpacker(err.response.data)
-    }
-}
+  try {
+    const { data } = await mainApi.post<ServerMessagesResponse>(
+      createUserUrl,
+      packLoginFormData(payload),
+      { withCredentials: true }
+    );
+
+    return data;
+  } catch (err) {
+    return serverMessageUnpacker(err.response.data);
+  }
+};

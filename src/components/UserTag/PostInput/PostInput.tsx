@@ -23,7 +23,6 @@ const PostInput = ({  }: Types.PostInput) => {
   const {
     formValues,
     handleChangeFormValues,
-    errorValues,
     onButtonClick,
     isButtonDisabled
   } = useForm({
@@ -40,7 +39,7 @@ const PostInput = ({  }: Types.PostInput) => {
 
   const addPost = async () => {
     await API.addPosts({
-      post: formValues.postInput,
+      postContent: formValues.postInput,
       tags: getHashTags(formValues.postInput)
     });
   };

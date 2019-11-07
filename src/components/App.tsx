@@ -5,16 +5,11 @@ import * as Styled from "./AppStyles";
 import Login from "./Login";
 import Register from "./Register";
 import Navbar from "./Navbar";
-import { withRouter } from "react-router-dom";
-
-const NavbarWithRouter = withRouter(props => <Navbar {...props} />);
-
-const x = () => <span>ELO</span>;
 
 const App = () => {
   return (
     <Styled.App>
-      <NavbarWithRouter />
+      <Navbar />
       <Styled.AppContent>
         <Switch>
           <Route exact path="/posts" component={UserTag} />

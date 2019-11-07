@@ -1,10 +1,9 @@
 import { mainApi } from "../../axios-instances";
-import { getPostsPayload } from "./postsTypes";
-import { postsMapper } from "./postsMapper";
+import { GetPostsPayload } from "./postsTypes";
+import { postsUnpacker, addPostPacker } from "./postsMapper";
 import {
   serverMessageUnpacker,
-  UIServerMessages,
-  ServerMessagesResponse
+  UIServerMessages
 } from "../common/errorDataUnpacker";
 import * as Types from "./postsTypes";
 
@@ -12,19 +11,19 @@ const getPostsUrl = "/get-posts";
 const addPostUrl = "/add-post";
 
 export const getPosts = async (
-  payload: getPostsPayload
+  payload: GetPostsPayload
 ): Promise<Types.UIPostsResponse | UIServerMessages> => {
   try {
     const { data } = await mainApi.post(getPostsUrl, payload);
-    return postsMapper(data);
+    return postsUnpacker(data);
   } catch (err) {
     return serverMessageUnpacker(err.response.data);
   }
 };
 
-export const addPosts = async payload => {
+export const addPosts = async (payload: Types.IAddPostParams) => {
   try {
-    const { data } = await mainApi.post(addPostUrl, payload, {
+    await mainApi.post(addPostUrl, addPostPacker(payload), {
       withCredentials: true
     });
   } catch (err) {

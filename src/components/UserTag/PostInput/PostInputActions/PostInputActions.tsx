@@ -2,7 +2,6 @@ import * as React from "react";
 import * as Types from "./PostInputActionsTypes";
 import * as Styled from "./PostInputActionsStyles";
 import Button from "../../../Common/Button";
-import * as API from "../../../../api/endpoints/posts/posts";
 
 const PostInputActions = ({
   onSendPostButtonClick,

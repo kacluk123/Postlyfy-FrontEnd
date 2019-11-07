@@ -2,7 +2,6 @@ import * as React from "react";
 import * as Styled from "./LoginStyles";
 import StandardInput from "../Common/StandardInput/StandardInput";
 import Button from "../Common/Button";
-import ServerMessageViewComponent from "../Common/ServerMessageView";
 import useForm from "../../hooks/useForm";
 import * as API from "../../api/endpoints/auth/login/login";
 
