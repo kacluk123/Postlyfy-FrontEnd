@@ -1,16 +1,56 @@
 import * as React from "react";
 import * as Types from "./useFormTypes";
-import { validateInput } from "./helperFunctions";
+import { validateInput, isFormDirty } from "./helperFunctions";
 
-const isFormDirty = (errorObject: Types.errorValues): boolean => {
-  return Object.values(errorObject).some(error => {
-    return error !== undefined;
-  });
-};
+enum FORM_ACTIONS {
+  CHANGE_FORM_VALUE = "CHANGE_FORM_VALUE",
+  VALIDATE_ALL_INPUTS = "VALIDATE_ALL_INPUTS",
+  DISABLE_BUTTON = "DISABLE_BUTTON",
+  ENABLE_BUTTON = "ENABLE_BUTTON"
+}
 
-function reducer(state, action) {
+export interface IFormBaseAction {
+  type: FORM_ACTIONS;
+}
+
+interface IChangeFormValue extends IFormBaseAction {
+  type: FORM_ACTIONS.CHANGE_FORM_VALUE;
+  fieldName: string;
+  value: string;
+  validationRules: Types.ValidationRules;
+}
+
+interface IValidateAllInputs<T> extends IFormBaseAction {
+  type: FORM_ACTIONS.VALIDATE_ALL_INPUTS;
+  errorValues: T;
+}
+
+interface IDisableButton extends IFormBaseAction {
+  type: FORM_ACTIONS.DISABLE_BUTTON;
+}
+
+interface IEnableButton extends IFormBaseAction {
+  type: FORM_ACTIONS.ENABLE_BUTTON;
+}
+
+type IFormActions<T> =
+  | IChangeFormValue
+  | IValidateAllInputs<T>
+  | IDisableButton
+  | IEnableButton;
+
+interface IFormState<T> {
+  formValues: T;
+  errorValues: T;
+  isButtonDisabled: boolean;
+}
+
+const formReducer = <T extends {}>() => (
+  state: IFormState<T>,
+  action: IFormActions<T>
+) => {
   switch (action.type) {
-    case "CHANGE_FORM_VALUE": {
+    case FORM_ACTIONS.CHANGE_FORM_VALUE: {
       return {
         ...state,
         formValues: {
@@ -26,19 +66,19 @@ function reducer(state, action) {
         }
       };
     }
-    case "VALIDATE_ALL_INPUTS": {
+    case FORM_ACTIONS.VALIDATE_ALL_INPUTS: {
       return {
         ...state,
         errorValues: action.errorValues
       };
     }
-    case "DISABLE_BUTTON": {
+    case FORM_ACTIONS.DISABLE_BUTTON: {
       return {
         ...state,
         isButtonDisabled: true
       };
     }
-    case "ENABLE_BUTTON": {
+    case FORM_ACTIONS.ENABLE_BUTTON: {
       return {
         ...state,
         isButtonDisabled: false
@@ -47,9 +87,9 @@ function reducer(state, action) {
     default:
       return state;
   }
-}
+};
 
-const useForm = (form: Types.useFormParams) => {
+const useForm = <T extends {}>(form: Types.UseFormParams<T>) => {
   const firstUpdate = React.useRef(true);
 
   const initialState = React.useMemo(
@@ -65,7 +105,7 @@ const useForm = (form: Types.useFormParams) => {
     []
   );
 
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = React.useReducer(formReducer<T>(), initialState);
 
   React.useEffect(() => {
     if (firstUpdate.current) {
@@ -74,9 +114,9 @@ const useForm = (form: Types.useFormParams) => {
     }
 
     if (isFormDirty(state.errorValues)) {
-      dispatch({ type: "DISABLE_BUTTON" });
+      dispatch({ type: FORM_ACTIONS.DISABLE_BUTTON });
     } else {
-      dispatch({ type: "ENABLE_BUTTON" });
+      dispatch({ type: FORM_ACTIONS.ENABLE_BUTTON });
     }
   }, [state.errorValues]);
 
@@ -88,7 +128,7 @@ const useForm = (form: Types.useFormParams) => {
     const validationRulesOfCurrentInput = form.validationRules[inputName];
 
     dispatch({
-      type: "CHANGE_FORM_VALUE",
+      type: FORM_ACTIONS.CHANGE_FORM_VALUE,
       fieldName: inputName,
       value,
       validationRules: validationRulesOfCurrentInput
@@ -97,7 +137,7 @@ const useForm = (form: Types.useFormParams) => {
 
   const validateAllInputs = React.useCallback(() => {
     const validatedInputs = Object.keys(state.formValues).reduce(
-      (prev, curr): Types.errorValues => {
+      (prev, curr) => {
         return {
           ...prev,
           [curr]: validateInput(
@@ -106,11 +146,11 @@ const useForm = (form: Types.useFormParams) => {
           )
         };
       },
-      {}
+      { ...state.errorValues }
     );
 
     dispatch({
-      type: "VALIDATE_ALL_INPUTS",
+      type: FORM_ACTIONS.VALIDATE_ALL_INPUTS,
       errorValues: validatedInputs
     });
   }, []);

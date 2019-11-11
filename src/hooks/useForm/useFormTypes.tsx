@@ -1,33 +1,33 @@
-export interface formErrorCreatorParams {
+export interface FormErrorCreatorParams {
   errorMessage: string;
   isValid: boolean;
 }
 
-export interface formErrorCreatorOutput extends formErrorCreatorParams {}
+export interface FormErrorCreatorOutput extends FormErrorCreatorParams {}
 
-export interface validationRules {
+export interface ValidationRules {
   required?: boolean;
   email?: boolean;
   minLength?: number;
 }
 
-export interface checkValidationOfInputParams {
+export interface CheckValidationOfInputParams {
   value: string;
-  validationRules: validationRules;
+  validationRules: ValidationRules;
   name: string;
 }
 
-export interface initialValues {
+export interface InitialValues {
   [k: string]: string;
 }
 
-export interface useFormParams {
-  initialValues: initialValues;
+export interface UseFormParams<T> {
+  initialValues: T;
   validationRules: {
-    [k: string]: validationRules;
+    [k: string]: ValidationRules;
   };
 }
 
-export interface errorValues {
+export interface ErrorValues {
   [k: string]: string;
 }

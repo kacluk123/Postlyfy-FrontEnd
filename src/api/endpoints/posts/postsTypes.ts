@@ -34,3 +34,8 @@ export interface IAddPostParams {
   postContent: string;
   tags: string[];
 }
+
+export interface IAddPostServerRequestParams {
+  post: string;
+  tags: string[];
+}

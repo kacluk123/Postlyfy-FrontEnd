@@ -4,7 +4,7 @@ export interface NavbarStyles {
 
 export type routeNames = "/posts" | "/login" | "/register";
 
-export interface routeTypes {
+export interface RouteTypes {
   HOME: "/posts";
   LOGIN: "/login";
   REGISTER: "/register";

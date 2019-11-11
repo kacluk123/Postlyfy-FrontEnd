@@ -2,11 +2,10 @@ import * as React from "react";
 import * as Styled from "./PostStyles";
 import PostsList from "./PostsList";
 import PostInput from "./PostInput";
-import { Route, Switch, Link } from "react-router-dom";
-import { useRouteMatch } from "react-router";
+import { Route, Switch, Link, useRouteMatch } from "react-router-dom";
 
 const UserTagComponent = () => {
-  const { path, url } = useRouteMatch(undefined);
+  const { path, url } = useRouteMatch();
   console.log(path, url);
   return (
     <Styled.UserTag>

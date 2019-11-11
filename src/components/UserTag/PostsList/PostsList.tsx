@@ -23,7 +23,6 @@ const PostsListComponent = () => {
   const { tag } = useParams();
 
   React.useEffect(() => {
-    console.log("ELO");
     if (tag) {
       dispatch(
         fetchPostsTHUNK({
@@ -35,6 +34,17 @@ const PostsListComponent = () => {
       );
     }
   }, []);
+
+  React.useEffect(() => {
+    dispatch(
+      fetchPostsTHUNK({
+        offset: 0,
+        limit: 20,
+        initial: true,
+        tag
+      })
+    );
+  }, [tag]);
 
   React.useEffect(() => {
     if (isMaxScroll && products.length !== total) {

@@ -2,7 +2,7 @@ import * as Types from "./useFormTypes";
 import { validateEmail } from "./regex";
 
 export const validateInput = (
-  validationRules: Types.validationRules,
+  validationRules: Types.ValidationRules,
   value: string
 ) => {
   if (validationRules.email) {
@@ -20,4 +20,10 @@ export const validateInput = (
   }
 
   return;
+};
+
+export const isFormDirty = (errorObject: Types.ErrorValues): boolean => {
+  return Object.values(errorObject).some(error => {
+    return error !== undefined;
+  });
 };

@@ -12,7 +12,7 @@ const App = () => {
       <Navbar />
       <Styled.AppContent>
         <Switch>
-          <Route exact path="/posts" component={UserTag} />
+          <Route path="/posts" component={UserTag} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
         </Switch>

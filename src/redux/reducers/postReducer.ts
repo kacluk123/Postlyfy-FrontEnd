@@ -32,7 +32,9 @@ export function postsReducer(
       return {
         ...state,
         pending: false,
-        posts: [...state.posts, ...action.posts.postsList],
+        posts: action.initial
+          ? action.posts.postsList
+          : [...state.posts, ...action.posts.postsList],
         total: action.posts.totalNumberOfPosts
       };
     }

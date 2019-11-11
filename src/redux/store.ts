@@ -4,9 +4,7 @@ import { postsReducer } from "../redux/reducers/postReducer";
 
 const middlewares = [thunk];
 
-const rootReducer = combineReducers({
-  postsReducer
-});
+const rootReducer = postsReducer;
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 

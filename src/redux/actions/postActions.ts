@@ -21,6 +21,7 @@ export interface IfetchPostsPending extends IPostsBaseAction {
 
 export interface IfetchProductsSuccess extends IPostsBaseAction {
   posts: UIPostsResponse;
+  initial: boolean;
   type: POSTS_ACTIONS_NAMES.FETCH_POSTS_SUCCESS;
 }
 
@@ -41,10 +42,12 @@ export type PostsActions =
   | IfetchProductsError;
 
 export function fetchProductsSuccess(
-  posts: UIPostsResponse
+  posts: UIPostsResponse,
+  initial: boolean
 ): IfetchProductsSuccess {
   return {
     type: POSTS_ACTIONS_NAMES.FETCH_POSTS_SUCCESS,
+    initial,
     posts
   };
 }

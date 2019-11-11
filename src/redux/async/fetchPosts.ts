@@ -37,7 +37,7 @@ export const fetchPosts = ({
     const data = await getPosts({ offset, limit, tag });
 
     if (isApiResonseHasError(data)) {
-      dispatch(fetchProductsSuccess(data));
+      dispatch(fetchProductsSuccess(data, initial));
     } else {
       dispatch(fetchProductsError(data));
     }

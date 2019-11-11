@@ -6,6 +6,7 @@ import ServerMessageViewComponent from "../Common/ServerMessageView";
 import useForm from "../../hooks/useForm";
 import * as API from "../../api/endpoints/auth/signup/signup";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
+import { IRegisterFormTypes } from "./RegisterTypes";
 
 const RegisterComponent = () => {
   const {
@@ -14,7 +15,7 @@ const RegisterComponent = () => {
     errorValues,
     onButtonClick,
     isButtonDisabled
-  } = useForm({
+  } = useForm<IRegisterFormTypes>({
     initialValues: {
       formEmail: "",
       formPassword: "",
