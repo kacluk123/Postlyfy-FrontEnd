@@ -3,7 +3,7 @@ import * as Styled from "./NavbarStyles";
 import * as types from "./NavbarTypes";
 import { useLocation } from "react-router";
 
-const routes: types.routeTypes = {
+const routes: types.RouteTypes = {
   HOME: "/posts",
   REGISTER: "/register",
   LOGIN: "/login"
