@@ -11,6 +11,7 @@ import * as React from "react";
 import SinglePost from "./SinglePost";
 import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
+import PostInput from "../PostInput";
 import { useParams } from "react-router";
 
 const PostsListComponent = () => {
@@ -21,7 +22,7 @@ const PostsListComponent = () => {
   const isMaxScroll = useWindowScroll();
   const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
   const { tag } = useParams();
-
+  console.log(tag);
   React.useEffect(() => {
     if (tag) {
       dispatch(
@@ -36,14 +37,16 @@ const PostsListComponent = () => {
   }, []);
 
   React.useEffect(() => {
-    dispatch(
-      fetchPostsTHUNK({
-        offset: 0,
-        limit: 20,
-        initial: true,
-        tag
-      })
-    );
+    if (tag) {
+      dispatch(
+        fetchPostsTHUNK({
+          offset: 0,
+          limit: 20,
+          initial: true,
+          tag
+        })
+      );
+    }
   }, [tag]);
 
   React.useEffect(() => {
@@ -71,20 +74,23 @@ const PostsListComponent = () => {
   }
 
   return (
-    <Styled.PostsList>
-      {products.map(
-        ({ postId, author, content, createdAt }: SingleUIPostsResponse) => (
-          <SinglePost
-            key={postId}
-            postId={postId}
-            author={author}
-            content={content}
-            createdAt={createdAt}
-          />
-        )
-      )}
-      {onScrollPending && <Loader />}
-    </Styled.PostsList>
+    <Styled.PostsListContainer>
+      <Styled.PostsList>
+        <PostInput />
+        {products.map(
+          ({ postId, author, content, createdAt }: SingleUIPostsResponse) => (
+            <SinglePost
+              key={postId}
+              postId={postId}
+              author={author}
+              content={content}
+              createdAt={createdAt}
+            />
+          )
+        )}
+        {onScrollPending && <Loader />}
+      </Styled.PostsList>
+    </Styled.PostsListContainer>
   );
 };
 

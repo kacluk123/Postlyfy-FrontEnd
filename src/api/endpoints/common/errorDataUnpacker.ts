@@ -25,3 +25,15 @@ export const serverMessageUnpacker = (
     )
   };
 };
+
+interface Error {
+  isError: boolean;
+}
+
+type apiResponse<T> = Error & T;
+
+export function isApiResonseHasError<T>(
+  data: apiResponse<T> | UIServerMessages
+): data is apiResponse<T> {
+  return !data.isError;
+}
