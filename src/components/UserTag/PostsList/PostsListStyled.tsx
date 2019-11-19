@@ -1,19 +1,27 @@
 import styled from "styled-components";
 
-export const PostsListContainer = styled.div.attrs({
-  className: "PostsListContainer"
+export const Posts = styled.div.attrs({
+  className: "Posts"
 })`
-  height: 100vh;
   width: 100%;
+  min-height: calc(100vh - 50px);
+  max-height: auto;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 export const PostsList = styled.div.attrs({
   className: "PostsList"
 })`
-  width: 1000px;
+  margin-top: 50px;
   display: grid;
+  width: 100%;
   grid-row-gap: 10px;
+`;
+
+export const PostsListContainer = styled.div.attrs({
+  className: "PostsListContainer"
+})`
+  width: 1000px;
 `;

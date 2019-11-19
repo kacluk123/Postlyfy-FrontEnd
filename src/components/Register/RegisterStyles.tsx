@@ -24,7 +24,8 @@ export const RegisterServerMessages = styled.div.attrs({
 export const RegisterContainer = styled.div.attrs({
   className: "RegisterContainer"
 })`
-  height: 100vh;
+  height: calc(100vh - 50px);
   display: flex;
   align-items: center;
+  justify-content: center;
 `;

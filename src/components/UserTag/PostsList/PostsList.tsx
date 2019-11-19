@@ -74,23 +74,25 @@ const PostsListComponent = () => {
   }
 
   return (
-    <Styled.PostsListContainer>
-      <Styled.PostsList>
+    <Styled.Posts>
+      <Styled.PostsListContainer>
         <PostInput />
-        {products.map(
-          ({ postId, author, content, createdAt }: SingleUIPostsResponse) => (
-            <SinglePost
-              key={postId}
-              postId={postId}
-              author={author}
-              content={content}
-              createdAt={createdAt}
-            />
-          )
-        )}
-        {onScrollPending && <Loader />}
-      </Styled.PostsList>
-    </Styled.PostsListContainer>
+        <Styled.PostsList>
+          {products.map(
+            ({ postId, author, content, createdAt }: SingleUIPostsResponse) => (
+              <SinglePost
+                key={postId}
+                postId={postId}
+                author={author}
+                content={content}
+                createdAt={createdAt}
+              />
+            )
+          )}
+          {onScrollPending && <Loader />}
+        </Styled.PostsList>
+      </Styled.PostsListContainer>
+    </Styled.Posts>
   );
 };
 

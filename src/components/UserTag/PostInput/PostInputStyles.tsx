@@ -4,6 +4,7 @@ export const PostInput = styled.div.attrs({
   className: "PostInput"
 })`
   width: 100%;
+  margin-top: 30px;
   background: var(--grey-special);
   display: grid;
   padding: 15px;
