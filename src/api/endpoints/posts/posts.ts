@@ -7,8 +7,8 @@ import {
 } from "../common/errorDataUnpacker";
 import * as Types from "./postsTypes";
 
-const getPostsUrl = "/get-posts";
-const addPostUrl = "/add-post";
+const getPostsUrl = "/posts/get-posts";
+const addPostUrl = "/posts/add-post";
 
 export const getPosts = async (
   payload: GetPostsPayload
