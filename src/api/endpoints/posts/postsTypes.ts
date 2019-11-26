@@ -39,3 +39,7 @@ export interface IAddPostServerRequestParams {
   post: string;
   tags: string[];
 }
+
+export interface IAddCommentParams {
+  comment: string;
+}

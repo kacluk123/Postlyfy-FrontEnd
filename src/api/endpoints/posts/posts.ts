@@ -1,6 +1,6 @@
 import { mainApi } from "../../axios-instances";
 import { GetPostsPayload } from "./postsTypes";
-import { postsUnpacker, addPostPacker } from "./postsMapper";
+import { postsUnpacker, addPostPacker, addCommentPacker } from "./postsMapper";
 import {
   serverMessageUnpacker,
   UIServerMessages
@@ -9,6 +9,7 @@ import * as Types from "./postsTypes";
 
 const getPostsUrl = "/posts/get-posts";
 const addPostUrl = "/posts/add-post";
+const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 
 export const getPosts = async (
   payload: GetPostsPayload
@@ -24,6 +25,19 @@ export const getPosts = async (
 export const addPosts = async (payload: Types.IAddPostParams) => {
   try {
     await mainApi.post(addPostUrl, addPostPacker(payload), {
+      withCredentials: true
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addComment = async (
+  payload: Types.IAddCommentParams,
+  postId: string
+) => {
+  try {
+    await mainApi.patch(addCommentUrl(postId), addCommentPacker(payload), {
       withCredentials: true
     });
   } catch (err) {

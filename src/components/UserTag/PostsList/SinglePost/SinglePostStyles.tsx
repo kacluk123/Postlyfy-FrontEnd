@@ -8,11 +8,24 @@ export const HashtagLink = styled(Link).attrs({
   color: #3f51b5;
 `;
 
+export const SinglePostReplyText = styled.div.attrs({
+  className: "SinglePostReplyText"
+})`
+  opacity: 0.6;
+  transition: 0.3s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+`;
+
 export const SinglePost = styled.div.attrs({
   className: "SinglePost"
 })`
   width: 100%;
-  min-height: 100px;
+  min-height: 140px;
   padding: 10px 20px 10px 20px;
   background: #edecea;
   border-radius: 2px;
@@ -22,7 +35,8 @@ export const SinglePost = styled.div.attrs({
   grid-row-gap: 10px;
   grid-template-areas:
     "SinglePostUserAvatar SingleUserName SinglePostDate SinglePostDate"
-    "SinglePostUserAvatar SinglePostContent SinglePostContent SinglePostContent";
+    "SinglePostUserAvatar SinglePostContent SinglePostContent SinglePostContent"
+    "SinglePostUserAvatar SinglePostActions SinglePostActions SinglePostActions";
 `;
 
 export const SinglePostUserAvatar = styled.div.attrs({
@@ -63,4 +77,10 @@ export const SingleUserName = styled.div.attrs({
   color: var(--red-orange);
   font-weight: 400;
   border-bottom: 1px solid var(--tiny-grey);
+`;
+
+export const SinglePostActions = styled.div.attrs({
+  className: "SinglePostActions"
+})`
+  grid-area: SinglePostActions;
 `;

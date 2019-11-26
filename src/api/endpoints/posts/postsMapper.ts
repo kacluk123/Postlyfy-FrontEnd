@@ -25,3 +25,9 @@ export const addPostPacker = (
   post: payload.postContent,
   tags: payload.tags
 });
+
+export const addCommentPacker = (
+  payload: Types.IAddCommentParams
+): Types.IAddCommentServerRequestParams => ({
+  comment: payload.comment
+});
