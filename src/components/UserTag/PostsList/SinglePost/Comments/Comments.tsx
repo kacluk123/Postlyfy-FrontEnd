@@ -4,6 +4,7 @@ import StandardTextArea from "../../../../Common/StandardTextArea";
 import * as Types from "./CommentsTypes";
 import * as API from "../../../../../api/endpoints/posts/posts";
 import useForm from "../../../../../hooks/useForm";
+import ReplyForm from "../../../Common/ReplyForm";
 
 const Comments = ({ isCommentInputShowed, postId }: Types.IComments) => {
   const {
@@ -22,19 +23,23 @@ const Comments = ({ isCommentInputShowed, postId }: Types.IComments) => {
       }
     }
   });
+
   const sendComment = async () => {
+    console.log("elo");
     await API.addComment({ comment: formValues.comment }, postId);
   };
+
   return (
     <Styled.Comments>
       {isCommentInputShowed && (
         <React.Fragment>
-          <StandardTextArea
+          <ReplyForm
             name="comment"
+            handleSubmit={onButtonClick(sendComment)}
+            isButtonDisable={isButtonDisabled}
             value={formValues.comment}
             onChange={handleChangeFormValues}
           />
-          <button onClick={onButtonClick(sendComment)}>Send comment</button>
         </React.Fragment>
       )}
     </Styled.Comments>

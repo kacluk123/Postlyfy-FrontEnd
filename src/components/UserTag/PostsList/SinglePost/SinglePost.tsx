@@ -38,6 +38,7 @@ const SinglePostComponent = ({
   return (
     <React.Fragment>
       <Styled.SinglePost>
+        <Comments isCommentInputShowed={isCommentInputShowed} postId={postId} />
         <Styled.SingleUserName>{author}</Styled.SingleUserName>
         <Styled.SinglePostUserAvatar>
           <Icon.User height="36px" width="36px" />
@@ -56,7 +57,6 @@ const SinglePostComponent = ({
           </Styled.SinglePostReplyText>
         </Styled.SinglePostActions>
       </Styled.SinglePost>
-      <Comments isCommentInputShowed={isCommentInputShowed} postId={postId} />
     </React.Fragment>
   );
 };

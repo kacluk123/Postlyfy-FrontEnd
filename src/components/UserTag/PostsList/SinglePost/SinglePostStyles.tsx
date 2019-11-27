@@ -36,7 +36,8 @@ export const SinglePost = styled.div.attrs({
   grid-template-areas:
     "SinglePostUserAvatar SingleUserName SinglePostDate SinglePostDate"
     "SinglePostUserAvatar SinglePostContent SinglePostContent SinglePostContent"
-    "SinglePostUserAvatar SinglePostActions SinglePostActions SinglePostActions";
+    "SinglePostUserAvatar SinglePostActions SinglePostActions SinglePostActions"
+    "SinglePostUserAvatar Comments Comments Comments";
 `;
 
 export const SinglePostUserAvatar = styled.div.attrs({

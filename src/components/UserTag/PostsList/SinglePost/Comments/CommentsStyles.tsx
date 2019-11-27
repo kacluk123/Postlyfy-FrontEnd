@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const Comments = styled.div.attrs({
   className: "Comments"
-})``;
+})`
+  grid-area: Comments;
+`;
 
 export const CommentsInput = styled.div.attrs({
   className: "CommentsInput"

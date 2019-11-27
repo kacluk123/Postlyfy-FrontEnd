@@ -43,3 +43,11 @@ export interface IAddPostServerRequestParams {
 export interface IAddCommentParams {
   comment: string;
 }
+
+export interface IAddCommentParams {
+  comment: string;
+}
+
+export interface IAddCommentServerRequestParams {
+  comment: string;
+}
