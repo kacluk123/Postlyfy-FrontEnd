@@ -3,5 +3,5 @@ export interface IReplyForm {
   value: string;
   handleSubmit: () => void;
   isButtonDisable: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }

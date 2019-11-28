@@ -5,6 +5,7 @@ import * as Icon from "../../../Common/Icons/Icons";
 import moment from "moment";
 import reactStringReplace from "react-string-replace";
 import Comments from "./Comments";
+import SingleReply from "../../Common/SingleReply";
 
 const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
@@ -29,35 +30,31 @@ const SinglePostComponent = ({
   author,
   postId,
   content,
-  createdAt
+  createdAt,
+  comments
 }: SingleUIPostsResponse) => {
   const [isCommentInputShowed, setVisibilityOfCommentInput] = React.useState<
     boolean
   >(false);
 
   return (
-    <React.Fragment>
-      <Styled.SinglePost>
-        <Comments isCommentInputShowed={isCommentInputShowed} postId={postId} />
-        <Styled.SingleUserName>{author}</Styled.SingleUserName>
-        <Styled.SinglePostUserAvatar>
-          <Icon.User height="36px" width="36px" />
-        </Styled.SinglePostUserAvatar>
-        <Styled.SinglePostDate>
-          {moment(createdAt).format("MMM Do YY")}
-        </Styled.SinglePostDate>
-        <Styled.SinglePostContent>
-          {replaceHashTags(addNewLine(content))}
-        </Styled.SinglePostContent>
-        <Styled.SinglePostActions>
-          <Styled.SinglePostReplyText
-            onClick={() => setVisibilityOfCommentInput(visible => !visible)}
-          >
-            Reply
-          </Styled.SinglePostReplyText>
-        </Styled.SinglePostActions>
-      </Styled.SinglePost>
-    </React.Fragment>
+    <SingleReply
+      author={author}
+      content={replaceHashTags(addNewLine(content))}
+      createdAt={moment(createdAt).format("MMM Do YY")}
+      type="post"
+    >
+      <Comments
+        isCommentInputShowed={isCommentInputShowed}
+        postId={postId}
+        comments={comments}
+      />
+      <Styled.SinglePostReplyText
+        onClick={() => setVisibilityOfCommentInput(visible => !visible)}
+      >
+        Reply
+      </Styled.SinglePostReplyText>
+    </SingleReply>
   );
 };
 

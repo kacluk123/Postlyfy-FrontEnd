@@ -9,6 +9,21 @@ export interface SingleServerPostsResponse {
   createdBy: string;
   postContent: string;
   addedAt: string;
+  comments: SingleServerResponseComment[];
+}
+
+export interface SingleServerResponseComment {
+  addedAt: string;
+  author: string;
+  content: string;
+  _id: string;
+}
+
+export interface UIResponseComment {
+  createdAt: string;
+  author: string;
+  content: string;
+  commentId: string;
 }
 
 export interface SingleUIPostsResponse {
@@ -16,6 +31,7 @@ export interface SingleUIPostsResponse {
   author: string;
   content: string;
   createdAt: string;
+  comments: UIResponseComment[];
 }
 
 export interface ServerPostsResponse {

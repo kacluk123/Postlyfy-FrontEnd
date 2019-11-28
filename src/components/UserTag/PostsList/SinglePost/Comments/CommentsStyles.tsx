@@ -23,3 +23,11 @@ export const CommentsInput = styled.div.attrs({
     }
   }
 `;
+
+export const CommentsList = styled.div.attrs({
+  className: "CommentsList"
+})`
+  display: grid;
+  width: 100%;
+  grid-row-gap: 10px;
+`;

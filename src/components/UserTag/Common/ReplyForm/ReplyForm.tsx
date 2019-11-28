@@ -12,15 +12,14 @@ const ReplyForm = ({
   onChange
 }: Types.IReplyForm) => {
   return (
-    <Styled.ReplyForm
-      onSubmit={event => {
-        event.preventDefault();
-        console.log("elo");
-      }}
-    >
+    <Styled.ReplyForm>
       <Styled.ReplyFormContainer>
         <StandardTextArea name={name} value={value} onChange={onChange} />
-        <ReplyFormActions value={value} isButtonDisabled={isButtonDisable} />
+        <ReplyFormActions
+          value={value}
+          onClick={handleSubmit}
+          isButtonDisabled={isButtonDisable}
+        />
       </Styled.ReplyFormContainer>
     </Styled.ReplyForm>
   );

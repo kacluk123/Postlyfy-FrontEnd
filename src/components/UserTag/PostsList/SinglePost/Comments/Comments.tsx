@@ -5,8 +5,13 @@ import * as Types from "./CommentsTypes";
 import * as API from "../../../../../api/endpoints/posts/posts";
 import useForm from "../../../../../hooks/useForm";
 import ReplyForm from "../../../Common/ReplyForm";
+import SingleReply from "../../../Common/SingleReply";
 
-const Comments = ({ isCommentInputShowed, postId }: Types.IComments) => {
+const Comments = ({
+  isCommentInputShowed,
+  postId,
+  comments
+}: Types.IComments) => {
   const {
     formValues,
     handleChangeFormValues,
@@ -25,7 +30,6 @@ const Comments = ({ isCommentInputShowed, postId }: Types.IComments) => {
   });
 
   const sendComment = async () => {
-    console.log("elo");
     await API.addComment({ comment: formValues.comment }, postId);
   };
 
@@ -42,6 +46,17 @@ const Comments = ({ isCommentInputShowed, postId }: Types.IComments) => {
           />
         </React.Fragment>
       )}
+      <Styled.CommentsList>
+        {comments.map(({ content, createdAt, author, commentId }) => (
+          <SingleReply
+            key={commentId}
+            createdAt={createdAt}
+            author={author}
+            content={content}
+            type="default"
+          />
+        ))}
+      </Styled.CommentsList>
     </Styled.Comments>
   );
 };

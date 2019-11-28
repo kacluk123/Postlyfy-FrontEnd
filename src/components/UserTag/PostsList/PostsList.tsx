@@ -79,13 +79,20 @@ const PostsListComponent = () => {
         <PostInput />
         <Styled.PostsList>
           {products.map(
-            ({ postId, author, content, createdAt }: SingleUIPostsResponse) => (
+            ({
+              postId,
+              author,
+              content,
+              createdAt,
+              comments
+            }: SingleUIPostsResponse) => (
               <SinglePost
                 key={postId}
                 postId={postId}
                 author={author}
                 content={content}
                 createdAt={createdAt}
+                comments={comments}
               />
             )
           )}

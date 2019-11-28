@@ -16,6 +16,7 @@ export const getPosts = async (
 ): Promise<Types.UIPostsResponse | UIServerMessages> => {
   try {
     const { data } = await mainApi.post(getPostsUrl, payload);
+    console.log(data);
     return postsUnpacker(data);
   } catch (err) {
     return serverMessageUnpacker(err.response.data);
@@ -36,6 +37,7 @@ export const addComment = async (
   payload: Types.IAddCommentParams,
   postId: string
 ) => {
+  console.log(payload);
   try {
     await mainApi.patch(addCommentUrl(postId), addCommentPacker(payload), {
       withCredentials: true

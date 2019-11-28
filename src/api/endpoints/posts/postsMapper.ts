@@ -16,7 +16,8 @@ const singlePostUnpacker = (
   postId: post._id,
   author: post.createdBy,
   content: post.postContent,
-  createdAt: post.addedAt
+  createdAt: post.addedAt,
+  comments: post.comments.map(comment => singleCommentUnpacker(comment))
 });
 
 export const addPostPacker = (
@@ -30,4 +31,13 @@ export const addCommentPacker = (
   payload: Types.IAddCommentParams
 ): Types.IAddCommentServerRequestParams => ({
   comment: payload.comment
+});
+
+export const singleCommentUnpacker = (
+  payload: Types.SingleServerResponseComment
+): Types.UIResponseComment => ({
+  commentId: payload._id,
+  content: payload.content,
+  author: payload.author,
+  createdAt: payload.addedAt
 });
