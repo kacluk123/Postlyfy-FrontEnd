@@ -4,6 +4,7 @@ export const Comments = styled.div.attrs({
   className: "Comments"
 })`
   grid-area: Comments;
+  width: 100%;
 `;
 
 export const CommentsInput = styled.div.attrs({
