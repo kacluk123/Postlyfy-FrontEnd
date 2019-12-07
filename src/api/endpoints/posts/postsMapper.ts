@@ -10,7 +10,7 @@ export const postsUnpacker = (
   isError: response.isError
 });
 
-const singlePostUnpacker = (
+export const singlePostUnpacker = (
   post: Types.SingleServerPostsResponse
 ): Types.SingleUIPostsResponse => ({
   postId: post._id,

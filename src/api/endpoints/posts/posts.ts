@@ -1,21 +1,32 @@
 import { mainApi } from "../../axios-instances";
-import { GetPostsPayload } from "./postsTypes";
-import { postsUnpacker, addPostPacker, addCommentPacker } from "./postsMapper";
+import {
+  postsUnpacker,
+  addPostPacker,
+  addCommentPacker,
+  singlePostUnpacker
+} from "./postsMapper";
 import {
   serverMessageUnpacker,
   UIServerMessages
 } from "../common/errorDataUnpacker";
 import * as Types from "./postsTypes";
 
-const getPostsUrl = "/posts/get-posts";
+const getPostsUrl = (tag: string) => `/posts/get-posts/${tag}`;
 const addPostUrl = "/posts/add-post";
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 
 export const getPosts = async (
-  payload: GetPostsPayload
+  url: string,
+  payload: Types.GetPostsPayload
 ): Promise<Types.UIPostsResponse | UIServerMessages> => {
+  console.log(payload);
   try {
-    const { data } = await mainApi.post(getPostsUrl, payload);
+    const { data } = await mainApi.get(`${url}/${payload.tag}`, {
+      params: {
+        limit: payload.limit,
+        offset: payload.offset
+      }
+    });
     console.log(data);
     return postsUnpacker(data);
   } catch (err) {
@@ -23,11 +34,18 @@ export const getPosts = async (
   }
 };
 
-export const addPosts = async (payload: Types.IAddPostParams) => {
+export const addPosts = async (
+  payload: Types.IAddPostParams
+): Promise<Types.SingleUIPostsResponse> => {
   try {
-    await mainApi.post(addPostUrl, addPostPacker(payload), {
-      withCredentials: true
-    });
+    const { data } = await mainApi.post<Types.SingleServerPostsResponse>(
+      addPostUrl,
+      addPostPacker(payload),
+      {
+        withCredentials: true
+      }
+    );
+    return singlePostUnpacker(data);
   } catch (err) {
     console.log(err);
   }

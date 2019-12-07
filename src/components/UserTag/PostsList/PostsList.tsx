@@ -13,63 +13,67 @@ import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
+import useSWR, { mutate } from "swr";
+import { getPosts } from "../../../api/endpoints/posts/posts";
 
 const PostsListComponent = () => {
-  const products = useSelector(getProducts);
+  // const products = useSelector(getProducts);
   const pending = useSelector(getProductsPending);
-  const total = useSelector(getTotalPosts);
-  const dispatch = useDispatch();
+  // const total = useSelector(getTotalPosts);
+  // const dispatch = useDispatch();
   const isMaxScroll = useWindowScroll();
   const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
   const { tag } = useParams();
-  console.log(tag);
-  React.useEffect(() => {
-    if (tag) {
-      dispatch(
-        fetchPostsTHUNK({
-          offset: 0,
-          limit: 20,
-          initial: true,
-          tag
-        })
-      );
-    }
-  }, []);
+  const params = React.useMemo(() => ({ tag, limit: 10, offset: 0 }), [tag]);
+  const { data, error } = useSWR(["/posts/get-posts", params], getPosts);
+  console.log(data);
+  // React.useEffect(() => {
+  //   if (tag) {
+  //     dispatch(
+  //       fetchPostsTHUNK({
+  //         offset: 0,
+  //         limit: 20,
+  //         initial: true,
+  //         tag
+  //       })
+  //     );
+  //   }
+  // }, []);
+
+  // React.useEffect(() => {
+  //   if (tag) {
+  //     dispatch(
+  //       fetchPostsTHUNK({
+  //         offset: 0,
+  //         limit: 20,
+  //         initial: true,
+  //         tag
+  //       })
+  //     );
+  //   }
+  // }, [tag]);
 
   React.useEffect(() => {
-    if (tag) {
-      dispatch(
-        fetchPostsTHUNK({
-          offset: 0,
-          limit: 20,
-          initial: true,
-          tag
-        })
-      );
-    }
-  }, [tag]);
-
-  React.useEffect(() => {
-    if (isMaxScroll && products.length !== total) {
+    if (isMaxScroll && data.postsList.length !== data.totalNumberOfPosts) {
       setOnScrollPending(true);
+      console.log("dadas");
       try {
-        if (tag) {
-          dispatch(
-            fetchPostsTHUNK({
-              limit: 20,
-              offset: products.length,
-              initial: false,
-              tag
-            })
-          );
-        }
+        async () => {
+          console.log("eee");
+          const posts = await getPosts("/posts/get-posts", params);
+
+          mutate("/api/user", {
+            ...data,
+            postsList: [data.postsList, posts.postsList]
+          });
+        };
       } finally {
         setOnScrollPending(false);
       }
     }
   }, [isMaxScroll]);
 
-  if (pending) {
+  if (!data) {
     return <Loader />;
   }
 
@@ -78,7 +82,7 @@ const PostsListComponent = () => {
       <Styled.PostsListContainer>
         <PostInput />
         <Styled.PostsList>
-          {products.map(
+          {data.postsList.map(
             ({
               postId,
               author,
