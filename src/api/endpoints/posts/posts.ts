@@ -19,7 +19,6 @@ export const getPosts = async (
   url: string,
   payload: Types.GetPostsPayload
 ): Promise<Types.UIPostsResponse | UIServerMessages> => {
-  console.log(payload);
   try {
     const { data } = await mainApi.get(`${url}/${payload.tag}`, {
       params: {
@@ -27,7 +26,7 @@ export const getPosts = async (
         offset: payload.offset
       }
     });
-    console.log(data);
+
     return postsUnpacker(data);
   } catch (err) {
     return serverMessageUnpacker(err.response.data);

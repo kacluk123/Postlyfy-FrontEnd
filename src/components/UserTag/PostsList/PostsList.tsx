@@ -13,98 +13,94 @@ import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
-import useSWR, { mutate } from "swr";
+import useSWR, { useSWRPages } from "swr";
 import { getPosts } from "../../../api/endpoints/posts/posts";
+import useOnScreen from "../../../hooks/useOnScreen";
 
 const PostsListComponent = () => {
   // const products = useSelector(getProducts);
-  const pending = useSelector(getProductsPending);
+  // const pending = useSelector(getProductsPending);
   // const total = useSelector(getTotalPosts);
   // const dispatch = useDispatch();
-  const isMaxScroll = useWindowScroll();
-  const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
+  // const isMaxScroll = useWindowScroll();
+  // const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
+  // const params = React.useMemo(() => ({ tag, limit: 10, offset: 0 }), []);
+  // const { data, error } = useSWR(["/posts/get-posts", params], getPosts);
   const { tag } = useParams();
-  const params = React.useMemo(() => ({ tag, limit: 10, offset: 0 }), [tag]);
-  const { data, error } = useSWR(["/posts/get-posts", params], getPosts);
-  console.log(data);
-  // React.useEffect(() => {
-  //   if (tag) {
-  //     dispatch(
-  //       fetchPostsTHUNK({
-  //         offset: 0,
-  //         limit: 20,
-  //         initial: true,
-  //         tag
-  //       })
-  //     );
-  //   }
-  // }, []);
+  let total = 0;
+  
+  const { pages, isLoadingMore, loadMore } = useSWRPages(
+    "get-posts",
+    ({ offset, withSWR }) => {
+      const params = React.useMemo(
+        () => ({
+          limit: 10,
+          tag,
+          offset: offset || 0
+        }),
+        [tag, offset]
+      );
 
-  // React.useEffect(() => {
-  //   if (tag) {
-  //     dispatch(
-  //       fetchPostsTHUNK({
-  //         offset: 0,
-  //         limit: 20,
-  //         initial: true,
-  //         tag
-  //       })
-  //     );
-  //   }
-  // }, [tag]);
+      const { data } = withSWR(useSWR(["/posts/get-posts", params], getPosts));
+      console.log(data);
+      if (!data) return null;
+
+      const { postsList } = data;
+      total = data.total
+      return postsList.map(
+        ({
+          postId,
+          author,
+          content,
+          createdAt,
+          comments
+        }: SingleUIPostsResponse) => (
+          <SinglePost
+            key={postId}
+            postId={postId}
+            author={author}
+            content={content}
+            createdAt={createdAt}
+            comments={comments}
+          />
+        )
+      );
+    }, ({ data }) => {
+
+      return data.offset >= data.totalNumberOfPosts ? null : data.offset + data.limit;
+    },
+    [tag]
+  );
+  console.log(pages);
+  const $loadMoreButton = React.useRef(null);
+  const isOnScreen = useOnScreen($loadMoreButton, "200px");
 
   React.useEffect(() => {
-    if (isMaxScroll && data.postsList.length !== data.totalNumberOfPosts) {
-      setOnScrollPending(true);
-      console.log("dadas");
-      try {
-        async () => {
-          console.log("eee");
-          const posts = await getPosts("/posts/get-posts", params);
-
-          mutate("/api/user", {
-            ...data,
-            postsList: [data.postsList, posts.postsList]
-          });
-        };
-      } finally {
-        setOnScrollPending(false);
-      }
+    if (isOnScreen) {
+      loadMore();
     }
-  }, [isMaxScroll]);
-
-  if (!data) {
-    return <Loader />;
-  }
+  }, [isOnScreen]);
 
   return (
     <Styled.Posts>
       <Styled.PostsListContainer>
-        <PostInput />
+        <PostInput 
+
+        />
         <Styled.PostsList>
-          {data.postsList.map(
-            ({
-              postId,
-              author,
-              content,
-              createdAt,
-              comments
-            }: SingleUIPostsResponse) => (
-              <SinglePost
-                key={postId}
-                postId={postId}
-                author={author}
-                content={content}
-                createdAt={createdAt}
-                comments={comments}
-              />
-            )
-          )}
-          {onScrollPending && <Loader />}
+          {pages}
+          {/* {onScrollPending && <Loader />} */}
+          <button
+            ref={$loadMoreButton}
+            disabled={isLoadingMore}
+            onClick={loadMore}
+          >
+            Load More Pokémon
+          </button>
         </Styled.PostsList>
       </Styled.PostsListContainer>
     </Styled.Posts>
   );
 };
 
-export default PostsListComponent;
+export default React.memo(PostsListComponent);

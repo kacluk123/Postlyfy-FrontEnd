@@ -38,12 +38,16 @@ export interface ServerPostsResponse {
   isError: boolean;
   posts: SingleServerPostsResponse[];
   total: number;
+  offset: string;
+  limit: string;
 }
 
 export interface UIPostsResponse {
   isError: boolean;
   postsList: SingleUIPostsResponse[];
   totalNumberOfPosts: number;
+  offset: string;
+  limit: string;
 }
 
 export interface IAddPostParams {

@@ -7,6 +7,8 @@ export const postsUnpacker = (
     singlePostUnpacker(post)
   ),
   totalNumberOfPosts: response.total,
+  offset: response.offset,
+  limit: response.limit,
   isError: response.isError
 });
 

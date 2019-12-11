@@ -5,6 +5,7 @@ import * as API from "../../../api/endpoints/posts/posts";
 import useForm from "../../../hooks/useForm";
 import StandardTextArea from "../../Common/StandardTextArea";
 import PostInputActions from "./PostInputActions";
+import { mutate } from 'swr'
 
 const hashTagsDirty = (value: string): RegExpMatchArray | [] => {
   const hashtagRegexp = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
@@ -38,10 +39,14 @@ const PostInput = ({  }: Types.PostInput) => {
   });
 
   const addPost = async () => {
-    await API.addPosts({
+    const post = await API.addPosts({
       postContent: formValues.postInput,
       tags: getHashTags(formValues.postInput)
     });
+
+    mutate("get-posts", {
+      ads: 'dadas'
+    })
   };
 
   return (
