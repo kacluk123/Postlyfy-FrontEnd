@@ -1,11 +1,20 @@
 import { applyMiddleware, createStore, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { postsReducer } from "../redux/reducers/postReducer";
+import { userReducer } from "../redux/reducers/userReducer";
 
 const middlewares = [thunk];
 
-const rootReducer = postsReducer;
+const rootReducer = combineReducers({
+  userReducer,
+  postsReducer,
+});
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
-export type AppState = ReturnType<typeof rootReducer>;
+export interface IRootReducer {
+  userReducer: ReturnType<typeof userReducer>;
+  postsReducer: ReturnType<typeof postsReducer>;
+}
+
+export type AppState = IRootReducer;

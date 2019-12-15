@@ -42,7 +42,7 @@ export function postsReducer(
     case POSTS_ACTIONS_NAMES.ADD_NEW_POST: {
       return {
         ...state,
-        posts: [...state.posts, action.post]
+        posts: [action.post, ...state.posts]
       };
     }
 

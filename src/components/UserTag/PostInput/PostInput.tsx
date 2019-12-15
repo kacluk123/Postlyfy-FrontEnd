@@ -5,7 +5,8 @@ import * as API from "../../../api/endpoints/posts/posts";
 import useForm from "../../../hooks/useForm";
 import StandardTextArea from "../../Common/StandardTextArea";
 import PostInputActions from "./PostInputActions";
-import { mutate } from 'swr'
+import { useSelector, useDispatch } from "react-redux";
+import { addNewPost } from '../../../redux/actions/postActions';
 
 const hashTagsDirty = (value: string): RegExpMatchArray | [] => {
   const hashtagRegexp = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
@@ -20,7 +21,8 @@ const deleteWhiteSpace = (arrayToRemoveWhiteSpaces: string[]): string[] =>
 const getHashTags = (post: string): string[] =>
   deleteWhiteSpace(hashTagsDirty(post));
 
-const PostInput = ({  }: Types.PostInput) => {
+const PostInput = ({ tag }: Types.PostInput) => {
+  const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
   const {
     formValues,
     handleChangeFormValues,
@@ -28,7 +30,9 @@ const PostInput = ({  }: Types.PostInput) => {
     isButtonDisabled
   } = useForm({
     initialValues: {
-      postInput: ""
+      postInput: `
+#${tag}
+      `
     },
     validationRules: {
       postInput: {
@@ -36,7 +40,15 @@ const PostInput = ({  }: Types.PostInput) => {
         minLength: 6
       }
     }
-  });
+  }, [tag]);
+  
+  console.log(textAreaRef);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    textAreaRef.current?.focus();
+  }, [tag]);
 
   const addPost = async () => {
     const post = await API.addPosts({
@@ -44,9 +56,7 @@ const PostInput = ({  }: Types.PostInput) => {
       tags: getHashTags(formValues.postInput)
     });
 
-    mutate("get-posts", {
-      ads: 'dadas'
-    })
+    dispatch(addNewPost(post));
   };
 
   return (
@@ -55,6 +65,7 @@ const PostInput = ({  }: Types.PostInput) => {
         name="postInput"
         value={formValues.postInput}
         onChange={handleChangeFormValues}
+        textAreaRef={textAreaRef}
       />
       <PostInputActions
         postInputValue={formValues.postInput}

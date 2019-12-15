@@ -4,6 +4,7 @@ import StandardInput from "../Common/StandardInput/StandardInput";
 import Button from "../Common/Button";
 import useForm from "../../hooks/useForm";
 import * as API from "../../api/endpoints/auth/login/login";
+import { getUser } from "../../api/endpoints/user/user";
 
 const Login = () => {
   const {
@@ -27,10 +28,13 @@ const Login = () => {
         minLength: 6
       }
     }
-  });
+  }, []);
 
   const handleButtonClick = async () => {
     await API.login(formValues);
+    const currentUser = await getUser();
+
+    console.log(currentUser)
   };
 
   return (

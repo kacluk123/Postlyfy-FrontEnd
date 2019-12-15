@@ -1,1 +1,3 @@
-export interface PostInput {}
+export interface PostInput {
+  tag: string;
+}

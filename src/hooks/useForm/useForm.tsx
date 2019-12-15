@@ -6,7 +6,8 @@ enum FORM_ACTIONS {
   CHANGE_FORM_VALUE = "CHANGE_FORM_VALUE",
   VALIDATE_ALL_INPUTS = "VALIDATE_ALL_INPUTS",
   DISABLE_BUTTON = "DISABLE_BUTTON",
-  ENABLE_BUTTON = "ENABLE_BUTTON"
+  ENABLE_BUTTON = "ENABLE_BUTTON",
+  RESET_FORM = "RESET_FORM"
 }
 
 export interface IFormBaseAction {
@@ -33,11 +34,17 @@ interface IEnableButton extends IFormBaseAction {
   type: FORM_ACTIONS.ENABLE_BUTTON;
 }
 
+interface IResetForm<T> extends IFormBaseAction {
+  type: FORM_ACTIONS.RESET_FORM;
+  state: IFormState<T>;
+}
+
 type IFormActions<T> =
   | IChangeFormValue
   | IValidateAllInputs<T>
   | IDisableButton
-  | IEnableButton;
+  | IEnableButton
+  | IResetForm<T>;
 
 interface IFormState<T> {
   formValues: T;
@@ -84,26 +91,32 @@ const formReducer = <T extends {}>() => (
         isButtonDisabled: false
       };
     }
+    case FORM_ACTIONS.RESET_FORM: {
+      return {
+        ...action.state
+      };
+    }
     default:
       return state;
   }
 };
 
-const useForm = <T extends {}>(form: Types.UseFormParams<T>) => {
+const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitialValues: any[]) => {
   const firstUpdate = React.useRef(true);
 
-  const initialState = React.useMemo(
-    () => ({
-      formValues: {
-        ...form.initialValues
-      },
-      errorValues: {
-        ...form.initialValues
-      },
-      isButtonDisabled: false
-    }),
-    []
-  );
+  const initialState = {
+    formValues: {
+      ...form.initialValues
+    },
+    errorValues: {
+      ...form.initialValues
+    },
+    isButtonDisabled: false
+  };
+
+  React.useEffect(() => {
+    dispatch({ type: FORM_ACTIONS.RESET_FORM, state: initialState});
+  }, forceToResetInitialValues);
 
   const [state, dispatch] = React.useReducer(formReducer<T>(), initialState);
 

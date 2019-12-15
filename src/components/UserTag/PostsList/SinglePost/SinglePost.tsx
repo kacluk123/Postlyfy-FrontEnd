@@ -9,7 +9,6 @@ import SingleReply from "../../Common/SingleReply";
 
 const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
-    console.log(match);
     return (
       <span>
         {" "}

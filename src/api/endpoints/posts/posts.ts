@@ -16,11 +16,10 @@ const addPostUrl = "/posts/add-post";
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 
 export const getPosts = async (
-  url: string,
   payload: Types.GetPostsPayload
 ): Promise<Types.UIPostsResponse | UIServerMessages> => {
   try {
-    const { data } = await mainApi.get(`${url}/${payload.tag}`, {
+    const { data } = await mainApi.get(getPostsUrl(payload.tag), {
       params: {
         limit: payload.limit,
         offset: payload.offset

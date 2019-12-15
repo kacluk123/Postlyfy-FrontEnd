@@ -13,94 +13,93 @@ import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
-import useSWR, { useSWRPages } from "swr";
-import { getPosts } from "../../../api/endpoints/posts/posts";
-import useOnScreen from "../../../hooks/useOnScreen";
 
 const PostsListComponent = () => {
-  // const products = useSelector(getProducts);
-  // const pending = useSelector(getProductsPending);
-  // const total = useSelector(getTotalPosts);
-  // const dispatch = useDispatch();
-  // const isMaxScroll = useWindowScroll();
-  // const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
-  // const params = React.useMemo(() => ({ tag, limit: 10, offset: 0 }), []);
-  // const { data, error } = useSWR(["/posts/get-posts", params], getPosts);
+  const posts = useSelector(getProducts);
+  const pending = useSelector(getProductsPending);
+  const total = useSelector(getTotalPosts);
+  const dispatch = useDispatch();
+  const isMaxScroll = useWindowScroll();
+  const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
   const { tag } = useParams();
-  let total = 0;
-  
-  const { pages, isLoadingMore, loadMore } = useSWRPages(
-    "get-posts",
-    ({ offset, withSWR }) => {
-      const params = React.useMemo(
-        () => ({
+  React.useEffect(() => {
+    if (tag) {
+      dispatch(
+        fetchPostsTHUNK({
+          offset: 0,
           limit: 10,
-          tag,
-          offset: offset || 0
-        }),
-        [tag, offset]
+          initial: true,
+          tag
+        })
       );
-
-      const { data } = withSWR(useSWR(["/posts/get-posts", params], getPosts));
-      console.log(data);
-      if (!data) return null;
-
-      const { postsList } = data;
-      total = data.total
-      return postsList.map(
-        ({
-          postId,
-          author,
-          content,
-          createdAt,
-          comments
-        }: SingleUIPostsResponse) => (
-          <SinglePost
-            key={postId}
-            postId={postId}
-            author={author}
-            content={content}
-            createdAt={createdAt}
-            comments={comments}
-          />
-        )
-      );
-    }, ({ data }) => {
-
-      return data.offset >= data.totalNumberOfPosts ? null : data.offset + data.limit;
-    },
-    [tag]
-  );
-  console.log(pages);
-  const $loadMoreButton = React.useRef(null);
-  const isOnScreen = useOnScreen($loadMoreButton, "200px");
+    }
+  }, []);
 
   React.useEffect(() => {
-    if (isOnScreen) {
-      loadMore();
+    if (tag) {
+      dispatch(
+        fetchPostsTHUNK({
+          offset: 0,
+          limit: 10,
+          initial: true,
+          tag
+        })
+      );
     }
-  }, [isOnScreen]);
+  }, [tag]);
+
+  React.useEffect(() => {
+    if (isMaxScroll && posts.length !== total) {
+      setOnScrollPending(true);
+      try {
+        if (tag) {
+          dispatch(
+            fetchPostsTHUNK({
+              limit: 10,
+              offset: posts.length,
+              initial: false,
+              tag
+            })
+          );
+        }
+      } finally {
+        setOnScrollPending(false);
+      }
+    }
+  }, [isMaxScroll]);
+
+  if (pending) {
+    return <Loader />;
+  }
 
   return (
     <Styled.Posts>
       <Styled.PostsListContainer>
-        <PostInput 
-
-        />
+        <PostInput tag={tag} />
         <Styled.PostsList>
-          {pages}
-          {/* {onScrollPending && <Loader />} */}
-          <button
-            ref={$loadMoreButton}
-            disabled={isLoadingMore}
-            onClick={loadMore}
-          >
-            Load More Pokémon
-          </button>
+          {posts.map(
+            ({
+              postId,
+              author,
+              content,
+              createdAt,
+              comments
+            }: SingleUIPostsResponse) => (
+              <SinglePost
+                key={postId}
+                postId={postId}
+                author={author}
+                content={content}
+                createdAt={createdAt}
+                comments={comments}
+              />
+            )
+          )}
+          {onScrollPending && <Loader />}
         </Styled.PostsList>
       </Styled.PostsListContainer>
     </Styled.Posts>
   );
 };
 
-export default React.memo(PostsListComponent);
+export default PostsListComponent;
