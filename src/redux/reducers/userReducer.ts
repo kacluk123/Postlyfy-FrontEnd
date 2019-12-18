@@ -1,6 +1,7 @@
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 import { IUIResponseUser } from "../../api/endpoints/user/userTypes";
 import { UserActions, USER_ACTIONS_NAMES } from '../actions/userActions';
+import { AppState } from '../store';
 
 interface InitialStateType {
   readonly pending: boolean;
@@ -12,7 +13,7 @@ const initialState = {
   pending: false,
   userData: null,
   errors: [],
-}
+};
 
 export function userReducer(
   state: InitialStateType = initialState,
@@ -45,3 +46,5 @@ export function userReducer(
     }
   }
 }
+
+export const getUser = (state: AppState) => state.userReducer.userData;

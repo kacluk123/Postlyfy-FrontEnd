@@ -7,6 +7,7 @@ import StandardTextArea from "../../Common/StandardTextArea";
 import PostInputActions from "./PostInputActions";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewPost } from '../../../redux/actions/postActions';
+import { getUser } from '../../../redux/reducers/userReducer';
 
 const hashTagsDirty = (value: string): RegExpMatchArray | [] => {
   const hashtagRegexp = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
@@ -22,6 +23,8 @@ const getHashTags = (post: string): string[] =>
   deleteWhiteSpace(hashTagsDirty(post));
 
 const PostInput = ({ tag }: Types.PostInput) => {
+  const user = useSelector(getUser);
+  const dispatch = useDispatch();
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
   const {
     formValues,
@@ -41,10 +44,6 @@ const PostInput = ({ tag }: Types.PostInput) => {
       }
     }
   }, [tag]);
-  
-  console.log(textAreaRef);
-
-  const dispatch = useDispatch();
 
   React.useEffect(() => {
     textAreaRef.current?.focus();
@@ -55,6 +54,8 @@ const PostInput = ({ tag }: Types.PostInput) => {
       postContent: formValues.postInput,
       tags: getHashTags(formValues.postInput)
     });
+
+    post.author = user?.user.name;
 
     dispatch(addNewPost(post));
   };

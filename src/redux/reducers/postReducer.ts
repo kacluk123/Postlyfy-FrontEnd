@@ -1,6 +1,7 @@
 import { POSTS_ACTIONS_NAMES, PostsActions } from "../actions/postActions";
 import { SingleUIPostsResponse } from "../../api/endpoints/posts/postsTypes";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
+import { AppState } from '../store';
 
 interface InitialStateType {
   readonly pending: boolean;
@@ -60,7 +61,7 @@ export function postsReducer(
   }
 }
 
-export const getProducts = (state: InitialStateType) => state.posts;
-export const getTotalPosts = (state: InitialStateType) => state.total;
-export const getProductsPending = (state: InitialStateType) => state.pending;
-export const getProductsError = (state: InitialStateType) => state.errors;
+export const getProducts = (state: AppState) => state.postsReducer.posts;
+export const getTotalPosts = (state: AppState) => state.postsReducer.total;
+export const getProductsPending = (state: AppState) => state.postsReducer.pending;
+export const getProductsError = (state: AppState) => state.postsReducer.errors;

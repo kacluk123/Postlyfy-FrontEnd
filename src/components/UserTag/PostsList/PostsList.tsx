@@ -4,6 +4,7 @@ import {
   getProductsPending,
   getTotalPosts
 } from "../../../redux/reducers/postReducer";
+import { AppState } from '../../../redux/store'
 import Loader from "../../Common/Loader";
 import fetchPostsTHUNK from "../../../redux/async/fetchPosts";
 import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
@@ -67,7 +68,7 @@ const PostsListComponent = () => {
       }
     }
   }, [isMaxScroll]);
-
+  
   if (pending) {
     return <Loader />;
   }

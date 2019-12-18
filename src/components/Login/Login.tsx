@@ -5,8 +5,10 @@ import Button from "../Common/Button";
 import useForm from "../../hooks/useForm";
 import * as API from "../../api/endpoints/auth/login/login";
 import { getUser } from "../../api/endpoints/user/user";
-
+import { useDispatch } from "react-redux";
+import { fetchUser } from '../../redux/async/fetchUser'
 const Login = () => {
+  const dispatch = useDispatch();
   const {
     formValues,
     handleChangeFormValues,
@@ -32,9 +34,8 @@ const Login = () => {
 
   const handleButtonClick = async () => {
     await API.login(formValues);
-    const currentUser = await getUser();
 
-    console.log(currentUser)
+    dispatch(fetchUser());
   };
 
   return (

@@ -33,7 +33,7 @@ export type UserActions =
 export function getUser(payload: IUIResponseUser) {
   return {
     type: USER_ACTIONS_NAMES.GET_USER_DATA,
-    payload
+    user: payload
   };
 }
 

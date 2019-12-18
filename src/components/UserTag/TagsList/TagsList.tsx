@@ -25,7 +25,7 @@ const TagsList = () => {
   }, []);
 
   if (isLoading) {
-    <Loader />;
+    return <Loader />;
   }
 
   return (

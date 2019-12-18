@@ -21,5 +21,3 @@ export const fetchUser = (): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
     }
   };
 };
-
-export default fetchPosts;

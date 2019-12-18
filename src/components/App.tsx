@@ -6,14 +6,23 @@ import Login from "./Login";
 import Register from "./Register";
 import Navbar from "./Navbar";
 import PostsList from "./UserTag/PostsList";
+import { useDispatch } from 'react-redux';
+import { fetchUser } from '../redux/async/fetchUser'
+
 const App = () => {
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+ 
   return (
     <Styled.App>
       <Navbar />
       <Styled.AppContent>
         <Switch>
           <Route
-            exact
+            exact 
             path="/posts"
             component={() => <Redirect to="/taglist" />}
           />
