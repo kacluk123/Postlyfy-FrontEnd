@@ -40,6 +40,14 @@ export const singleCommentUnpacker = (
 ): Types.UIResponseComment => ({
   commentId: payload._id,
   content: payload.content,
+  postId: payload.postId,
   author: payload.author,
   createdAt: payload.addedAt
+});
+
+export const singleCommentUnpackerPatch = (
+  payload: Types.SingleServerResponseCommentPatch
+): Types.UIResponseCommentPatch => ({
+  isError: payload.isError,
+  comment: singleCommentUnpacker(payload.comment)
 });

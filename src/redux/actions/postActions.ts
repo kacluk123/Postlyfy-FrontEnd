@@ -1,6 +1,7 @@
 import {
   UIPostsResponse,
-  SingleUIPostsResponse
+  SingleUIPostsResponse,
+  UIResponseCommentPatch,
 } from "../../api/endpoints/posts/postsTypes";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 
@@ -8,7 +9,8 @@ export enum POSTS_ACTIONS_NAMES {
   FETCH_POSTS_PENDING = "FETCH_PRODUCTS_PENDING",
   FETCH_POSTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS",
   FETCH_POSTS_ERROR = "FETCH_PRODUCTS_ERROR",
-  ADD_NEW_POST = "ADD_NEW_POST"
+  ADD_NEW_POST = "ADD_NEW_POST",
+  ADD_COMMENT_TO_POST = "ADD_COMMENT_TO_POST"
 }
 
 export interface IPostsBaseAction {
@@ -35,11 +37,17 @@ export interface IaddNewPost extends IPostsBaseAction {
   type: POSTS_ACTIONS_NAMES.ADD_NEW_POST;
 }
 
+export interface IaddNewComment extends IPostsBaseAction {
+  comment: UIResponseCommentPatch;
+  type: POSTS_ACTIONS_NAMES.ADD_COMMENT_TO_POST;
+}
+
 export type PostsActions =
   | IfetchPostsPending
   | IfetchProductsSuccess
   | IaddNewPost
-  | IfetchProductsError;
+  | IfetchProductsError
+  | IaddNewComment;
 
 export function fetchProductsSuccess(
   posts: UIPostsResponse,
@@ -71,5 +79,12 @@ export function addNewPost(post: SingleUIPostsResponse): IaddNewPost {
   return {
     type: POSTS_ACTIONS_NAMES.ADD_NEW_POST,
     post
+  };
+}
+
+export function addNewComment(comment: UIResponseCommentPatch): IaddNewComment {
+  return {
+    type: POSTS_ACTIONS_NAMES.ADD_COMMENT_TO_POST,
+    comment
   };
 }

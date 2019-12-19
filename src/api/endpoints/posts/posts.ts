@@ -3,7 +3,9 @@ import {
   postsUnpacker,
   addPostPacker,
   addCommentPacker,
-  singlePostUnpacker
+  singlePostUnpacker,
+  singleCommentUnpacker,
+  singleCommentUnpackerPatch
 } from "./postsMapper";
 import {
   serverMessageUnpacker,
@@ -53,11 +55,12 @@ export const addComment = async (
   payload: Types.IAddCommentParams,
   postId: string
 ) => {
-  console.log(payload);
   try {
-    await mainApi.patch(addCommentUrl(postId), addCommentPacker(payload), {
+    const { data } = await mainApi.patch<Types.SingleServerResponseCommentPatch>(
+    addCommentUrl(postId), addCommentPacker(payload), {
       withCredentials: true
     });
+    return singleCommentUnpackerPatch(data);
   } catch (err) {
     console.log(err);
   }

@@ -14,16 +14,27 @@ export interface SingleServerPostsResponse {
 
 export interface SingleServerResponseComment {
   addedAt: string;
+  postId: string;
   author: string;
   content: string;
   _id: string;
 }
 
+export interface SingleServerResponseCommentPatch {
+  isError: boolean;
+  comment: SingleServerResponseComment;
+}
 export interface UIResponseComment {
   createdAt: string;
   author: string;
   content: string;
+  postId: string;
   commentId: string;
+}
+
+export interface UIResponseCommentPatch {
+  isError: boolean;
+  comment: UIResponseComment;
 }
 
 export interface SingleUIPostsResponse {

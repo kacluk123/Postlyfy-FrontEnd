@@ -47,6 +47,24 @@ export function postsReducer(
       };
     }
 
+    case POSTS_ACTIONS_NAMES.ADD_COMMENT_TO_POST: {
+      return {
+        ...state,
+        posts: state.posts.map((post: SingleUIPostsResponse) => {
+          if (post.postId !== action.comment.comment.postId) {
+            return post;
+          }
+
+          const { comments, ...otherProp } = post;
+
+          return {
+            ...otherProp,
+            comments: [action.comment.comment, ...comments]
+          };
+        })
+      };
+    }
+
     case POSTS_ACTIONS_NAMES.FETCH_POSTS_ERROR: {
       return {
         ...state,

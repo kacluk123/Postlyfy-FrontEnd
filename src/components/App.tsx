@@ -15,7 +15,7 @@ const App = () => {
   React.useEffect(() => {
     dispatch(fetchUser());
   }, []);
- 
+
   return (
     <Styled.App>
       <Navbar />

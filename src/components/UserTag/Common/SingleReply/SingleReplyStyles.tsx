@@ -29,7 +29,7 @@ export const SingleReply = styled.div.attrs({
   background: #edecea;
   border-radius: 2px;
   display: grid;
-  grid-template-columns: 10% 10% 10% 1fr;
+  grid-template-columns: 10% max-content 10% 1fr;
   grid-template-rows: max-content;
   grid-row-gap: 10px;
   ${(props: { type: string }) => getGridAreas(props.type)}
@@ -55,7 +55,7 @@ export const SingleReplyDate = styled.div.attrs({
   font-size: 12px;
   font-weight: 400;
   color: var(--medium-grey);
-  padding-top: 3px;
+  padding: 3px 0 0 10px;
   border-bottom: 1px solid var(--tiny-grey);
 `;
 

@@ -6,12 +6,15 @@ import * as API from "../../../../../api/endpoints/posts/posts";
 import useForm from "../../../../../hooks/useForm";
 import ReplyForm from "../../../Common/ReplyForm";
 import SingleReply from "../../../Common/SingleReply";
-
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { addNewComment } from '../../../../../redux/actions/postActions';
 const Comments = ({
   isCommentInputShowed,
   postId,
   comments
 }: Types.IComments) => {
+  const dispatch = useDispatch();
   const {
     formValues,
     handleChangeFormValues,
@@ -27,10 +30,14 @@ const Comments = ({
         minLength: 6
       }
     }
-  });
+  }, []);
 
   const sendComment = async () => {
-    await API.addComment({ comment: formValues.comment }, postId);
+    const comment = await API.addComment({ comment: formValues.comment }, postId);
+    console.log(comment)
+    if (comment) {
+      dispatch(addNewComment(comment));
+    }
   };
 
   return (
@@ -50,7 +57,7 @@ const Comments = ({
         {comments.map(({ content, createdAt, author, commentId }) => (
           <SingleReply
             key={commentId}
-            createdAt={createdAt}
+            createdAt={moment(createdAt).format("MMM DD YY")}
             author={author}
             content={content}
             type="default"
