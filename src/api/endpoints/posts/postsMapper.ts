@@ -51,3 +51,9 @@ export const singleCommentUnpackerPatch = (
   isError: payload.isError,
   comment: singleCommentUnpacker(payload.comment)
 });
+
+export const commentsUnpacker = (payload: Types.IServerGetComments): Types.IUIGetComments => ({
+  isError: payload.isError,
+  comments: payload.comments.map((comment: Types.SingleServerResponseComment) => singleCommentUnpacker(comment)),
+  postId: payload.postId
+});

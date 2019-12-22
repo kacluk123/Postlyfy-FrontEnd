@@ -1,5 +1,5 @@
 import { POSTS_ACTIONS_NAMES, PostsActions } from "../actions/postActions";
-import { SingleUIPostsResponse } from "../../api/endpoints/posts/postsTypes";
+import { SingleUIPostsResponse, UIResponseComment } from "../../api/endpoints/posts/postsTypes";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 import { AppState } from '../store';
 
@@ -15,6 +15,28 @@ export const initialState = {
   posts: [],
   errors: [],
   total: 0
+};
+
+const appendCommentList = ({
+  posts,
+  postId,
+  element,
+}: {
+  posts: SingleUIPostsResponse[],
+  postId: string,
+  element: UIResponseComment | UIResponseComment[]
+}) => {
+  return posts.map((post: SingleUIPostsResponse) => {
+    if (post.postId !== postId) {
+      return post;
+    }
+    const { comments, ...otherProp } = post;
+
+    return {
+      ...otherProp,
+      comments:  Array.isArray(element) ? [...comments, ...element] : [element, ...comments]
+    };
+  });
 };
 
 export function postsReducer(
@@ -50,17 +72,21 @@ export function postsReducer(
     case POSTS_ACTIONS_NAMES.ADD_COMMENT_TO_POST: {
       return {
         ...state,
-        posts: state.posts.map((post: SingleUIPostsResponse) => {
-          if (post.postId !== action.comment.comment.postId) {
-            return post;
-          }
+        posts: appendCommentList({
+          element: action.comment.comment,
+          postId: action.comment.comment.postId,
+          posts: state.posts
+        })
+      };
+    }
 
-          const { comments, ...otherProp } = post;
-
-          return {
-            ...otherProp,
-            comments: [action.comment.comment, ...comments]
-          };
+    case POSTS_ACTIONS_NAMES.LOAD_MORE_COMMENTS: {
+      return {
+        ...state,
+        posts: appendCommentList({
+          element: action.payload.comments,
+          postId: action.payload.postId,
+          posts: state.posts
         })
       };
     }

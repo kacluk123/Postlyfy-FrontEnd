@@ -82,3 +82,15 @@ export interface IAddCommentParams {
 export interface IAddCommentServerRequestParams {
   comment: string;
 }
+
+export interface IServerGetComments {
+  isError: boolean;
+  comments: SingleServerResponseComment[];
+  postId: string;
+}
+
+export interface IUIGetComments {
+  isError: boolean;
+  comments: UIResponseComment[];
+  postId: string;
+}

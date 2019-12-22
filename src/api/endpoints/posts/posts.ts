@@ -4,6 +4,7 @@ import {
   addPostPacker,
   addCommentPacker,
   singlePostUnpacker,
+  commentsUnpacker,
   singleCommentUnpacker,
   singleCommentUnpackerPatch
 } from "./postsMapper";
@@ -16,6 +17,7 @@ import * as Types from "./postsTypes";
 const getPostsUrl = (tag: string) => `/posts/get-posts/${tag}`;
 const addPostUrl = "/posts/add-post";
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
+const getCommentsURL = (postId: string) => `/posts/comments/${postId}`;
 
 export const getPosts = async (
   payload: Types.GetPostsPayload
@@ -47,7 +49,7 @@ export const addPosts = async (
     );
     return singlePostUnpacker(data);
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 
@@ -65,3 +67,14 @@ export const addComment = async (
     console.log(err);
   }
 };
+
+export const getComments = async (
+  postId: string
+): Promise<Types.IUIGetComments> => {
+  try {
+    const { data } = await mainApi.get<Types.IServerGetComments>(getCommentsURL(postId));
+    return commentsUnpacker(data);
+  } catch (err) {
+    return err;
+  }
+}

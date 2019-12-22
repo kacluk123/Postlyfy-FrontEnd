@@ -2,6 +2,8 @@ import {
   UIPostsResponse,
   SingleUIPostsResponse,
   UIResponseCommentPatch,
+  IUIGetComments,
+  UIResponseComment,
 } from "../../api/endpoints/posts/postsTypes";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 
@@ -10,7 +12,8 @@ export enum POSTS_ACTIONS_NAMES {
   FETCH_POSTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS",
   FETCH_POSTS_ERROR = "FETCH_PRODUCTS_ERROR",
   ADD_NEW_POST = "ADD_NEW_POST",
-  ADD_COMMENT_TO_POST = "ADD_COMMENT_TO_POST"
+  ADD_COMMENT_TO_POST = "ADD_COMMENT_TO_POST",
+  LOAD_MORE_COMMENTS = "LOAD_MORE_COMMENTS"
 }
 
 export interface IPostsBaseAction {
@@ -42,12 +45,18 @@ export interface IaddNewComment extends IPostsBaseAction {
   type: POSTS_ACTIONS_NAMES.ADD_COMMENT_TO_POST;
 }
 
+export interface IloadMoreComments extends IPostsBaseAction {
+  payload: IUIGetComments;
+  type: POSTS_ACTIONS_NAMES.LOAD_MORE_COMMENTS;
+}
+
 export type PostsActions =
   | IfetchPostsPending
   | IfetchProductsSuccess
   | IaddNewPost
   | IfetchProductsError
-  | IaddNewComment;
+  | IaddNewComment
+  | IloadMoreComments;
 
 export function fetchProductsSuccess(
   posts: UIPostsResponse,
@@ -88,3 +97,10 @@ export function addNewComment(comment: UIResponseCommentPatch): IaddNewComment {
     comment
   };
 }
+
+export function loadMoreComments(payload: IUIGetComments): IloadMoreComments {
+  return {
+    type: POSTS_ACTIONS_NAMES.LOAD_MORE_COMMENTS,
+    payload,
+  };
+};

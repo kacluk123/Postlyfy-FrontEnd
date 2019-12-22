@@ -7,6 +7,7 @@ export const Posts = styled.div.attrs({
   min-height: calc(100vh - 50px);
   max-height: auto;
   display: flex;
+  overflow: hidden;
   align-items: center;
   flex-direction: column;
 `;

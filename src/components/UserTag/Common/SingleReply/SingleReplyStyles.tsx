@@ -23,12 +23,23 @@ const getGridAreas = (type: string) => {
 export const SingleReply = styled.div.attrs({
   className: "SingleReply"
 })<{ type: string }>`
+  @keyframes slide-fwd-bottom {
+    0% {
+      opacity: 0;
+      transform: translateY(0px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(10px);
+    }
+}
+  animation: slide-fwd-bottom 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   width: 100%;
-  min-height: 140px;
   padding: 10px 20px 10px 20px;
   background: #edecea;
   border-radius: 2px;
   display: grid;
+  min-height: 140px;
   grid-template-columns: 10% max-content 10% 1fr;
   grid-template-rows: max-content;
   grid-row-gap: 10px;

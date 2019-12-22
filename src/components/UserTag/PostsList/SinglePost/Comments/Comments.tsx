@@ -6,13 +6,16 @@ import * as API from "../../../../../api/endpoints/posts/posts";
 import useForm from "../../../../../hooks/useForm";
 import ReplyForm from "../../../Common/ReplyForm";
 import SingleReply from "../../../Common/SingleReply";
+import { getComments } from '../../../../../api/endpoints/posts/posts';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { addNewComment } from '../../../../../redux/actions/postActions';
+import { addNewComment, loadMoreComments } from '../../../../../redux/actions/postActions';
+import { SinglePostReplyText as LoadMoreComments } from '../../SinglePost/SinglePostStyles';
 const Comments = ({
   isCommentInputShowed,
   postId,
-  comments
+  comments,
+  hideCommentInput
 }: Types.IComments) => {
   const dispatch = useDispatch();
   const {
@@ -34,11 +37,16 @@ const Comments = ({
 
   const sendComment = async () => {
     const comment = await API.addComment({ comment: formValues.comment }, postId);
-    console.log(comment)
     if (comment) {
       dispatch(addNewComment(comment));
     }
+    hideCommentInput();
   };
+
+  const fetchComments = React.useCallback(async () => {
+    const comments = await getComments(postId);
+    dispatch(loadMoreComments(comments));
+  }, [postId]);
 
   return (
     <Styled.Comments>
@@ -64,6 +72,7 @@ const Comments = ({
           />
         ))}
       </Styled.CommentsList>
+      <LoadMoreComments onClick={fetchComments}> Load more comments </LoadMoreComments>
     </Styled.Comments>
   );
 };

@@ -36,6 +36,10 @@ const SinglePostComponent = ({
     boolean
   >(false);
 
+  const hideCommentInput = React.useCallback(() => {
+    setVisibilityOfCommentInput(false)
+  }, []);
+
   return (
     <SingleReply
       author={author}
@@ -47,6 +51,7 @@ const SinglePostComponent = ({
         isCommentInputShowed={isCommentInputShowed}
         postId={postId}
         comments={comments}
+        hideCommentInput={hideCommentInput}
       />
       <Styled.SinglePostReplyText
         onClick={() => setVisibilityOfCommentInput(visible => !visible)}
