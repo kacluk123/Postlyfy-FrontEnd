@@ -17,14 +17,14 @@ export const initialState = {
   total: 0
 };
 
-const appendCommentList = ({
+const modifyPost = ({
   posts,
   postId,
   element,
 }: {
   posts: SingleUIPostsResponse[],
   postId: string,
-  element: UIResponseComment | UIResponseComment[]
+  element: UIResponseComment | UIResponseComment[],
 }) => {
   return posts.map((post: SingleUIPostsResponse) => {
     if (post.postId !== postId) {
@@ -32,12 +32,20 @@ const appendCommentList = ({
     }
     const { comments, ...otherProp } = post;
 
-    return {
-      ...otherProp,
-      comments:  Array.isArray(element) ? [...comments, ...element] : [element, ...comments]
-    };
+    return Array.isArray(element) ? replacePostComments(post, element) : addNewComment(post, element);
   });
 };
+
+const addNewComment = (otherProps: SingleUIPostsResponse, commentsData: UIResponseComment): SingleUIPostsResponse => ({
+  ...otherProps,
+  commentsAddedInCurrentSession: [...otherProps.commentsAddedInCurrentSession, commentsData]
+});
+
+const replacePostComments = (otherProps: SingleUIPostsResponse, commentsData: UIResponseComment[]): SingleUIPostsResponse => ({
+  ...otherProps,
+  commentsAddedInCurrentSession: [],
+  comments: commentsData,
+});
 
 export function postsReducer(
   state: InitialStateType = initialState,
@@ -72,10 +80,11 @@ export function postsReducer(
     case POSTS_ACTIONS_NAMES.ADD_COMMENT_TO_POST: {
       return {
         ...state,
-        posts: appendCommentList({
+        posts: modifyPost({
           element: action.comment.comment,
           postId: action.comment.comment.postId,
-          posts: state.posts
+          posts: state.posts,
+          callback: addNewComment
         })
       };
     }
@@ -83,10 +92,11 @@ export function postsReducer(
     case POSTS_ACTIONS_NAMES.LOAD_MORE_COMMENTS: {
       return {
         ...state,
-        posts: appendCommentList({
+        posts: modifyPost({
           element: action.payload.comments,
           postId: action.payload.postId,
-          posts: state.posts
+          posts: state.posts,
+          callback: replacePostComments
         })
       };
     }

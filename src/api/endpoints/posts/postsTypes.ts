@@ -10,6 +10,17 @@ export interface SingleServerPostsResponse {
   postContent: string;
   addedAt: string;
   comments: SingleServerResponseComment[];
+  totalComments: number;
+}
+
+export interface SingleUIPostsResponse {
+  postId: string;
+  author: string;
+  content: string;
+  createdAt: string;
+  comments: UIResponseComment[];
+  totalComments: number;
+  commentsAddedInCurrentSession: UIResponseComment[];
 }
 
 export interface SingleServerResponseComment {
@@ -35,14 +46,6 @@ export interface UIResponseComment {
 export interface UIResponseCommentPatch {
   isError: boolean;
   comment: UIResponseComment;
-}
-
-export interface SingleUIPostsResponse {
-  postId: string;
-  author: string;
-  content: string;
-  createdAt: string;
-  comments: UIResponseComment[];
 }
 
 export interface ServerPostsResponse {
@@ -94,3 +97,7 @@ export interface IUIGetComments {
   comments: UIResponseComment[];
   postId: string;
 }
+
+export interface IGetCommentsParams {
+  skip: number;
+};

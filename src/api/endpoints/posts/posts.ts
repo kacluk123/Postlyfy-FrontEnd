@@ -69,10 +69,15 @@ export const addComment = async (
 };
 
 export const getComments = async (
-  postId: string
+  postId: string,
+  payload: Types.IGetCommentsParams,
 ): Promise<Types.IUIGetComments> => {
   try {
-    const { data } = await mainApi.get<Types.IServerGetComments>(getCommentsURL(postId));
+    const { data } = await mainApi.get<Types.IServerGetComments>(getCommentsURL(postId), {
+      params: {
+        skip: payload.skip,
+      }
+    });
     return commentsUnpacker(data);
   } catch (err) {
     return err;

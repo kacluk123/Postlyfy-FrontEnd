@@ -15,9 +15,14 @@ const Comments = ({
   isCommentInputShowed,
   postId,
   comments,
-  hideCommentInput
+  hideCommentInput,
+  commentsAddedInCurrentSession,
+  totalComments
 }: Types.IComments) => {
   const dispatch = useDispatch();
+  
+  const [canLoadMoreComment, setLoadMoreComment] = React.useState<boolean>(true);
+
   const {
     formValues,
     handleChangeFormValues,
@@ -34,6 +39,7 @@ const Comments = ({
       }
     }
   }, []);
+  
 
   const sendComment = async () => {
     const comment = await API.addComment({ comment: formValues.comment }, postId);
@@ -44,9 +50,14 @@ const Comments = ({
   };
 
   const fetchComments = React.useCallback(async () => {
-    const comments = await getComments(postId);
-    dispatch(loadMoreComments(comments));
-  }, [postId]);
+    const commentsList = await getComments(postId, {
+      skip: comments.length
+    });
+    dispatch(loadMoreComments(commentsList));
+    setLoadMoreComment(false);
+  }, [postId, comments.length]);
+
+  const isNotAllCommentsLoaded = totalComments > 3 && canLoadMoreComment;
 
   return (
     <Styled.Comments>
@@ -72,7 +83,18 @@ const Comments = ({
           />
         ))}
       </Styled.CommentsList>
-      <LoadMoreComments onClick={fetchComments}> Load more comments </LoadMoreComments>
+      {isNotAllCommentsLoaded && <LoadMoreComments onClick={fetchComments}> Load more comments </LoadMoreComments>}
+      <Styled.CommentsList>
+        {commentsAddedInCurrentSession.map(({ content, createdAt, author, commentId }) => (
+          <SingleReply
+            key={commentId}
+            createdAt={moment(createdAt).format("MMM DD YY")}
+            author={author}
+            content={content}
+            type="default"
+          />
+        ))}
+      </Styled.CommentsList>
     </Styled.Comments>
   );
 };

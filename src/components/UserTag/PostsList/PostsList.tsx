@@ -84,7 +84,9 @@ const PostsListComponent = () => {
               author,
               content,
               createdAt,
-              comments
+              comments,
+              commentsAddedInCurrentSession,
+              totalComments,
             }: SingleUIPostsResponse) => (
               <SinglePost
                 key={postId}
@@ -93,6 +95,8 @@ const PostsListComponent = () => {
                 content={content}
                 createdAt={createdAt}
                 comments={comments}
+                commentsAddedInCurrentSession={commentsAddedInCurrentSession}
+                totalComments={totalComments}
               />
             )
           )}

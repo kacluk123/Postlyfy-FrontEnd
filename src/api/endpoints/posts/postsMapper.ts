@@ -19,7 +19,9 @@ export const singlePostUnpacker = (
   author: post.createdBy,
   content: post.postContent,
   createdAt: post.addedAt,
-  comments: post.comments.map(comment => singleCommentUnpacker(comment))
+  comments: post.comments.map(comment => singleCommentUnpacker(comment)),
+  commentsAddedInCurrentSession: [],
+  totalComments: post.totalComments,
 });
 
 export const addPostPacker = (

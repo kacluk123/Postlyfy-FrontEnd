@@ -30,7 +30,9 @@ const SinglePostComponent = ({
   postId,
   content,
   createdAt,
-  comments
+  comments,
+  commentsAddedInCurrentSession,
+  totalComments
 }: SingleUIPostsResponse) => {
   const [isCommentInputShowed, setVisibilityOfCommentInput] = React.useState<
     boolean
@@ -51,7 +53,9 @@ const SinglePostComponent = ({
         isCommentInputShowed={isCommentInputShowed}
         postId={postId}
         comments={comments}
+        commentsAddedInCurrentSession={commentsAddedInCurrentSession}
         hideCommentInput={hideCommentInput}
+        totalComments={totalComments}
       />
       <Styled.SinglePostReplyText
         onClick={() => setVisibilityOfCommentInput(visible => !visible)}
