@@ -16,6 +16,8 @@ export enum POSTS_ACTIONS_NAMES {
   LOAD_MORE_COMMENTS = "LOAD_MORE_COMMENTS"
 }
 
+export type addPostsTypes = 'initial' | 'loadMore' | 'loadNew';
+
 export interface IPostsBaseAction {
   type: POSTS_ACTIONS_NAMES;
 }
@@ -26,7 +28,7 @@ export interface IfetchPostsPending extends IPostsBaseAction {
 
 export interface IfetchProductsSuccess extends IPostsBaseAction {
   posts: UIPostsResponse;
-  initial: boolean;
+  postsModifyType: addPostsTypes;
   type: POSTS_ACTIONS_NAMES.FETCH_POSTS_SUCCESS;
 }
 
@@ -60,11 +62,11 @@ export type PostsActions =
 
 export function fetchProductsSuccess(
   posts: UIPostsResponse,
-  initial: boolean
+  postsModifyType: addPostsTypes,
 ): IfetchProductsSuccess {
   return {
     type: POSTS_ACTIONS_NAMES.FETCH_POSTS_SUCCESS,
-    initial,
+    postsModifyType,
     posts
   };
 }

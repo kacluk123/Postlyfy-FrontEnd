@@ -2,19 +2,20 @@ import { POSTS_ACTIONS_NAMES, PostsActions } from "../actions/postActions";
 import { SingleUIPostsResponse, UIResponseComment } from "../../api/endpoints/posts/postsTypes";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 import { AppState } from '../store';
+import { addPostsTypes } from '../actions/postActions';
 
 interface InitialStateType {
   readonly pending: boolean;
   readonly posts: SingleUIPostsResponse[];
   readonly errors: UIServerMessages["messages"];
-  readonly total: number;
+  readonly totalNumberOfPosts: number;
 }
 
 export const initialState = {
   pending: false,
   posts: [],
   errors: [],
-  total: 0
+  totalNumberOfPosts: 0
 };
 
 const modifyPost = ({
@@ -47,6 +48,20 @@ const replacePostComments = (otherProps: SingleUIPostsResponse, commentsData: UI
   comments: commentsData,
 });
 
+const addPosts = ({
+  oldPosts,
+  newPosts,
+  type
+}: {
+  oldPosts: SingleUIPostsResponse[],
+  newPosts: SingleUIPostsResponse[],
+  type: addPostsTypes,
+}) => ({
+  initial: newPosts,
+  loadMore: [...oldPosts, ...newPosts],
+  loadNew: [...newPosts, ...oldPosts],
+}[type]);
+
 export function postsReducer(
   state: InitialStateType = initialState,
   action: PostsActions
@@ -63,10 +78,12 @@ export function postsReducer(
       return {
         ...state,
         pending: false,
-        posts: action.initial
-          ? action.posts.postsList
-          : [...state.posts, ...action.posts.postsList],
-        total: action.posts.totalNumberOfPosts
+        posts: addPosts({
+          oldPosts: state.posts,
+          newPosts: action.posts.postsList,
+          type: action.postsModifyType
+        }),
+        totalNumberOfPosts: action.posts.totalNumberOfPosts
       };
     }
 
@@ -115,7 +132,7 @@ export function postsReducer(
   }
 }
 
-export const getProducts = (state: AppState) => state.postsReducer.posts;
-export const getTotalPosts = (state: AppState) => state.postsReducer.total;
-export const getProductsPending = (state: AppState) => state.postsReducer.pending;
-export const getProductsError = (state: AppState) => state.postsReducer.errors;
+export const getPosts = (state: AppState) => state.postsReducer.posts;
+export const getTotalPosts = (state: AppState) => state.postsReducer.totalNumberOfPosts;
+export const getPostsPending = (state: AppState) => state.postsReducer.pending;
+export const getPostsError = (state: AppState) => state.postsReducer.errors;

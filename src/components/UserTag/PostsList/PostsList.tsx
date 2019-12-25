@@ -1,10 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getProducts,
-  getProductsPending,
+  getPosts,
+  getPostsPending,
   getTotalPosts
 } from "../../../redux/reducers/postReducer";
 import { AppState } from '../../../redux/store'
+import { MAIN_API_URL } from '../../../api/axios-instances';
+import openSocket from 'socket.io-client'
 import Loader from "../../Common/Loader";
 import fetchPostsTHUNK from "../../../redux/async/fetchPosts";
 import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
@@ -14,43 +16,79 @@ import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
+import { SinglePostReplyText } from './SinglePost/SinglePostStyles';
+
+interface IPostsSocketIoData {
+  action: 'create';
+  getTotalNumberOfPostsInTag: number;
+  serverTag: string;
+}
 
 const PostsListComponent = () => {
-  const posts = useSelector(getProducts);
-  const pending = useSelector(getProductsPending);
-  const total = useSelector(getTotalPosts);
+  const posts = useSelector(getPosts);
+  const pending = useSelector(getPostsPending);
+  const localTotalPostCount = useSelector(getTotalPosts);
+  const [serverTotalPostCount, setServerTotalPostCount] = React.useState<number>(0);
   const dispatch = useDispatch();
   const isMaxScroll = useWindowScroll();
   const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
   const { tag } = useParams();
+  const postListCountDifference = serverTotalPostCount - localTotalPostCount;
+
   React.useEffect(() => {
+    setServerTotalPostCount(0);
+    const socket = openSocket(MAIN_API_URL);
+    const socketCallback = (data: IPostsSocketIoData) => {
+      if (data.action === 'create' && data.serverTag === tag) {
+        setServerTotalPostCount(data.getTotalNumberOfPostsInTag);
+      }
+    };
+
+    socket.on('posts', socketCallback);
+   
     if (tag) {
       dispatch(
         fetchPostsTHUNK({
           offset: 0,
           limit: 10,
-          initial: true,
+          postsModifyType: 'initial',
           tag
         })
       );
     }
+    return () => {
+      socket.off('posts', socketCallback);
+    };
   }, []);
 
   React.useEffect(() => {
+    setServerTotalPostCount(0);
+    const socket = openSocket(MAIN_API_URL);
+    const socketCallback = (data: IPostsSocketIoData) => {
+      if (data.action === 'create' && data.serverTag === tag) {
+        setServerTotalPostCount(data.getTotalNumberOfPostsInTag);
+      }
+    };
+
+    socket.on('posts', socketCallback);
+   
     if (tag) {
       dispatch(
         fetchPostsTHUNK({
           offset: 0,
           limit: 10,
-          initial: true,
+          postsModifyType: 'initial',
           tag
         })
       );
     }
+    return () => {
+      socket.off('posts', socketCallback);
+    };
   }, [tag]);
 
   React.useEffect(() => {
-    if (isMaxScroll && posts.length !== total) {
+    if (isMaxScroll && posts.length !== localTotalPostCount) {
       setOnScrollPending(true);
       try {
         if (tag) {
@@ -58,7 +96,7 @@ const PostsListComponent = () => {
             fetchPostsTHUNK({
               limit: 10,
               offset: posts.length,
-              initial: false,
+              postsModifyType: 'loadMore',
               tag
             })
           );
@@ -69,6 +107,19 @@ const PostsListComponent = () => {
     }
   }, [isMaxScroll]);
   
+  const LoadMoreComments = () => {
+    if (tag) {
+      dispatch(
+        fetchPostsTHUNK({
+          limit: postListCountDifference,
+          offset: 0,
+          postsModifyType: 'loadNew',
+          tag
+        })
+      );
+    }
+  };
+
   if (pending) {
     return <Loader />;
   }
@@ -77,26 +128,19 @@ const PostsListComponent = () => {
     <Styled.Posts>
       <Styled.PostsListContainer>
         <PostInput tag={tag} />
+        {postListCountDifference > 0 && <SinglePostReplyText onClick={LoadMoreComments}>
+          {postListCountDifference} new posts
+        </SinglePostReplyText>}
         <Styled.PostsList>
           {posts.map(
             ({
               postId,
-              author,
-              content,
-              createdAt,
-              comments,
-              commentsAddedInCurrentSession,
-              totalComments,
+              ...params
             }: SingleUIPostsResponse) => (
               <SinglePost
                 key={postId}
                 postId={postId}
-                author={author}
-                content={content}
-                createdAt={createdAt}
-                comments={comments}
-                commentsAddedInCurrentSession={commentsAddedInCurrentSession}
-                totalComments={totalComments}
+                {...params}
               />
             )
           )}

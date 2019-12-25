@@ -15,7 +15,7 @@ import {
 import * as Types from "./postsTypes";
 
 const getPostsUrl = (tag: string) => `/posts/get-posts/${tag}`;
-const addPostUrl = "/posts/add-post";
+const addPostUrl = (tag: string) => `/posts/add-post/${tag}`;
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 const getCommentsURL = (postId: string) => `/posts/comments/${postId}`;
 
@@ -37,11 +37,12 @@ export const getPosts = async (
 };
 
 export const addPosts = async (
-  payload: Types.IAddPostParams
+  payload: Types.IAddPostParams,
+  tag: string
 ): Promise<Types.SingleUIPostsResponse> => {
   try {
     const { data } = await mainApi.post<Types.SingleServerPostsResponse>(
-      addPostUrl,
+      addPostUrl(tag),
       addPostPacker(payload),
       {
         withCredentials: true

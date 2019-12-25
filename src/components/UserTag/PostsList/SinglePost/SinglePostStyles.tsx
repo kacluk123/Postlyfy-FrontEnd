@@ -12,6 +12,9 @@ export const SinglePostReplyText = styled.div.attrs({
   className: "SinglePostReplyText"
 })`
   opacity: 0.6;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   transition: 0.3s ease-in;
   cursor: pointer;
 

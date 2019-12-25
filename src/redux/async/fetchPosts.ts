@@ -1,7 +1,8 @@
 import {
   fetchProductsPending,
   fetchProductsSuccess,
-  fetchProductsError
+  fetchProductsError,
+  addPostsTypes
 } from "../actions/postActions";
 
 import { getPosts } from "../../api/endpoints/posts/posts";
@@ -16,25 +17,25 @@ import {
 interface FetchPostsParams {
   offset: number;
   limit: number;
-  initial: boolean;
+  postsModifyType: addPostsTypes;
   tag: string;
 }
 
 export const fetchPosts = ({
   offset,
   limit,
-  initial,
+  postsModifyType,
   tag
 }: FetchPostsParams): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-    if (initial) {
+    if (postsModifyType === 'initial') {
       dispatch(fetchProductsPending());
     }
 
     const data = await getPosts({ offset, limit, tag });
     
     if (isApiResonseHasError(data)) {
-      dispatch(fetchProductsSuccess(data, initial));
+      dispatch(fetchProductsSuccess(data, postsModifyType));
     } else {
       dispatch(fetchProductsError(data));
     }

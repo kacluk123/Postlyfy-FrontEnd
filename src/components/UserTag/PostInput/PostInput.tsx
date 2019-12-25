@@ -53,7 +53,7 @@ const PostInput = ({ tag }: Types.PostInput) => {
     const post = await API.addPosts({
       postContent: formValues.postInput,
       tags: getHashTags(formValues.postInput)
-    });
+    }, tag);
 
     post.author = user?.user.name;
 
