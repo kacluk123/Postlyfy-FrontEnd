@@ -11,6 +11,7 @@ export interface SingleServerPostsResponse {
   addedAt: string;
   comments: SingleServerResponseComment[];
   totalComments: number;
+  userPicture: string | null;
 }
 
 export interface SingleUIPostsResponse {
@@ -18,6 +19,7 @@ export interface SingleUIPostsResponse {
   author: string;
   content: string;
   createdAt: string;
+  userPicture: string | null;
   comments: UIResponseComment[];
   totalComments: number;
   commentsAddedInCurrentSession: UIResponseComment[];

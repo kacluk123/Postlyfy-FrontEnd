@@ -32,7 +32,7 @@ export const SingleReply = styled.div.attrs({
       opacity: 1;
       transform: translateY(10px);
     }
-}
+  }
   animation: slide-fwd-bottom 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   width: 100%;
   padding: 10px 20px 10px 20px;
@@ -46,8 +46,8 @@ export const SingleReply = styled.div.attrs({
   ${(props: { type: string }) => getGridAreas(props.type)}
 `;
 
-export const SingleReplyUserAvatar = styled.div.attrs({
-  className: "SingleReplyUserAvatar"
+export const SingleReplyUserAvatarContainer = styled.div.attrs({
+  className: "SingleReplyUserAvatarContainer"
 })`
   grid-area: SingleReplyUserAvatar;
   width: 50px;
@@ -57,6 +57,15 @@ export const SingleReplyUserAvatar = styled.div.attrs({
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const SingleReplyUserAvatar = styled.img.attrs({
+  className: "SingleReplyUserAvatar"
+})`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
 `;
 
 export const SingleReplyDate = styled.div.attrs({

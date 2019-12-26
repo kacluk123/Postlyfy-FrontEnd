@@ -32,7 +32,8 @@ const SinglePostComponent = ({
   createdAt,
   comments,
   commentsAddedInCurrentSession,
-  totalComments
+  totalComments,
+  userPicture
 }: SingleUIPostsResponse) => {
   const [isCommentInputShowed, setVisibilityOfCommentInput] = React.useState<
     boolean
@@ -47,6 +48,7 @@ const SinglePostComponent = ({
       author={author}
       content={replaceHashTags(addNewLine(content))}
       createdAt={moment(createdAt).format("MMM Do YY")}
+      avatar={userPicture}
       type="post"
     >
       <Comments

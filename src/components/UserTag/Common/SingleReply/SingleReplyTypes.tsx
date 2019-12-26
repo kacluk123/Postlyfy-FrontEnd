@@ -10,4 +10,5 @@ export interface ISingleReply {
   content: string | React.ReactNodeArray;
   children?: React.ReactChildren;
   type?: REPLY_TYPE;
+  avatar: string | null;
 }

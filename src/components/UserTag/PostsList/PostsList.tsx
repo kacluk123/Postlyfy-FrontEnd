@@ -56,9 +56,9 @@ const PostsListComponent = () => {
         })
       );
     }
-    return () => {
-      socket.off('posts', socketCallback);
-    };
+    // return () => {
+    //   socket.off('posts', socketCallback);
+    // };
   }, []);
 
   React.useEffect(() => {
@@ -82,9 +82,9 @@ const PostsListComponent = () => {
         })
       );
     }
-    return () => {
-      socket.off('posts', socketCallback);
-    };
+    // return () => {
+    //   socket.off('posts', socketCallback);
+    // };
   }, [tag]);
 
   React.useEffect(() => {
@@ -128,9 +128,11 @@ const PostsListComponent = () => {
     <Styled.Posts>
       <Styled.PostsListContainer>
         <PostInput tag={tag} />
-        {postListCountDifference > 0 && <SinglePostReplyText onClick={LoadMoreComments}>
-          {postListCountDifference} new posts
-        </SinglePostReplyText>}
+        {postListCountDifference > 0 && <Styled.LoadMorePosts onClick={LoadMoreComments}>
+          <Styled.PostsListNewPostsCount>
+          {postListCountDifference}&nbsp;
+          </Styled.PostsListNewPostsCount>incoming posts. Click here to load.
+        </Styled.LoadMorePosts>}
         <Styled.PostsList>
           {posts.map(
             ({

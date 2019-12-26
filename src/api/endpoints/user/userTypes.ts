@@ -4,6 +4,7 @@ export interface IServerResponseUser {
     _id: string;
     name: string;
     email: string;
+    userPicture: string | null;
   };
 }
 
@@ -13,5 +14,6 @@ export interface IUIResponseUser {
     id: string;
     name: string;
     email: string;
+    userPicture: string | null;
   };
 }

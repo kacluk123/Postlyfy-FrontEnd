@@ -7,12 +7,14 @@ interface InitialStateType {
   readonly pending: boolean;
   readonly userData: IUIResponseUser | null;
   readonly errors: UIServerMessages["messages"];
+  readonly isAuth: boolean;
 }
 
 const initialState = {
   pending: false,
   userData: null,
   errors: [],
+  isAuth: false,
 };
 
 export function userReducer(
@@ -31,6 +33,7 @@ export function userReducer(
       return {
         ...state,
         pending: false,
+        isAuth: true,
         userData: action.user
       };
     }
@@ -39,6 +42,7 @@ export function userReducer(
         ...state,
         errors: action.error,
         pending: false,
+        isAuth: false,
       };
     }
     default: {
@@ -47,4 +51,5 @@ export function userReducer(
   }
 }
 
-export const getUser = (state: AppState) => state.userReducer.userData;
+export const getUser = (state: AppState) => state.userReducer.userData?.user;
+export const isAuth = (state: AppState) => state.userReducer.isAuth;

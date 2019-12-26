@@ -31,6 +31,7 @@ export const Navbar = styled.div.attrs({
 })`
   padding: 0 10px;
   background: white;
+  height: 60px;
   display: flex;
   border-bottom: 1px solid var(--color-white);
   align-items: center;

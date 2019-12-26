@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as Styled from "./NavbarStyles";
 import * as types from "./NavbarTypes";
+import { isAuth, getUser } from '../../redux/reducers/userReducer';
+import { useSelector } from 'react-redux';
+import { logout } from '../../api/endpoints/auth/logout/logout';
 import { useLocation } from "react-router";
+import NavbarUserData from './NavbarUserData';
 
 const routes: types.RouteTypes = {
   HOME: "/posts",
@@ -11,9 +15,14 @@ const routes: types.RouteTypes = {
 
 const Navbar = () => {
   const location = useLocation();
-
+  const isUserAuth = useSelector(isAuth);
+  
   const isRouteActive = (route: types.routeNames): boolean =>
     location.pathname === route;
+
+  const handleLogout = async () => {
+    logout();
+  };
 
   return (
     <Styled.Navbar>
@@ -21,18 +30,25 @@ const Navbar = () => {
         Posts
       </Styled.NavbarLink>
       <Styled.LinksGroup>
-        <Styled.NavbarLink
-          to={routes.LOGIN}
-          isActive={isRouteActive(routes.LOGIN)}
-        >
-          Login
-        </Styled.NavbarLink>
-        <Styled.NavbarLink
-          to={routes.REGISTER}
-          isActive={isRouteActive(routes.REGISTER)}
-        >
-          Register
-        </Styled.NavbarLink>
+        {isUserAuth
+          ? <NavbarUserData />
+          : (
+            <React.Fragment>
+              <Styled.NavbarLink
+                to={routes.LOGIN}
+                isActive={isRouteActive(routes.LOGIN)}
+              >
+                Login
+              </Styled.NavbarLink>
+              <Styled.NavbarLink
+                to={routes.REGISTER}
+                isActive={isRouteActive(routes.REGISTER)}
+              >
+                Register
+              </Styled.NavbarLink>
+            </React.Fragment>
+        )}
+        <span onClick={handleLogout}>Logout</span>
       </Styled.LinksGroup>
     </Styled.Navbar>
   );

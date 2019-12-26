@@ -35,7 +35,7 @@ const RegisterComponent = () => {
         minLength: 6
       }
     }
-  });
+  }, []);
 
   const [apiResponseMessage, setApiResponseMessage] = React.useState<
     UIServerMessages

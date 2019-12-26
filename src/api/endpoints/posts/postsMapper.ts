@@ -22,6 +22,7 @@ export const singlePostUnpacker = (
   comments: post.comments.map(comment => singleCommentUnpacker(comment)),
   commentsAddedInCurrentSession: [],
   totalComments: post.totalComments,
+  userPicture: post.userPicture,
 });
 
 export const addPostPacker = (
