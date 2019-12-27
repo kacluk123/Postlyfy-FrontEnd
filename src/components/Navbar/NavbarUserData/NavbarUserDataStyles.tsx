@@ -24,7 +24,9 @@ export const NavbarUserDataUserAvatarContainer = styled.div.attrs({
   background: white;
   display: flex;
   background: var(--dark);
+  cursor: pointer;
   justify-content: center;
+  position: relative;
   align-items: center;
   object-fit: contain;
 `;

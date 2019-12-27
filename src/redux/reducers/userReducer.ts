@@ -45,6 +45,13 @@ export function userReducer(
         isAuth: false,
       };
     }
+    case USER_ACTIONS_NAMES.DESTROY_USER_DATA: {
+      return {
+        ...state,
+        isAuth: false,
+        userData: null,
+      };
+    }
     default: {
       return state;
     }

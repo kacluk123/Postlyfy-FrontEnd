@@ -4,7 +4,8 @@ import { IUIResponseUser } from '../../api/endpoints/user/userTypes'
 export enum USER_ACTIONS_NAMES {
   GET_USER_DATA = "GET_USER_DATA",
   GET_USER_PENDING = "GET_USER_PENDING",
-  USER_ERROR = "USER_ERROR"
+  USER_ERROR = "USER_ERROR",
+  DESTROY_USER_DATA = "DESTROY_USER_DATA"
 }
 
 export interface IUserBaseAction {
@@ -20,6 +21,10 @@ export interface IUserPending extends IUserBaseAction {
   type: USER_ACTIONS_NAMES.GET_USER_PENDING;
 }
 
+export interface IUserDestroy extends IUserBaseAction {
+  type: USER_ACTIONS_NAMES.DESTROY_USER_DATA;
+}
+
 export interface IGetUserData extends IUserBaseAction {
   type: USER_ACTIONS_NAMES.GET_USER_DATA;
   user: IUIResponseUser;
@@ -28,7 +33,8 @@ export interface IGetUserData extends IUserBaseAction {
 export type UserActions =
   | IUserError
   | IUserPending
-  | IGetUserData;
+  | IGetUserData
+  | IUserDestroy;
 
 export function getUser(payload: IUIResponseUser) {
   return {
@@ -40,6 +46,12 @@ export function getUser(payload: IUIResponseUser) {
 export function getUserPending(): IUserPending {
   return {
     type: USER_ACTIONS_NAMES.GET_USER_PENDING
+  };
+}
+
+export function destroyUserData(): IUserDestroy {
+  return {
+    type: USER_ACTIONS_NAMES.DESTROY_USER_DATA
   };
 }
 

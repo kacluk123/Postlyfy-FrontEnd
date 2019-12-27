@@ -23,7 +23,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     logout();
   };
-
+  console.log(isUserAuth);
   return (
     <Styled.Navbar>
       <Styled.NavbarLink to={routes.HOME} isActive={isRouteActive(routes.HOME)}>
@@ -48,7 +48,6 @@ const Navbar = () => {
               </Styled.NavbarLink>
             </React.Fragment>
         )}
-        <span onClick={handleLogout}>Logout</span>
       </Styled.LinksGroup>
     </Styled.Navbar>
   );
