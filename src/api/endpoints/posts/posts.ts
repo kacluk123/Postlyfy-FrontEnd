@@ -18,6 +18,7 @@ const getPostsUrl = (tag: string) => `/posts/get-posts/${tag}`;
 const addPostUrl = (tag: string) => `/posts/add-post/${tag}`;
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 const getCommentsURL = (postId: string) => `/posts/comments/${postId}`;
+const toggleLikeUrl = (postId: string) => `/posts/toggleLike/${postId}`;
 
 export const getPosts = async (
   payload: Types.GetPostsPayload
@@ -82,5 +83,17 @@ export const getComments = async (
     return commentsUnpacker(data);
   } catch (err) {
     return err;
+  }
+};
+
+export const toggleLike = async (
+  postId: string,
+) => {
+  try {
+    await mainApi.post(toggleLikeUrl(postId), {
+      withCredentials: true
+    });
+  } catch {
+    console.log('error');
   }
 }

@@ -10,6 +10,11 @@ export const Posts = styled.div.attrs({
   overflow: hidden;
   align-items: center;
   flex-direction: column;
+  @media (max-width: 1040px) {
+    & {
+      padding: 20px;
+    }
+  }
 `;
 
 export const PostsList = styled.div.attrs({
@@ -25,6 +30,11 @@ export const PostsListContainer = styled.div.attrs({
   className: "PostsListContainer"
 })`
   width: 1000px;
+  @media (max-width: 1040px) {
+    & {
+      width: 100%;
+    }
+  }
 `;
 
 export const PostsListNewPostsCount = styled.div.attrs({

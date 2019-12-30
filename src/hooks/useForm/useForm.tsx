@@ -150,7 +150,7 @@ const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitial
 
   const validateAllInputs = React.useCallback(() => {
     const validatedInputs = Object.keys(state.formValues).reduce(
-      (prev, curr) => {
+      (prev: T, curr: string) => {
         return {
           ...prev,
           [curr]: validateInput(
@@ -166,7 +166,7 @@ const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitial
       type: FORM_ACTIONS.VALIDATE_ALL_INPUTS,
       errorValues: validatedInputs
     });
-  }, []);
+  }, [state.formValues]);
 
   const onButtonClick = (callback: Function) => () => {
     validateAllInputs();

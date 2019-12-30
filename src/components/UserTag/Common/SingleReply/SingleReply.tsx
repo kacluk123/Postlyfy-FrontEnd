@@ -15,8 +15,8 @@ const SingleReply = ({
     <Styled.SingleReply type={type}>
       {children}
       <Styled.SingleReplyUserName>{author}</Styled.SingleReplyUserName>
-      <Styled.SingleReplyUserAvatarContainer>
-        {avatar ? <Styled.SingleReplyUserAvatar src={avatar}/> : <Icon.User height="36px" width="36px" />}
+      <Styled.SingleReplyUserAvatarContainer type={type}>
+        {avatar ? <Styled.SingleReplyUserAvatar src={avatar}/> : <Icon.User height="100%" width="100%" />}
       </Styled.SingleReplyUserAvatarContainer>
       <Styled.SingleReplyDate>{createdAt}</Styled.SingleReplyDate>
       <Styled.SingleReplyContent>{content}</Styled.SingleReplyContent>

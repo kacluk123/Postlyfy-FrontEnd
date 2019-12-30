@@ -5,6 +5,9 @@ export const Comments = styled.div.attrs({
 })`
   grid-area: Comments;
   width: 100%;
+  @media (max-width: 500px) {
+    padding-left: 15px;
+  }
 `;
 
 export const CommentsInput = styled.div.attrs({

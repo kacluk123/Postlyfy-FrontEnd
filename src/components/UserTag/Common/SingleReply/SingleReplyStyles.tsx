@@ -9,6 +9,17 @@ const getGridAreas = (type: string) => {
         "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent"
         "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions"
         "SingleReplyUserAvatar Comments Comments Comments";
+
+      @media (max-width: 500px) {
+        & {
+          grid-template-areas:
+            "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate"
+            "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent"
+            "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions"
+            "Comments Comments Comments Comments";
+        }
+
+      };
     `,
     [REPLY_TYPE.DEFAULT]: css`
       grid-template-areas:
@@ -40,10 +51,15 @@ export const SingleReply = styled.div.attrs({
   border-radius: 2px;
   display: grid;
   min-height: 140px;
-  grid-template-columns: 10% max-content 10% 1fr;
+  grid-template-columns: 70px max-content 10% 1fr;
   grid-template-rows: max-content;
   grid-row-gap: 10px;
   ${(props: { type: string }) => getGridAreas(props.type)}
+  ${(props: { type: string }) => props.type === REPLY_TYPE.DEFAULT && css`
+    @media (max-width: 500px) {
+      grid-template-columns: 50px max-content 10% 1fr;
+    }
+  `}
 `;
 
 export const SingleReplyUserAvatarContainer = styled.div.attrs({
@@ -57,6 +73,13 @@ export const SingleReplyUserAvatarContainer = styled.div.attrs({
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${(props: { type: string }) => props.type === REPLY_TYPE.DEFAULT && css`
+    @media (max-width: 500px) {
+      width: 35px;
+      height: 35px;
+    }
+  `}
 `;
 
 export const SingleReplyUserAvatar = styled.img.attrs({

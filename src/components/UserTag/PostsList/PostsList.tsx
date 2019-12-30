@@ -56,9 +56,9 @@ const PostsListComponent = () => {
         })
       );
     }
-    // return () => {
-    //   socket.off('posts', socketCallback);
-    // };
+    return () => {
+      socket.off('posts', socketCallback);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -82,9 +82,9 @@ const PostsListComponent = () => {
         })
       );
     }
-    // return () => {
-    //   socket.off('posts', socketCallback);
-    // };
+    return () => {
+      socket.off('posts', socketCallback);
+    };
   }, [tag]);
 
   React.useEffect(() => {

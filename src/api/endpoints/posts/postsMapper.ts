@@ -23,6 +23,7 @@ export const singlePostUnpacker = (
   commentsAddedInCurrentSession: [],
   totalComments: post.totalComments,
   userPicture: post.userPicture,
+  likes: post.likes,
 });
 
 export const addPostPacker = (

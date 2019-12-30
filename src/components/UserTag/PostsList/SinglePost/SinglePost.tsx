@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Styled from "./SinglePostStyles";
 import { SingleUIPostsResponse } from "../../../../api/endpoints/posts/postsTypes";
+import { toggleLike } from "../../../../api/endpoints/posts/posts";
 import * as Icon from "../../../Common/Icons/Icons";
 import moment from "moment";
 import reactStringReplace from "react-string-replace";
@@ -43,6 +44,10 @@ const SinglePostComponent = ({
     setVisibilityOfCommentInput(false)
   }, []);
 
+  const togglePostLike = async () => {
+    await toggleLike(postId);
+  }
+
   return (
     <SingleReply
       author={author}
@@ -51,6 +56,7 @@ const SinglePostComponent = ({
       avatar={userPicture}
       type="post"
     >
+      <span onClick={togglePostLike}>Like</span>
       <Comments
         isCommentInputShowed={isCommentInputShowed}
         postId={postId}
