@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@material-ui/icons": "^4.5.1",
     "@types/moment": "^2.13.0",
     "@types/react-router": "^5.1.2",
     "awesome-typescript-loader": "^5.2.1",

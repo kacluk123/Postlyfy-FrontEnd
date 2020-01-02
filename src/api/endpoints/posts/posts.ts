@@ -18,7 +18,7 @@ const getPostsUrl = (tag: string) => `/posts/get-posts/${tag}`;
 const addPostUrl = (tag: string) => `/posts/add-post/${tag}`;
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 const getCommentsURL = (postId: string) => `/posts/comments/${postId}`;
-const toggleLikeUrl = (postId: string) => `/posts/toggleLike/${postId}`;
+const toggleLikeUrl = (postId: string) => `/posts/toggle-like/${postId}`;
 
 export const getPosts = async (
   payload: Types.GetPostsPayload
@@ -90,7 +90,7 @@ export const toggleLike = async (
   postId: string,
 ) => {
   try {
-    await mainApi.post(toggleLikeUrl(postId), {
+    await mainApi.post(toggleLikeUrl(postId), {elo: "siema"}, {
       withCredentials: true
     });
   } catch {

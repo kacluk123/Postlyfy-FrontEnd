@@ -56,7 +56,6 @@ const SinglePostComponent = ({
       avatar={userPicture}
       type="post"
     >
-      <span onClick={togglePostLike}>Like</span>
       <Comments
         isCommentInputShowed={isCommentInputShowed}
         postId={postId}

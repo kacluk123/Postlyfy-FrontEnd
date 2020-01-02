@@ -5,10 +5,10 @@ const getGridAreas = (type: string) => {
   const gridAreas = {
     [REPLY_TYPE.POST]: css`
       grid-template-areas:
-        "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate"
-        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent"
-        "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions"
-        "SingleReplyUserAvatar Comments Comments Comments";
+        "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate SingleReplyLikeButton"
+        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyLikeButton"
+        "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions SingleReplyLikeButton"
+        "SingleReplyUserAvatar Comments Comments Comments SingleReplyLikeButton";
 
       @media (max-width: 500px) {
         & {
@@ -23,8 +23,8 @@ const getGridAreas = (type: string) => {
     `,
     [REPLY_TYPE.DEFAULT]: css`
       grid-template-areas:
-        "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate"
-        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent";
+        "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate SingleReplyLikeButton"
+        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyLikeButton";
     `
   };
 
@@ -51,7 +51,7 @@ export const SingleReply = styled.div.attrs({
   border-radius: 2px;
   display: grid;
   min-height: 140px;
-  grid-template-columns: 70px max-content 10% 1fr;
+  grid-template-columns: 70px max-content 10% 1fr 1fr;
   grid-template-rows: max-content;
   grid-row-gap: 10px;
   ${(props: { type: string }) => getGridAreas(props.type)}
@@ -89,6 +89,12 @@ export const SingleReplyUserAvatar = styled.img.attrs({
   height: 100%;
   object-fit: contain;
   border-radius: 50%;
+`;
+
+export const SingleReplyLikeButton = styled.div.attrs({
+  className: "SingleReplyLikeButton"
+})`
+  grid-area: SingleReplyLikeButton;
 `;
 
 export const SingleReplyDate = styled.div.attrs({
