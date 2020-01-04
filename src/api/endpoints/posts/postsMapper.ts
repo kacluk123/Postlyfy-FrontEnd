@@ -24,6 +24,7 @@ export const singlePostUnpacker = (
   totalComments: post.totalComments,
   userPicture: post.userPicture,
   likes: post.likes,
+  likesCount: post.likesCount
 });
 
 export const addPostPacker = (

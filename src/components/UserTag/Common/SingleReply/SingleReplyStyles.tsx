@@ -6,17 +6,17 @@ const getGridAreas = (type: string) => {
     [REPLY_TYPE.POST]: css`
       grid-template-areas:
         "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate SingleReplyLikeButton"
-        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyLikeButton"
-        "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions SingleReplyLikeButton"
-        "SingleReplyUserAvatar Comments Comments Comments SingleReplyLikeButton";
+        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyContent"
+        "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions SingleReplyActions"
+        "SingleReplyUserAvatar Comments Comments Comments Comments";
 
       @media (max-width: 500px) {
         & {
           grid-template-areas:
-            "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate"
-            "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent"
-            "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions"
-            "Comments Comments Comments Comments";
+            "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate SingleReplyLikeButton"
+            "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyContent"
+            "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions SingleReplyActions"
+            "Comments Comments Comments Comments Comments";
         }
 
       };
@@ -24,7 +24,7 @@ const getGridAreas = (type: string) => {
     [REPLY_TYPE.DEFAULT]: css`
       grid-template-areas:
         "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate SingleReplyLikeButton"
-        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyLikeButton";
+        "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyContent";
     `
   };
 
@@ -51,7 +51,7 @@ export const SingleReply = styled.div.attrs({
   border-radius: 2px;
   display: grid;
   min-height: 140px;
-  grid-template-columns: 70px max-content 10% 1fr 1fr;
+  grid-template-columns: 70px max-content 10% 1fr max-content;
   grid-template-rows: max-content;
   grid-row-gap: 10px;
   ${(props: { type: string }) => getGridAreas(props.type)}
@@ -95,6 +95,40 @@ export const SingleReplyLikeButton = styled.div.attrs({
   className: "SingleReplyLikeButton"
 })`
   grid-area: SingleReplyLikeButton;
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 5px;
+  align-items: center;
+`;
+
+export const SingleReplyLikeCount = styled.div.attrs({
+  className: "SingleReplyLikeCount"
+})`
+`;
+
+export const SingleReplyLikeButtonIcon = styled.div.attrs({
+  className: "SingleReplyLikeButtonIcon"
+})`
+  @keyframes bounceright {
+    10% {
+      transform: translateX(0);
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(-12deg);
+    }
+    100% {
+      transform: translateX(3px);
+      transform: rotate(12deg);
+    }
+  }
+
+  ${(props: { isAnimateRunning: boolean }) => props.isAnimateRunning && css`
+    animation: bounceright .11s alternate ease;
+    animation-iteration-count: 2;
+  `}
+
+  cursor: pointer;
 `;
 
 export const SingleReplyDate = styled.div.attrs({

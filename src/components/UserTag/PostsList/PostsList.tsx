@@ -6,7 +6,7 @@ import {
 } from "../../../redux/reducers/postReducer";
 import { AppState } from '../../../redux/store'
 import { MAIN_API_URL } from '../../../api/axios-instances';
-import openSocket from 'socket.io-client'
+import openSocket from 'socket.io-client';
 import Loader from "../../Common/Loader";
 import fetchPostsTHUNK from "../../../redux/async/fetchPosts";
 import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
@@ -16,6 +16,7 @@ import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
+import { getUser } from '../../../redux/reducers/userReducer';
 import { SinglePostReplyText } from './SinglePost/SinglePostStyles';
 
 interface IPostsSocketIoData {

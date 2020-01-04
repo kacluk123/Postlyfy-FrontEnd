@@ -22,10 +22,12 @@ const modifyPost = ({
   posts,
   postId,
   element,
+  callback
 }: {
   posts: SingleUIPostsResponse[],
   postId: string,
-  element: UIResponseComment | UIResponseComment[],
+  element: any,
+  callback: (post: SingleUIPostsResponse, element: any) => SingleUIPostsResponse
 }) => {
   return posts.map((post: SingleUIPostsResponse) => {
     if (post.postId !== postId) {
@@ -33,7 +35,7 @@ const modifyPost = ({
     }
     const { comments, ...otherProp } = post;
 
-    return Array.isArray(element) ? replacePostComments(post, element) : addNewComment(post, element);
+    return callback(post, element)
   });
 };
 
@@ -47,6 +49,16 @@ const replacePostComments = (otherProps: SingleUIPostsResponse, commentsData: UI
   commentsAddedInCurrentSession: [],
   comments: commentsData,
 });
+
+const toggleLike = (post: SingleUIPostsResponse, userId: string): SingleUIPostsResponse => {
+  const isPostLikedByUser = post.likes.includes(userId);
+
+  return {
+    ...post,
+    likesCount: isPostLikedByUser ? post.likesCount - 1 : post.likesCount + 1,
+    likes: isPostLikedByUser ? post.likes.filter((id: string) => id !== userId) : [...post.likes, userId]
+  };
+};
 
 const addPosts = ({
   oldPosts,
@@ -123,6 +135,18 @@ export function postsReducer(
         ...state,
         pending: false,
         errors: action.error.messages
+      };
+    }
+
+    case POSTS_ACTIONS_NAMES.TOGGLE_POST_LIKE: {
+      return {
+        ...state,
+        posts: modifyPost({
+          element: action.payload.userId,
+          postId: action.payload.postId,
+          posts: state.posts,
+          callback: toggleLike,
+        })
       };
     }
 

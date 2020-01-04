@@ -11,15 +11,17 @@ export interface SingleServerPostsResponse {
   addedAt: string;
   comments: SingleServerResponseComment[];
   totalComments: number;
-  likes: number;
+  likes: string[];
   userPicture: string | null;
+  likesCount: number;
 }
 
 export interface SingleUIPostsResponse {
   postId: string;
   author: string;
   content: string;
-  likes: number;
+  likes: string[];
+  likesCount: number;
   createdAt: string;
   userPicture: string | null;
   comments: UIResponseComment[];

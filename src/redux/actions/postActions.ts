@@ -11,12 +11,18 @@ export enum POSTS_ACTIONS_NAMES {
   FETCH_POSTS_PENDING = "FETCH_PRODUCTS_PENDING",
   FETCH_POSTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS",
   FETCH_POSTS_ERROR = "FETCH_PRODUCTS_ERROR",
+  TOGGLE_POST_LIKE = "TOGGLE_POST_LIKE",
   ADD_NEW_POST = "ADD_NEW_POST",
   ADD_COMMENT_TO_POST = "ADD_COMMENT_TO_POST",
   LOAD_MORE_COMMENTS = "LOAD_MORE_COMMENTS"
 }
 
 export type addPostsTypes = 'initial' | 'loadMore' | 'loadNew';
+
+interface ITogglePostLikePayload {
+  postId: string;
+  userId: string;
+};
 
 export interface IPostsBaseAction {
   type: POSTS_ACTIONS_NAMES;
@@ -52,13 +58,19 @@ export interface IloadMoreComments extends IPostsBaseAction {
   type: POSTS_ACTIONS_NAMES.LOAD_MORE_COMMENTS;
 }
 
+export interface ITogglePostLike extends IPostsBaseAction {
+  payload: ITogglePostLikePayload;
+  type: POSTS_ACTIONS_NAMES.TOGGLE_POST_LIKE;
+}
+
 export type PostsActions =
   | IfetchPostsPending
   | IfetchProductsSuccess
   | IaddNewPost
   | IfetchProductsError
   | IaddNewComment
-  | IloadMoreComments;
+  | IloadMoreComments
+  | ITogglePostLike;
 
 export function fetchProductsSuccess(
   posts: UIPostsResponse,
@@ -103,6 +115,13 @@ export function addNewComment(comment: UIResponseCommentPatch): IaddNewComment {
 export function loadMoreComments(payload: IUIGetComments): IloadMoreComments {
   return {
     type: POSTS_ACTIONS_NAMES.LOAD_MORE_COMMENTS,
+    payload,
+  };
+};
+
+export function togglePostLike(payload: ITogglePostLikePayload): ITogglePostLike {
+  return {
+    type: POSTS_ACTIONS_NAMES.TOGGLE_POST_LIKE,
     payload,
   };
 };

@@ -7,6 +7,9 @@ import moment from "moment";
 import reactStringReplace from "react-string-replace";
 import Comments from "./Comments";
 import SingleReply from "../../Common/SingleReply";
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
+import { togglePostLike, POSTS_ACTIONS_NAMES } from '../../../../redux/actions/postActions';
 
 const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
@@ -34,8 +37,13 @@ const SinglePostComponent = ({
   comments,
   commentsAddedInCurrentSession,
   totalComments,
-  userPicture
+  userPicture,
+  likes,
+  likesCount
 }: SingleUIPostsResponse) => {
+  const user = useSelector(getUser);
+  const dispatch = useDispatch();
+  const isUserAuth = useSelector(isAuth);
   const [isCommentInputShowed, setVisibilityOfCommentInput] = React.useState<
     boolean
   >(false);
@@ -44,9 +52,17 @@ const SinglePostComponent = ({
     setVisibilityOfCommentInput(false)
   }, []);
 
-  const togglePostLike = async () => {
+  const toggleSinglePostLike = async () => {
+    if (user?.id) {
+      dispatch(togglePostLike({
+        userId: user?.id,
+        postId,
+      }));
+    }
     await toggleLike(postId);
-  }
+  };
+
+  const isLikedByUser = user && likes.includes(user.id);
 
   return (
     <SingleReply
@@ -54,6 +70,10 @@ const SinglePostComponent = ({
       content={replaceHashTags(addNewLine(content))}
       createdAt={moment(createdAt).format("MMM Do YY")}
       avatar={userPicture}
+      isLiked={isLikedByUser}
+      isAuth={isUserAuth}
+      onLikeButtonClick={toggleSinglePostLike}
+      likesCount={likesCount}
       type="post"
     >
       <Comments
