@@ -104,6 +104,27 @@ export const SingleReplyLikeButton = styled.div.attrs({
 export const SingleReplyLikeCount = styled.div.attrs({
   className: "SingleReplyLikeCount"
 })`
+  @keyframes showWithOpacity {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    } to {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  ${(props: { isAnimateRunning: boolean, isLiked: boolean }) => props.isAnimateRunning && css`
+    ${props.isLiked ? css`
+      animation: showWithOpacity .3s alternate-reverse ease;
+    ` : css `
+      animation: showWithOpacity .3s alternate ease;
+    `}
+
+  `}
+
+  display: flex;
+  align-items: flex-start;
 `;
 
 export const SingleReplyLikeButtonIcon = styled.div.attrs({
@@ -127,7 +148,7 @@ export const SingleReplyLikeButtonIcon = styled.div.attrs({
     animation: bounceright .11s alternate ease;
     animation-iteration-count: 2;
   `}
-
+  
   cursor: pointer;
 `;
 

@@ -35,7 +35,12 @@ const SingleReply = ({
             onLikeButtonClick();
           }} color={isLikeDisabled ? "disabled" : "primary"} />
         </Styled.SingleReplyLikeButtonIcon>
-        <Styled.SingleReplyLikeCount>
+        <Styled.SingleReplyLikeCount
+          isLiked={isLiked}
+          isAnimateRunning={isAnimateRunning}
+          onClick={() => {
+            setAnimationRunning(true);
+        }}>
           {likesCount}
         </Styled.SingleReplyLikeCount>
       </Styled.SingleReplyLikeButton>

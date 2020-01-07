@@ -106,6 +106,13 @@ export function postsReducer(
       };
     }
 
+    case POSTS_ACTIONS_NAMES.DELETE_POST: {
+      return {
+        ...state,
+        posts: [...state.posts].filter((post: SingleUIPostsResponse) => post.postId !== action.postId);
+      };
+    }
+
     case POSTS_ACTIONS_NAMES.ADD_COMMENT_TO_POST: {
       return {
         ...state,

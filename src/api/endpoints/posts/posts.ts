@@ -16,6 +16,7 @@ import * as Types from "./postsTypes";
 
 const getPostsUrl = (tag: string) => `/posts/get-posts/${tag}`;
 const addPostUrl = (tag: string) => `/posts/add-post/${tag}`;
+const deletePostUrl = (postId: string) => `/posts/delete-post/${postId}`;
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 const getCommentsURL = (postId: string) => `/posts/comments/${postId}`;
 const toggleLikeUrl = (postId: string) => `/posts/toggle-like/${postId}`;
@@ -50,6 +51,22 @@ export const addPosts = async (
       }
     );
     return singlePostUnpacker(data);
+  } catch (err) {
+    return err;
+  }
+};
+
+export const deletePost = async (
+  postId: string,
+): Promise<void> => {
+  try {
+    await mainApi.delete<Types.SingleServerPostsResponse>(
+      deletePostUrl(postId),
+      {
+        withCredentials: true
+      }
+    );
+
   } catch (err) {
     return err;
   }

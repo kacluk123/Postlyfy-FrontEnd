@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Styled from "./SinglePostStyles";
 import { SingleUIPostsResponse } from "../../../../api/endpoints/posts/postsTypes";
-import { toggleLike } from "../../../../api/endpoints/posts/posts";
+import { toggleLike, deletePost } from "../../../../api/endpoints/posts/posts";
 import * as Icon from "../../../Common/Icons/Icons";
 import moment from "moment";
 import reactStringReplace from "react-string-replace";
@@ -9,7 +9,8 @@ import Comments from "./Comments";
 import SingleReply from "../../Common/SingleReply";
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
-import { togglePostLike, POSTS_ACTIONS_NAMES } from '../../../../redux/actions/postActions';
+import { togglePostLike, POSTS_ACTIONS_NAMES, deletePostAction } from '../../../../redux/actions/postActions';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
@@ -62,6 +63,15 @@ const SinglePostComponent = ({
     await toggleLike(postId);
   };
 
+  const deletePostFromList = async () => {
+    try {
+      await deletePost(postId);
+      dispatch(deletePostAction(postId));
+    } catch {
+      console.log('failed to delete post')
+    }
+  };
+
   const isLikedByUser = user && likes.includes(user.id);
 
   return (
@@ -89,6 +99,7 @@ const SinglePostComponent = ({
       >
         Reply
       </Styled.SinglePostReplyText>
+      <DeleteOutlineIcon onClick={deletePostFromList} color='primary' />
     </SingleReply>
   );
 };
