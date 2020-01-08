@@ -3,6 +3,7 @@ import * as Styled from "./SingleReplyStyles";
 import * as Types from "./SingleReplyTypes";
 import * as Icon from "../../../Common/Icons/Icons";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const SingleReply = ({
   author,
@@ -14,13 +15,25 @@ const SingleReply = ({
   isAuth,
   isLiked,
   likesCount,
-  onLikeButtonClick
+  onLikeButtonClick,
+  isPostDeleting = false,
+  isPostDeleted = false,
+  handleAnimationEnd
 }: Types.ISingleReply) => {
   const isLikeDisabled = !isAuth || !isLiked;
   const [isAnimateRunning, setAnimationRunning] = React.useState<boolean>(false);
-
+  console.log(isPostDeleting)
   return (
-    <Styled.SingleReply type={type}>
+    <Styled.SingleReply
+      type={type}
+      isPostDeleting={isPostDeleting}
+      isPostDeleted={isPostDeleted}
+      onAnimationEnd={(event: React.AnimationEvent<HTMLDivElement>) => {
+        if (event.animationName === 'deecreseHeight') {
+          handleAnimationEnd();
+        }
+      }}
+    >
       {children}
       <Styled.SingleReplyUserName>{author}</Styled.SingleReplyUserName>
       <Styled.SingleReplyUserAvatarContainer type={type}>
@@ -46,6 +59,11 @@ const SingleReply = ({
       </Styled.SingleReplyLikeButton>
       <Styled.SingleReplyDate>{createdAt}</Styled.SingleReplyDate>
       <Styled.SingleReplyContent>{content}</Styled.SingleReplyContent>
+      {isPostDeleting && (
+        <Styled.SingleReplyLoader>
+          <CircularProgress />
+        </Styled.SingleReplyLoader>
+      )}
     </Styled.SingleReply>
   );
 };

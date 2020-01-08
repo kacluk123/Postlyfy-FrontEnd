@@ -15,4 +15,7 @@ export interface ISingleReply {
   likesCount?: number;
   isLiked?: boolean;
   isAuth?: boolean;
+  isPostDeleting?: boolean;
+  isPostDeleted?: boolean;
+  handleAnimationEnd?: () => void; 
 }

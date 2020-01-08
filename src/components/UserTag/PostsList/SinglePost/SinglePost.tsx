@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
 import { togglePostLike, POSTS_ACTIONS_NAMES, deletePostAction } from '../../../../redux/actions/postActions';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {
@@ -48,6 +49,8 @@ const SinglePostComponent = ({
   const [isCommentInputShowed, setVisibilityOfCommentInput] = React.useState<
     boolean
   >(false);
+  const [isPostDeleting, setPostDeleting] = React.useState<boolean>(false);
+  const [isPostDeleted, setPostDeleted] = React.useState<boolean>(false);
 
   const hideCommentInput = React.useCallback(() => {
     setVisibilityOfCommentInput(false)
@@ -65,11 +68,16 @@ const SinglePostComponent = ({
 
   const deletePostFromList = async () => {
     try {
+      setPostDeleting(true);
       await deletePost(postId);
-      dispatch(deletePostAction(postId));
+      setPostDeleted(true);
     } catch {
       console.log('failed to delete post')
     }
+  };
+
+  const deletePostLocal = () => {
+    dispatch(deletePostAction(postId));
   };
 
   const isLikedByUser = user && likes.includes(user.id);
@@ -84,6 +92,9 @@ const SinglePostComponent = ({
       isAuth={isUserAuth}
       onLikeButtonClick={toggleSinglePostLike}
       likesCount={likesCount}
+      isPostDeleting={isPostDeleting}
+      isPostDeleted={isPostDeleted}
+      handleAnimationEnd={deletePostLocal}
       type="post"
     >
       <Comments
