@@ -44,7 +44,7 @@ const PostInput = ({ tag }: Types.PostInput) => {
       }
     }
   }, [tag]);
-  console.log(user)
+
   React.useEffect(() => {
     textAreaRef.current?.focus();
   }, [tag]);
@@ -54,11 +54,14 @@ const PostInput = ({ tag }: Types.PostInput) => {
       postContent: formValues.postInput,
       tags: getHashTags(formValues.postInput)
     }, tag);
+    console.log(user?.userPicture)
+    const updatedPost = {
+      ...post,
+      author: user?.name,
+      userPicture: user?.userPicture,
+    }
 
-    post.author = user?.name;
-    post.userPicture = user?.userPicture;
-
-    dispatch(addNewPost(post));
+    dispatch(addNewPost(updatedPost));
   };
 
   return (

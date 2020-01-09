@@ -33,4 +33,8 @@ export const NavbarUserDataUserAvatarContainer = styled.div.attrs({
 
 export const NavbarUserDataUserAvatar = styled.img.attrs({
   className: 'NavbarUserDataUserAvatar'
-})``;
+})`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+`;

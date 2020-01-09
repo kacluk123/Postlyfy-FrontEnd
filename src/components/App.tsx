@@ -30,6 +30,7 @@ const App = () => {
           <Route path="/register" component={Register} />
           <Route path="/posts/:tag" component={PostsList} />
           <Route path="/taglist" component={UserTag} />
+          <Redirect from="/" to="/taglist" />
         </Switch>
       </Styled.AppContent>
     </Styled.App>

@@ -10,18 +10,7 @@ export const HashtagLink = styled(Link).attrs({
 
 export const SinglePostReplyText = styled.div.attrs({
   className: "SinglePostReplyText"
-})`
-  opacity: 0.6;
-  width: 100%;
-  display: flex;
-  transition: 0.3s ease-in;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-    opacity: 0.8;
-  }
-`;
+})``;
 
 export const SinglePost = styled.div.attrs({
   className: "SinglePost"
@@ -82,8 +71,37 @@ export const SingleUserName = styled.div.attrs({
   border-bottom: 1px solid var(--tiny-grey);
 `;
 
+// export const SinglePostActionsContainer = styled.div.attrs({
+//   className: "SinglePostActionsContainer"
+// })`
+//   grid-area: SinglePostActions;
+// `;
+
 export const SinglePostActions = styled.div.attrs({
   className: "SinglePostActions"
 })`
   grid-area: SinglePostActions;
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 25px;
+  grid-auto-columns: max-content;
+`;
+
+export const SinglePostAction = styled.div.attrs({
+  className: "SinglePostAction"
+})`
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-column-gap: 5px;
+  opacity: 0.6;
+  transition: 0.3s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    .SinglePostReplyText {
+      text-decoration: underline;
+    }
+    opacity: 0.8;
+  }
 `;

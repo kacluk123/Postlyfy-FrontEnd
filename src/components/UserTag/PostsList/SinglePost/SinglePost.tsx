@@ -10,6 +10,7 @@ import SingleReply from "../../Common/SingleReply";
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
 import { togglePostLike, POSTS_ACTIONS_NAMES, deletePostAction } from '../../../../redux/actions/postActions';
+import ReplyIcon from '@material-ui/icons/Reply';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -55,6 +56,8 @@ const SinglePostComponent = ({
   const hideCommentInput = React.useCallback(() => {
     setVisibilityOfCommentInput(false)
   }, []);
+
+  const isAuthor = user?.name === author;
 
   const toggleSinglePostLike = async () => {
     if (user?.id) {
@@ -105,12 +108,23 @@ const SinglePostComponent = ({
         hideCommentInput={hideCommentInput}
         totalComments={totalComments}
       />
-      <Styled.SinglePostReplyText
-        onClick={() => setVisibilityOfCommentInput(visible => !visible)}
-      >
-        Reply
-      </Styled.SinglePostReplyText>
-      <DeleteOutlineIcon onClick={deletePostFromList} color='primary' />
+
+      <Styled.SinglePostActions>
+        <Styled.SinglePostAction onClick={() => setVisibilityOfCommentInput(visible => !visible)}>
+          <Styled.SinglePostReplyText>
+            Reply
+          </Styled.SinglePostReplyText>
+          <ReplyIcon color='disabled' />
+        </Styled.SinglePostAction>
+        {isAuthor && (
+          <Styled.SinglePostAction onClick={deletePostFromList}>
+            <Styled.SinglePostReplyText>
+              Delete post
+            </Styled.SinglePostReplyText>
+            <DeleteOutlineIcon color='disabled' />
+          </Styled.SinglePostAction>
+        )}
+      </Styled.SinglePostActions>
     </SingleReply>
   );
 };

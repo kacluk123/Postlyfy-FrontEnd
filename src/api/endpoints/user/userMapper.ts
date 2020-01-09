@@ -8,5 +8,6 @@ export const userUnpacker = (
     id: response.user._id,
     email: response.user.email,
     name: response.user.name,
+    userPicture: response.user.userPicture
   }
 });

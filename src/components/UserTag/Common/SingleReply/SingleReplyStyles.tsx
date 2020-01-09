@@ -7,7 +7,7 @@ const getGridAreas = (type: string) => {
       grid-template-areas:
         "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate SingleReplyLikeButton"
         "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyContent"
-        "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions SingleReplyActions"
+        "SingleReplyUserAvatar SinglePostActions SinglePostActions SinglePostActions SinglePostActions"
         "SingleReplyUserAvatar Comments Comments Comments Comments";
 
       @media (max-width: 500px) {
@@ -15,7 +15,7 @@ const getGridAreas = (type: string) => {
           grid-template-areas:
             "SingleReplyUserAvatar SingleReplyUserName SingleReplyDate SingleReplyDate SingleReplyLikeButton"
             "SingleReplyUserAvatar SingleReplyContent SingleReplyContent SingleReplyContent SingleReplyContent"
-            "SingleReplyUserAvatar SingleReplyActions SingleReplyActions SingleReplyActions SingleReplyActions"
+            "SingleReplyUserAvatar SinglePostActions SinglePostActions SinglePostActions SinglePostActions"
             "Comments Comments Comments Comments Comments";
         }
 
@@ -71,7 +71,7 @@ export const SingleReply = styled.div.attrs({
   display: grid;
   min-height: 140px;
   grid-template-columns: 70px max-content 10% 1fr max-content;
-  grid-template-rows: max-content;
+  grid-auto-rows: max-content;
   grid-row-gap: 10px;
   ${(props: { type: string }) => getGridAreas(props.type)}
   
@@ -99,6 +99,7 @@ export const SingleReplyUserAvatarContainer = styled.div.attrs({
   grid-area: SingleReplyUserAvatar;
   width: 50px;
   height: 50px;
+  box-shadow: -1px 0px 6px 0px rgba(143,140,147,1);
   border-radius: 50%;
   background: white;
   display: flex;
@@ -118,7 +119,6 @@ export const SingleReplyUserAvatar = styled.img.attrs({
 })`
   width: 100%;
   height: 100%;
-  object-fit: contain;
   border-radius: 50%;
 `;
 

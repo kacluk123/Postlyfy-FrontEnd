@@ -17,6 +17,7 @@ import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
 import { getUser } from '../../../redux/reducers/userReducer';
+import { resetPosts } from '../../../redux/actions/postActions';
 import { SinglePostReplyText } from './SinglePost/SinglePostStyles';
 
 interface IPostsSocketIoData {
@@ -59,6 +60,7 @@ const PostsListComponent = () => {
     }
     return () => {
       socket.off('posts', socketCallback);
+      dispatch(resetPosts());
     };
   }, []);
 
@@ -85,6 +87,7 @@ const PostsListComponent = () => {
     }
     return () => {
       socket.off('posts', socketCallback);
+      dispatch(resetPosts());
     };
   }, [tag]);
 

@@ -4,6 +4,7 @@ import * as Types from "./SingleReplyTypes";
 import * as Icon from "../../../Common/Icons/Icons";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { REPLY_TYPE } from "./SingleReplyTypes";
 
 const SingleReply = ({
   author,
@@ -30,24 +31,28 @@ const SingleReply = ({
       isPostDeleted={isPostDeleted}
       onAnimationEnd={(event: React.AnimationEvent<HTMLDivElement>) => {
         if (event.animationName === 'deecreseHeight') {
-          handleAnimationEnd();
+          if (handleAnimationEnd) {
+            handleAnimationEnd()
+          }
         }
       }}
     >
       {children}
       <Styled.SingleReplyUserName>{author}</Styled.SingleReplyUserName>
       <Styled.SingleReplyUserAvatarContainer type={type}>
-        {avatar ? <Styled.SingleReplyUserAvatar src={avatar}/> : <Icon.User height="100%" width="100%" />}
+        {avatar ? <Styled.SingleReplyUserAvatar src={avatar}/> : <Icon.User height="80%" width="80%" />}
       </Styled.SingleReplyUserAvatarContainer>
       <Styled.SingleReplyLikeButton>
-        <Styled.SingleReplyLikeButtonIcon
-          onAnimationEnd={() => setAnimationRunning(false)}
-          isAnimateRunning={isAnimateRunning}>
-          <ThumbUpIcon onClick={() => {
-            setAnimationRunning(true);
-            onLikeButtonClick();
-          }} color={isLikeDisabled ? "disabled" : "primary"} />
-        </Styled.SingleReplyLikeButtonIcon>
+        {type === REPLY_TYPE.POST && (
+          <Styled.SingleReplyLikeButtonIcon
+            onAnimationEnd={() => setAnimationRunning(false)}
+            isAnimateRunning={isAnimateRunning}>
+            <ThumbUpIcon onClick={() => {
+              setAnimationRunning(true);
+              onLikeButtonClick();
+            }} color={isLikeDisabled ? "disabled" : "primary"} />
+          </Styled.SingleReplyLikeButtonIcon>
+        )}
         <Styled.SingleReplyLikeCount
           isLiked={isLiked}
           isAnimateRunning={isAnimateRunning}

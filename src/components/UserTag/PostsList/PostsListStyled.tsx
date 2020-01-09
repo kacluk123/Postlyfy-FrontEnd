@@ -17,7 +17,7 @@ export const Posts = styled.div.attrs({
   }
 `;
 
-export const PostsList = styled.ul.attrs({
+export const PostsList = styled.div.attrs({
   className: "PostsList"
 })`
   margin-top: 50px;

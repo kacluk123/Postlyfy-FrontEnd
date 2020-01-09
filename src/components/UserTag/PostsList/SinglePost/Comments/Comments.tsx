@@ -55,7 +55,7 @@ const Comments = ({
     });
     dispatch(loadMoreComments(commentsList));
     setLoadMoreComment(false);
-  }, [postId, comments.length]);
+  }, [postId]);
 
   const isNotAllCommentsLoaded = totalComments > 3 && canLoadMoreComment;
 

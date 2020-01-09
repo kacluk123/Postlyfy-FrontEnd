@@ -4,6 +4,6 @@ export interface StandardInputProps {
     name: string
     type?: 'password' | 'text' | 'number'
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-    errorMessage: string, 
-    isValid?: boolean
+    errorMessage?: string;
+    isValid?: boolean;
 }

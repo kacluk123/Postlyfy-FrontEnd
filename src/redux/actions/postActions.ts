@@ -15,7 +15,8 @@ export enum POSTS_ACTIONS_NAMES {
   ADD_NEW_POST = "ADD_NEW_POST",
   DELETE_POST = "DELETE_POST",
   ADD_COMMENT_TO_POST = "ADD_COMMENT_TO_POST",
-  LOAD_MORE_COMMENTS = "LOAD_MORE_COMMENTS"
+  LOAD_MORE_COMMENTS = "LOAD_MORE_COMMENTS",
+  RESET_POSTS = 'RESET_POSTS'
 }
 
 export type addPostsTypes = 'initial' | 'loadMore' | 'loadNew';
@@ -31,6 +32,10 @@ export interface IPostsBaseAction {
 
 export interface IfetchPostsPending extends IPostsBaseAction {
   type: POSTS_ACTIONS_NAMES.FETCH_POSTS_PENDING;
+}
+
+export interface IResetPosts extends IPostsBaseAction {
+  type: POSTS_ACTIONS_NAMES.RESET_POSTS;
 }
 
 export interface IfetchProductsSuccess extends IPostsBaseAction {
@@ -77,7 +82,8 @@ export type PostsActions =
   | IaddNewComment
   | IloadMoreComments
   | ITogglePostLike
-  | IDeletePost;
+  | IDeletePost
+  | IResetPosts;
 
 export function fetchProductsSuccess(
   posts: UIPostsResponse,
@@ -93,6 +99,12 @@ export function fetchProductsSuccess(
 export function fetchProductsPending(): IfetchPostsPending {
   return {
     type: POSTS_ACTIONS_NAMES.FETCH_POSTS_PENDING
+  };
+}
+
+export function resetPosts(): IResetPosts {
+  return {
+    type: POSTS_ACTIONS_NAMES.RESET_POSTS
   };
 }
 

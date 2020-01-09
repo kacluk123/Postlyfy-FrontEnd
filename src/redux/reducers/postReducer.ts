@@ -99,6 +99,14 @@ export function postsReducer(
       };
     }
 
+    case POSTS_ACTIONS_NAMES.RESET_POSTS: {
+      return {
+        ...state,
+        posts: [],
+        totalNumberOfPosts: 0,
+      };
+    }
+
     case POSTS_ACTIONS_NAMES.ADD_NEW_POST: {
       return {
         ...state,

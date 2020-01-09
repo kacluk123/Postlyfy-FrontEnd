@@ -1,6 +1,7 @@
 export interface StandardButton {
   isPending?: boolean;
   children: string;
-  disabled: boolean;
+  disabled?: boolean;
   onClick?: () => void;
+  type?: 'button' | 'reset' | 'submit';
 }
