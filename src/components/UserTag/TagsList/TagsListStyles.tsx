@@ -14,7 +14,24 @@ export const TagsListElements = styled.div.attrs({
   className: "TagsListElements"
 })`
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 `;
+
+export const TagsText = styled.div.attrs({
+  className: 'TagsText'
+})`
+  margin-top: 15px;
+  font-size: 16px;
+  color: white;
+`
+
+export const MostActive = styled.div.attrs({
+  className: 'MostActive'
+})`
+  display: flex;
+  gap: 15px;
+`
 
 export const HashtagLink = styled(Link).attrs({
   className: "HashtagLink"
