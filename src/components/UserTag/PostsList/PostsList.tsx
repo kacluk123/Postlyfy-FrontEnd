@@ -74,7 +74,7 @@ const PostsListComponent = () => {
     };
 
     socket.on('posts', socketCallback);
-   
+    
     if (tag) {
       dispatch(
         fetchPostsTHUNK({

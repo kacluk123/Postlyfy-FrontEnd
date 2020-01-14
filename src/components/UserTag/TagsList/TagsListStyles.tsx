@@ -29,8 +29,28 @@ export const TagsText = styled.div.attrs({
 export const MostActive = styled.div.attrs({
   className: 'MostActive'
 })`
-  display: flex;
-  gap: 15px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+  align-items: center;
+
+  & {
+    .MuiSelect-selectMenu {
+      font-size: 16px;
+      color: white;
+      margin-top: 16px;
+    }
+
+    .MuiSelect-icon {
+      color: var(--medium-grey);
+    }
+
+    .MuiInput-underline {
+      &:before {
+        border-bottom: 1px solid var(--medium-grey);
+      }
+    }
+  }
 `
 
 export const HashtagLink = styled(Link).attrs({

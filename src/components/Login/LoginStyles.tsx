@@ -21,3 +21,11 @@ export const LoginContainer = styled.div.attrs({
   align-items: center;
   justify-content: center;
 `;
+
+export const LoginServerMessages = styled.div.attrs({
+  className: "RegisterServerMessages"
+})`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;

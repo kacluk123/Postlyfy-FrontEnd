@@ -3,9 +3,9 @@ import * as Styled from "./RegisterStyles";
 import StandardInput from "../Common/StandardInput/StandardInput";
 import Button from "../Common/Button";
 import ServerMessageViewComponent from "../Common/ServerMessageView";
+import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 import useForm from "../../hooks/useForm";
 import * as API from "../../api/endpoints/auth/signup/signup";
-import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 import { IRegisterFormTypes } from "./RegisterTypes";
 
 const RegisterComponent = () => {

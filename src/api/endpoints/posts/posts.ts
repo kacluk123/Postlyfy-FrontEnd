@@ -28,7 +28,13 @@ export const getPosts = async (
     const { data } = await mainApi.get(getPostsUrl(payload.tag), {
       params: {
         limit: payload.limit,
-        offset: payload.offset
+        offset: payload.offset,
+        sorting: {
+          sort: '-addedAt',
+          match: {
+            tags: payload.tag
+          }
+        }
       }
     });
 
