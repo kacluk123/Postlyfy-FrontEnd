@@ -35,7 +35,7 @@ const modifyPost = ({
     }
     const { comments, ...otherProp } = post;
 
-    return callback(post, element)
+    return callback(post, element);
   });
 };
 

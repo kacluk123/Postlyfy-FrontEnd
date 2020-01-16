@@ -66,9 +66,9 @@ export const SingleReply = styled.div.attrs({
   width: 100%;
   position: relative;
   padding: 10px 20px 10px 20px;
+  display: grid;
   background: #edecea;
   border-radius: 2px;
-  display: grid;
   min-height: 140px;
   grid-template-columns: 70px max-content 10% 1fr max-content;
   grid-auto-rows: max-content;

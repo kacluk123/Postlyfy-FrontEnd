@@ -19,6 +19,7 @@ import { useParams } from "react-router";
 import { getUser } from '../../../redux/reducers/userReducer';
 import { resetPosts } from '../../../redux/actions/postActions';
 import { SinglePostReplyText } from './SinglePost/SinglePostStyles';
+import PostsFilters from './PostsFilters';
 
 interface IPostsSocketIoData {
   action: 'create';
@@ -131,6 +132,7 @@ const PostsListComponent = () => {
   return (
     <Styled.Posts>
       <Styled.PostsListContainer>
+        <PostsFilters />
         <PostInput tag={tag} />
         {postListCountDifference > 0 && <Styled.LoadMorePosts onClick={LoadMoreComments}>
           <Styled.PostsListNewPostsCount>
