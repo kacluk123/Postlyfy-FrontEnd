@@ -13,26 +13,30 @@ import {
   UIServerMessages,
   isApiResonseHasError
 } from "../../api/endpoints/common/errorDataUnpacker";
+import { matchWithOperator, ISingleMatch } from '../reducers/postsFilterReducer';
 
 interface FetchPostsParams {
   offset: number;
   limit: number;
   postsModifyType: addPostsTypes;
-  tag: string;
+  sorting: {
+    sort: string[]
+    match: matchWithOperator | ISingleMatch;
+  };
 }
 
 export const fetchPosts = ({
   offset,
   limit,
   postsModifyType,
-  tag
+  sorting
 }: FetchPostsParams): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     if (postsModifyType === 'initial') {
       dispatch(fetchProductsPending());
     }
 
-    const data = await getPosts({ offset, limit, tag });
+    const data = await getPosts({ offset, limit, sorting });
     
     if (isApiResonseHasError(data)) {
       dispatch(fetchProductsSuccess(data, postsModifyType));

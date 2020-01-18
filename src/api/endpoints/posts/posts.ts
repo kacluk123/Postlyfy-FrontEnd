@@ -29,12 +29,7 @@ export const getPosts = async (
       params: {
         limit: payload.limit,
         offset: payload.offset,
-        sorting: {
-          sort: ['-likesCount', '-addedAt'],
-          match: {
-            tags: payload.tag
-          }
-        }
+        sorting: payload.sorting
       }
     });
 

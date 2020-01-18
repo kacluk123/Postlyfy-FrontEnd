@@ -17,6 +17,7 @@ import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
 import { getUser } from '../../../redux/reducers/userReducer';
+import { getSorting } from '../../../redux/reducers/postsFilterReducer';
 import { resetPosts } from '../../../redux/actions/postActions';
 import { SinglePostReplyText } from './SinglePost/SinglePostStyles';
 import PostsFilters from './PostsFilters';
@@ -30,6 +31,7 @@ interface IPostsSocketIoData {
 const PostsListComponent = () => {
   const posts = useSelector(getPosts);
   const pending = useSelector(getPostsPending);
+  const sorting = useSelector(getSorting);
   const localTotalPostCount = useSelector(getTotalPosts);
   const [serverTotalPostCount, setServerTotalPostCount] = React.useState<number>(0);
   const dispatch = useDispatch();
@@ -124,7 +126,7 @@ const PostsListComponent = () => {
       );
     }
   };
-
+  console.log(sorting)
   if (pending) {
     return <Loader />;
   }
@@ -132,8 +134,8 @@ const PostsListComponent = () => {
   return (
     <Styled.Posts>
       <Styled.PostsListContainer>
-        <PostsFilters />
         <PostInput tag={tag} />
+        <PostsFilters />
         {postListCountDifference > 0 && <Styled.LoadMorePosts onClick={LoadMoreComments}>
           <Styled.PostsListNewPostsCount>
           {postListCountDifference}&nbsp;

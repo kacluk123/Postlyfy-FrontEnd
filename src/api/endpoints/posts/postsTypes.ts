@@ -1,7 +1,13 @@
+import { matchWithOperator, ISingleMatch } from '../../../redux/reducers/postsFilterReducer';
+
 export interface GetPostsPayload {
   limit: number;
   offset: number;
   tag: string;
+  sorting: {
+    sort: string[];
+    match: matchWithOperator | ISingleMatch
+  }
 }
 
 export interface SingleServerPostsResponse {
