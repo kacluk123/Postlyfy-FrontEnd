@@ -14,7 +14,7 @@ import {
 } from "../common/errorDataUnpacker";
 import * as Types from "./postsTypes";
 
-const getPostsUrl = (tag: string) => `/posts/get-posts/${tag}`;
+const getPostsUrl = () => `/posts/get-posts/`;
 const addPostUrl = (tag: string) => `/posts/add-post/${tag}`;
 const deletePostUrl = (postId: string) => `/posts/delete-post/${postId}`;
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
@@ -25,7 +25,7 @@ export const getPosts = async (
   payload: Types.GetPostsPayload
 ): Promise<Types.UIPostsResponse | UIServerMessages> => {
   try {
-    const { data } = await mainApi.get(getPostsUrl(payload.tag), {
+    const { data } = await mainApi.get(getPostsUrl(), {
       params: {
         limit: payload.limit,
         offset: payload.offset,

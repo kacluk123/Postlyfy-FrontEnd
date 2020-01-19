@@ -17,8 +17,9 @@ import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
 import { getUser } from '../../../redux/reducers/userReducer';
-import { getSorting } from '../../../redux/reducers/postsFilterReducer';
+import { getSorting, getSortingType } from '../../../redux/reducers/postsFilterReducer';
 import { resetPosts } from '../../../redux/actions/postActions';
+import { changeAllSorting } from '../../../redux/actions/postsFiltersActions';
 import { SinglePostReplyText } from './SinglePost/SinglePostStyles';
 import PostsFilters from './PostsFilters';
 
@@ -36,6 +37,8 @@ const PostsListComponent = () => {
   const [serverTotalPostCount, setServerTotalPostCount] = React.useState<number>(0);
   const dispatch = useDispatch();
   const isMaxScroll = useWindowScroll();
+  const sortingType = useSelector(getSortingType)
+
   const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
   const { tag } = useParams();
   const postListCountDifference = serverTotalPostCount - localTotalPostCount;
@@ -44,6 +47,8 @@ const PostsListComponent = () => {
     setServerTotalPostCount(0);
     const socket = openSocket(MAIN_API_URL);
     const socketCallback = (data: IPostsSocketIoData) => {
+      console.log(data)
+
       if (data.action === 'create' && data.serverTag === tag) {
         setServerTotalPostCount(data.getTotalNumberOfPostsInTag);
       }
@@ -53,11 +58,12 @@ const PostsListComponent = () => {
    
     if (tag) {
       dispatch(
-        fetchPostsTHUNK({
-          offset: 0,
-          limit: 10,
-          postsModifyType: 'initial',
-          tag
+        changeAllSorting({
+          sort: ['-addedAt'],
+          match: {
+            tags: tag
+          },
+          sortingType: 'newest',
         })
       );
     }
@@ -69,30 +75,21 @@ const PostsListComponent = () => {
 
   React.useEffect(() => {
     setServerTotalPostCount(0);
-    const socket = openSocket(MAIN_API_URL);
-    const socketCallback = (data: IPostsSocketIoData) => {
-      if (data.action === 'create' && data.serverTag === tag) {
-        setServerTotalPostCount(data.getTotalNumberOfPostsInTag);
-      }
-    };
-
-    socket.on('posts', socketCallback);
-    
-    if (tag) {
+    console.log(sorting)
+    if (tag && sorting?.match && sorting?.sort ) {
       dispatch(
         fetchPostsTHUNK({
           offset: 0,
           limit: 10,
           postsModifyType: 'initial',
-          tag
+          sorting: {
+            match: sorting.match,
+            sort: sorting.sort
+          },
         })
       );
     }
-    return () => {
-      socket.off('posts', socketCallback);
-      dispatch(resetPosts());
-    };
-  }, [tag]);
+  }, [sorting]);
 
   React.useEffect(() => {
     if (isMaxScroll && posts.length !== localTotalPostCount) {
@@ -104,7 +101,7 @@ const PostsListComponent = () => {
               limit: 10,
               offset: posts.length,
               postsModifyType: 'loadMore',
-              tag
+              sorting
             })
           );
         }
@@ -115,15 +112,28 @@ const PostsListComponent = () => {
   }, [isMaxScroll]);
   
   const LoadMoreComments = () => {
+    
     if (tag) {
-      dispatch(
-        fetchPostsTHUNK({
-          limit: postListCountDifference,
-          offset: 0,
-          postsModifyType: 'loadNew',
-          tag
-        })
-      );
+      if (sortingType === 'newest') {
+        dispatch(
+          fetchPostsTHUNK({
+            limit: postListCountDifference,
+            offset: 0,
+            postsModifyType: 'loadNew',
+            sorting
+          })
+        );
+      } else {
+        dispatch(
+          changeAllSorting({
+            sort: ['-addedAt'],
+            match: {
+              tags: tag
+            },
+            sortingType: 'newest',
+          })
+        );
+      }
     }
   };
   console.log(sorting)

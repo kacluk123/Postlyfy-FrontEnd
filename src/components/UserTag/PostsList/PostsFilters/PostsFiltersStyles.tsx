@@ -6,9 +6,10 @@ export const PostsFilters = styled.div.attrs({
   background: #edecea;
   border-radius: 2px;
   height: 90px;
-  background: var(--grey-special);
   margin-top: 10px;
   padding: 15px;
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 15px;
   justify-content: center;
 `;

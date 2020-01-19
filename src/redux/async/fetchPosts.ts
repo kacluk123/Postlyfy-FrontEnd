@@ -35,7 +35,6 @@ export const fetchPosts = ({
     if (postsModifyType === 'initial') {
       dispatch(fetchProductsPending());
     }
-
     const data = await getPosts({ offset, limit, sorting });
     
     if (isApiResonseHasError(data)) {
