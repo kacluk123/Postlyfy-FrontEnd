@@ -2,17 +2,15 @@ import * as React from "react";
 import * as Styled from "./SinglePostStyles";
 import { SingleUIPostsResponse } from "../../../../api/endpoints/posts/postsTypes";
 import { toggleLike, deletePost } from "../../../../api/endpoints/posts/posts";
-import * as Icon from "../../../Common/Icons/Icons";
 import moment from "moment";
 import reactStringReplace from "react-string-replace";
 import Comments from "./Comments";
 import SingleReply from "../../Common/SingleReply";
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
-import { togglePostLike, POSTS_ACTIONS_NAMES, deletePostAction } from '../../../../redux/actions/postActions';
+import { togglePostLike, deletePostAction } from '../../../../redux/actions/postActions';
 import ReplyIcon from '@material-ui/icons/Reply';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 const replaceHashTags = (content: string | React.ReactNodeArray) =>
   reactStringReplace(content, /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, (match, i) => {

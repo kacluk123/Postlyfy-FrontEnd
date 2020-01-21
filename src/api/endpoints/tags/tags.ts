@@ -1,6 +1,5 @@
 import { mainApi } from "../../axios-instances";
 import { tagsUnpacker } from "./tagsMapper";
-import moment, { Moment } from 'moment';
 import {
   serverMessageUnpacker,
   UIServerMessages

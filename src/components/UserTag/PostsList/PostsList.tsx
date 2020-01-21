@@ -4,23 +4,19 @@ import {
   getPostsPending,
   getTotalPosts
 } from "../../../redux/reducers/postReducer";
-import { AppState } from '../../../redux/store'
 import { MAIN_API_URL } from '../../../api/axios-instances';
 import openSocket from 'socket.io-client';
 import Loader from "../../Common/Loader";
 import fetchPostsTHUNK from "../../../redux/async/fetchPosts";
-import { SingleUIPostsResponse } from "../../../api/endpoints/posts/postsTypes";
 import * as React from "react";
 import SinglePost from "./SinglePost";
 import * as Styled from "./PostsListStyled";
 import useWindowScroll from "../../../hooks/useWindowScroll";
 import PostInput from "../PostInput";
 import { useParams } from "react-router";
-import { getUser } from '../../../redux/reducers/userReducer';
 import { getSorting, getSortingType } from '../../../redux/reducers/postsFilterReducer';
 import { resetPosts } from '../../../redux/actions/postActions';
 import { changeAllSorting } from '../../../redux/actions/postsFiltersActions';
-import { SinglePostReplyText } from './SinglePost/SinglePostStyles';
 import PostsFilters from './PostsFilters';
 
 interface IPostsSocketIoData {
@@ -37,17 +33,16 @@ const PostsListComponent = () => {
   const [serverTotalPostCount, setServerTotalPostCount] = React.useState<number>(0);
   const dispatch = useDispatch();
   const isMaxScroll = useWindowScroll();
-  const sortingType = useSelector(getSortingType)
+  const sortingType = useSelector(getSortingType);
 
   const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
-  const { tag } = useParams();
+  const { tag } = useParams<{tag: string}>();
   const postListCountDifference = serverTotalPostCount - localTotalPostCount;
 
   React.useEffect(() => {
     setServerTotalPostCount(0);
     const socket = openSocket(MAIN_API_URL);
     const socketCallback = (data: IPostsSocketIoData) => {
-      console.log(data)
 
       if (data.action === 'create' && data.serverTag === tag) {
         setServerTotalPostCount(data.getTotalNumberOfPostsInTag);
@@ -55,18 +50,15 @@ const PostsListComponent = () => {
     };
 
     socket.on('posts', socketCallback);
-   
-    if (tag) {
-      dispatch(
-        changeAllSorting({
-          sort: ['-addedAt'],
-          match: {
-            tags: tag
-          },
-          sortingType: 'newest',
-        })
-      );
-    }
+    dispatch(
+      changeAllSorting({
+        sort: ['-addedAt'],
+        match: {
+          tags: tag
+        },
+        sortingType: 'newest',
+      })
+    );
     return () => {
       socket.off('posts', socketCallback);
       dispatch(resetPosts());
@@ -75,27 +67,23 @@ const PostsListComponent = () => {
 
   React.useEffect(() => {
     setServerTotalPostCount(0);
-    console.log(sorting)
-    if (tag && sorting?.match && sorting?.sort ) {
-      dispatch(
-        fetchPostsTHUNK({
-          offset: 0,
-          limit: 10,
-          postsModifyType: 'initial',
-          sorting: {
-            match: sorting.match,
-            sort: sorting.sort
-          },
-        })
-      );
-    }
+    dispatch(
+      fetchPostsTHUNK({
+        offset: 0,
+        limit: 10,
+        postsModifyType: 'initial',
+        sorting: {
+          match: sorting.match,
+          sort: sorting.sort
+        },
+      })
+    );
   }, [sorting]);
 
   React.useEffect(() => {
     if (isMaxScroll && posts.length !== localTotalPostCount) {
       setOnScrollPending(true);
       try {
-        if (tag) {
           dispatch(
             fetchPostsTHUNK({
               limit: 10,
@@ -104,7 +92,6 @@ const PostsListComponent = () => {
               sorting
             })
           );
-        }
       } finally {
         setOnScrollPending(false);
       }
@@ -112,8 +99,6 @@ const PostsListComponent = () => {
   }, [isMaxScroll]);
   
   const LoadMoreComments = () => {
-    
-    if (tag) {
       if (sortingType === 'newest') {
         dispatch(
           fetchPostsTHUNK({
@@ -134,9 +119,8 @@ const PostsListComponent = () => {
           })
         );
       }
-    }
   };
-  console.log(sorting)
+
   if (pending) {
     return <Loader />;
   }
@@ -156,7 +140,7 @@ const PostsListComponent = () => {
             ({
               postId,
               ...params
-            }: SingleUIPostsResponse) => (
+            }) => (
               <SinglePost
                 key={postId}
                 postId={postId}

@@ -7,7 +7,6 @@ import { getUser as getUserData } from "../../api/endpoints/user/user";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import {
-  UIServerMessages,
   isApiResonseHasError
 } from "../../api/endpoints/common/errorDataUnpacker";
 

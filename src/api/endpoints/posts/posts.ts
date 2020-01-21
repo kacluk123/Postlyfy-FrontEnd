@@ -5,7 +5,6 @@ import {
   addCommentPacker,
   singlePostUnpacker,
   commentsUnpacker,
-  singleCommentUnpacker,
   singleCommentUnpackerPatch
 } from "./postsMapper";
 import {

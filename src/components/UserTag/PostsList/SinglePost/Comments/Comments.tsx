@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as Styled from "./CommentsStyles";
-import StandardTextArea from "../../../../Common/StandardTextArea";
 import * as Types from "./CommentsTypes";
 import * as API from "../../../../../api/endpoints/posts/posts";
 import useForm from "../../../../../hooks/useForm";

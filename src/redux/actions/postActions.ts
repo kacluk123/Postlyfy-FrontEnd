@@ -3,7 +3,6 @@ import {
   SingleUIPostsResponse,
   UIResponseCommentPatch,
   IUIGetComments,
-  UIResponseComment,
 } from "../../api/endpoints/posts/postsTypes";
 import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
 

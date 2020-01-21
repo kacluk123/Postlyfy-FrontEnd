@@ -7,9 +7,9 @@ import { postFiltersReducer } from "../redux/reducers/postsFilterReducer";
 const middlewares = [thunk];
 
 const rootReducer = combineReducers({
-  userReducer,
   postsReducer,
-  postFiltersReducer
+  postFiltersReducer,
+  userReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));

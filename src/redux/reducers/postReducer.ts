@@ -33,7 +33,6 @@ const modifyPost = ({
     if (post.postId !== postId) {
       return post;
     }
-    const { comments, ...otherProp } = post;
 
     return callback(post, element);
   });
@@ -117,7 +116,7 @@ export function postsReducer(
     case POSTS_ACTIONS_NAMES.DELETE_POST: {
       return {
         ...state,
-        posts: [...state.posts].filter((post: SingleUIPostsResponse) => post.postId !== action.postId);
+        posts: [...state.posts].filter((post: SingleUIPostsResponse) => post.postId !== action.postId),
       };
     }
 

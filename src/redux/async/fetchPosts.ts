@@ -8,9 +8,7 @@ import {
 import { getPosts } from "../../api/endpoints/posts/posts";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import { UIPostsResponse } from "../../api/endpoints/posts/postsTypes";
 import {
-  UIServerMessages,
   isApiResonseHasError
 } from "../../api/endpoints/common/errorDataUnpacker";
 import { matchWithOperator, ISingleMatch } from '../reducers/postsFilterReducer';
@@ -20,8 +18,8 @@ interface FetchPostsParams {
   limit: number;
   postsModifyType: addPostsTypes;
   sorting: {
-    sort: string[]
-    match: matchWithOperator | ISingleMatch;
+    sort?: string[]
+    match?: matchWithOperator | ISingleMatch
   };
 }
 

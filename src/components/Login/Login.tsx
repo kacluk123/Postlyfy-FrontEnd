@@ -4,7 +4,6 @@ import StandardInput from "../Common/StandardInput/StandardInput";
 import Button from "../Common/Button";
 import useForm from "../../hooks/useForm";
 import * as API from "../../api/endpoints/auth/login/login";
-import { getUser } from "../../api/endpoints/user/user";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { fetchUser } from '../../redux/async/fetchUser';

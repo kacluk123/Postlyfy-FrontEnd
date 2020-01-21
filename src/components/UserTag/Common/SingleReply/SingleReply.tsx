@@ -14,7 +14,7 @@ const SingleReply = ({
   type,
   avatar,
   isAuth,
-  isLiked,
+  isLiked = false,
   likesCount,
   onLikeButtonClick,
   isPostDeleting = false,
@@ -23,7 +23,6 @@ const SingleReply = ({
 }: Types.ISingleReply) => {
   const isLikeDisabled = !isAuth || !isLiked;
   const [isAnimateRunning, setAnimationRunning] = React.useState<boolean>(false);
-  console.log(isPostDeleting)
   return (
     <Styled.SingleReply
       type={type}

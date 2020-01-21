@@ -3,10 +3,9 @@ import { matchWithOperator, ISingleMatch } from '../../../redux/reducers/postsFi
 export interface GetPostsPayload {
   limit: number;
   offset: number;
-  tag: string;
   sorting: {
-    sort: string[];
-    match: matchWithOperator | ISingleMatch
+    sort?: string[] ;
+    match?: matchWithOperator | ISingleMatch 
   }
 }
 
