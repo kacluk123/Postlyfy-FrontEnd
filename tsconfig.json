@@ -18,6 +18,7 @@
     "outDir": "./dist/",
     "module": "commonjs",
     "target": "es5",
+    "downlevelIteration": true,
     "lib": ["es6", "dom"],
     "plugins": [
       {

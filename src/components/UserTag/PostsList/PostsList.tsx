@@ -53,9 +53,9 @@ const PostsListComponent = () => {
     dispatch(
       changeAllSorting({
         sort: ['-addedAt'],
-        match: {
+        match: [{
           tags: tag
-        },
+        }],
         sortingType: 'newest',
       })
     );

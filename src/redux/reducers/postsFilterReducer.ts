@@ -2,12 +2,10 @@ import { postsFilterActions, POSTS_FILTER_NAMES } from '../actions/postsFiltersA
 import { AppState } from '../store';
 import { createSelector } from 'reselect'; 
 
-type logicalSortingOperator = "$gt";
+// type logicalSortingOperator = "$gt";
 
 export interface ISingleMatch {
-  [k: string]: string | {
-    [k in logicalSortingOperator]: string;
-  };
+  [k: string]: string;
 };
 
 type matchOperators = "$or" | "$and";
@@ -19,12 +17,12 @@ export type matchWithOperator = {
 interface InitialStateType {
   readonly sortingType: string;
   readonly sort: null | string[];
-  readonly match: matchWithOperator | ISingleMatch | null;
+  readonly match: ISingleMatch[] | null;
 }
 
 const initialState: InitialStateType = {
   sort: null,
-  match: null,
+  match: [],
   sortingType: 'Newest'
 };
 
@@ -47,10 +45,51 @@ export function postFiltersReducer(
       };
     }
 
+    case POSTS_FILTER_NAMES.CHANGE_MATCH: {
+      return {
+        ...state,
+        match: changeMatchFilter(state.match, action.match),
+      };
+    }
+
+    case POSTS_FILTER_NAMES.DELETE_MATCH: {
+      return {
+        ...state,
+        match: [...state.match].filter((singleMatch) => {
+          const [key] = Object.entries(singleMatch)[0];
+
+          return key !== action.matchField;
+        })
+      };
+    }
+
     default: {
       return state;
     }
   }
+}
+
+const changeMatchFilter = (matches: ISingleMatch[] | null, actionMatch: ISingleMatch) => {
+  const [actionMatchKey, actionMatchValue] = Object.entries(actionMatch)[0];
+  const searchedMatch = matches?.find(match => {
+    const [matchKey, matchValue] = Object.entries(match)[0];
+
+    return matchKey === actionMatchKey;
+  });
+
+  if (searchedMatch) {
+    return matches?.map(match => {
+      const [matchKey, matchValue] = Object.entries(match)[0];
+
+      if (actionMatchKey === matchKey) {
+        return actionMatch;
+      }
+
+      return match;
+    });
+  }
+
+  return [...matches, actionMatch];
 }
 
 export const getMatch = (state: AppState) => state.postFiltersReducer.match;

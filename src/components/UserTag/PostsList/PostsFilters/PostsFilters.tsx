@@ -6,7 +6,7 @@ import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AssistantIcon from '@material-ui/icons/Assistant';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSorting, } from '../../../../redux/actions/postsFiltersActions';
+import { changeSorting, changeMatch, deleteMatch } from '../../../../redux/actions/postsFiltersActions';
 import { getSortingType } from '../../../../redux/reducers/postsFilterReducer';
 import Select from '@material-ui/core/Select';
 import moment from 'moment';
@@ -16,6 +16,7 @@ const selectDays = {
   day: moment().subtract(1, 'days').toString(),
   sevenDays: moment().subtract(7, 'days').toString(),
   month: moment().subtract(1, 'month').toString(),
+  allTime: 'allTime'
 };
 
 type selectDaysTypes = keyof typeof selectDays;
@@ -27,8 +28,18 @@ const PostsFilters = ({}: Types.IPostsFilters) => {
 
   const handleSelect = (event: React.ChangeEvent<{value: selectDaysTypes}>) => {
     const value = event.target.value;
-
     setSelectValue(value);
+
+
+    if (value === 'allTime') {
+      dispatch(deleteMatch('addedAt'));
+    } else {
+      dispatch(changeMatch({
+        addedAt: {
+          "$gt": value,
+        }
+      }));
+    }
   };
 
   return (
@@ -73,6 +84,7 @@ const PostsFilters = ({}: Types.IPostsFilters) => {
           <MenuItem value={selectDays.day}>1 day</MenuItem>
           <MenuItem value={selectDays.sevenDays}>7 days</MenuItem>
           <MenuItem value={selectDays.month}>1 Month</MenuItem>
+          <MenuItem value={selectDays.month}>All time</MenuItem>
         </Select>
     </Styled.PostsFilters>
   );

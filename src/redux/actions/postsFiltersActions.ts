@@ -3,7 +3,8 @@ import { ISingleMatch, matchWithOperator } from '../reducers/postsFilterReducer'
 export enum POSTS_FILTER_NAMES {
   CHANGE_SORTING = "CHANGE_SORTING",
   CHANGE_ALL_SORTING = "CHANGE_ALL_SORTING",
-  CHANGE_MATCH = "CHANGE_MATCH"
+  CHANGE_MATCH = "CHANGE_MATCH",
+  DELETE_MATCH = "DELETE_MATCH"
 }
 
 export interface IPostsFiltersBaseAction {
@@ -23,16 +24,24 @@ export interface IPostsFiltersChangeMatch extends IPostsFiltersBaseAction {
   match: ISingleMatch;
 }
 
+export interface IPostsFiltersDeleteMatch extends IPostsFiltersBaseAction {
+  type: POSTS_FILTER_NAMES.DELETE_MATCH;
+  matchField: string;
+}
+
 export interface IPostsFiltersChangeAllSorting extends IPostsFiltersBaseAction {
   type: POSTS_FILTER_NAMES.CHANGE_ALL_SORTING;
   sorting: {
     sort: string[]
-    match: matchWithOperator | ISingleMatch
+    match: ISingleMatch[] | ISingleMatch
     sortingType: string;
   };
 }
 
-export type postsFilterActions = IPostsFiltersChangeSorting | IPostsFiltersChangeAllSorting | IPostsFiltersChangeMatch;
+export type postsFilterActions = IPostsFiltersChangeSorting 
+  | IPostsFiltersChangeAllSorting 
+  | IPostsFiltersChangeMatch 
+  | IPostsFiltersDeleteMatch;
 
 export function changeSorting(sorting: {
   sort: string[],
@@ -51,9 +60,16 @@ export function changeMatch(match: ISingleMatch): IPostsFiltersChangeMatch {
   };
 };
 
+export function deleteMatch(matchField: string): IPostsFiltersDeleteMatch {
+  return {
+    type: POSTS_FILTER_NAMES.DELETE_MATCH,
+    matchField,
+  };
+};
+
 export function changeAllSorting(sorting: {
   sort: string[]
-  match: matchWithOperator | ISingleMatch
+  match: ISingleMatch[] | ISingleMatch
   sortingType: string
 }): IPostsFiltersChangeAllSorting {
   return {
