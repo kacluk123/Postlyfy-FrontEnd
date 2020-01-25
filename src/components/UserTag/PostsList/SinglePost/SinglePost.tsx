@@ -6,6 +6,7 @@ import moment from "moment";
 import reactStringReplace from "react-string-replace";
 import Comments from "./Comments";
 import SingleReply from "../../Common/SingleReply";
+import { REPLY_TYPE } from "../../Common/SingleReply/SingleReplyTypes";
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
 import { togglePostLike, deletePostAction } from '../../../../redux/actions/postActions';
@@ -96,7 +97,7 @@ const SinglePostComponent = ({
       isPostDeleting={isPostDeleting}
       isPostDeleted={isPostDeleted}
       handleAnimationEnd={deletePostLocal}
-      type="post"
+      type={REPLY_TYPE.POST}
     >
       <Comments
         isCommentInputShowed={isCommentInputShowed}

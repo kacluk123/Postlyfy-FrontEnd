@@ -1,14 +1,16 @@
 import { postsFilterActions, POSTS_FILTER_NAMES } from '../actions/postsFiltersActions';
 import { AppState } from '../store';
-import { createSelector } from 'reselect'; 
+import { createSelector } from 'reselect';
 
 // type logicalSortingOperator = "$gt";
 
 export interface ISingleMatch {
-  [k: string]: string;
-};
+  [k: string]: string | {
+    [k in matchOperators]: string
+  };
+}
 
-type matchOperators = "$or" | "$and";
+type matchOperators = "$gt";
 
 export type matchWithOperator = {
   [k in matchOperators]: ISingleMatch[]
@@ -22,7 +24,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
   sort: null,
-  match: [],
+  match: null,
   sortingType: 'Newest'
 };
 
@@ -70,27 +72,31 @@ export function postFiltersReducer(
 }
 
 const changeMatchFilter = (matches: ISingleMatch[] | null, actionMatch: ISingleMatch) => {
-  const [actionMatchKey, actionMatchValue] = Object.entries(actionMatch)[0];
-  const searchedMatch = matches?.find(match => {
-    const [matchKey, matchValue] = Object.entries(match)[0];
+  if (matches) {
+    const [actionMatchKey] = Object.entries(actionMatch)[0];
+    const searchedMatch = matches?.find(match => {
+      const [matchKey] = Object.entries(match)[0];
 
-    return matchKey === actionMatchKey;
-  });
-
-  if (searchedMatch) {
-    return matches?.map(match => {
-      const [matchKey, matchValue] = Object.entries(match)[0];
-
-      if (actionMatchKey === matchKey) {
-        return actionMatch;
-      }
-
-      return match;
+      return matchKey === actionMatchKey;
     });
+
+    if (searchedMatch) {
+      return matches.map(match => {
+        const [matchKey] = Object.entries(match)[0];
+
+        if (actionMatchKey === matchKey) {
+          return actionMatch;
+        }
+
+        return match;
+      });
+    }
+
+    return [...matches, actionMatch];
   }
 
-  return [...matches, actionMatch];
-}
+  return null;
+};
 
 export const getMatch = (state: AppState) => state.postFiltersReducer.match;
 export const getSort = (state: AppState) => state.postFiltersReducer.sort;
@@ -98,11 +104,8 @@ export const getSortingType = (state: AppState) => state.postFiltersReducer.sort
 
 export const getSorting = createSelector(
   [ getMatch, getSort ],
-  (match: InitialStateType['match'], sort: InitialStateType['sort']): {
-    match?: matchWithOperator | ISingleMatch
-    sort?: string[]
-  } => ({
-    ...(match ? { match } : {}),
-    ...(sort ? { sort } : {}),
+  (match: InitialStateType['match'], sort: InitialStateType['sort']) => ({
+    match,
+    sort,
   })
 );

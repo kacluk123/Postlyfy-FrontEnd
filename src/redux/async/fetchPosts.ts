@@ -11,15 +11,15 @@ import { AnyAction } from "redux";
 import {
   isApiResonseHasError
 } from "../../api/endpoints/common/errorDataUnpacker";
-import { matchWithOperator, ISingleMatch } from '../reducers/postsFilterReducer';
+import { ISingleMatch } from '../reducers/postsFilterReducer';
 
 interface FetchPostsParams {
   offset: number;
   limit: number;
   postsModifyType: addPostsTypes;
   sorting: {
-    sort?: string[]
-    match?: matchWithOperator | ISingleMatch
+    sort: string[] | null
+    match: ISingleMatch[] | null
   };
 }
 

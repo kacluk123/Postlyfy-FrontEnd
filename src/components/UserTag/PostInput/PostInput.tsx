@@ -54,14 +54,15 @@ const PostInput = ({ tag }: Types.PostInput) => {
       postContent: formValues.postInput,
       tags: getHashTags(formValues.postInput)
     }, tag);
-    console.log(user?.userPicture)
-    const updatedPost = {
-      ...post,
-      author: user?.name,
-      userPicture: user?.userPicture,
-    }
 
-    dispatch(addNewPost(updatedPost));
+    if (user) {
+      const updatedPost = {
+        ...post,
+        author: user?.name,
+        userPicture: user?.userPicture,
+      };
+      dispatch(addNewPost(updatedPost));
+    }
   };
 
   return (

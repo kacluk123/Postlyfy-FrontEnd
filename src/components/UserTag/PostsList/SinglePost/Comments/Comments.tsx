@@ -10,6 +10,8 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { addNewComment, loadMoreComments } from '../../../../../redux/actions/postActions';
 import { SinglePostReplyText as LoadMoreComments } from '../../SinglePost/SinglePostStyles';
+import { REPLY_TYPE } from '../../../Common/SingleReply/SingleReplyTypes';
+
 const Comments = ({
   isCommentInputShowed,
   postId,
@@ -78,7 +80,7 @@ const Comments = ({
             createdAt={moment(createdAt).format("MMM DD YY")}
             author={author}
             content={content}
-            type="default"
+            type={REPLY_TYPE.DEFAULT}
           />
         ))}
       </Styled.CommentsList>
@@ -90,7 +92,7 @@ const Comments = ({
             createdAt={moment(createdAt).format("MMM DD YY")}
             author={author}
             content={content}
-            type="default"
+            type={REPLY_TYPE.DEFAULT}
           />
         ))}
       </Styled.CommentsList>

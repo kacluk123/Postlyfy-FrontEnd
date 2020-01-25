@@ -31,7 +31,7 @@ const SingleReply = ({
       onAnimationEnd={(event: React.AnimationEvent<HTMLDivElement>) => {
         if (event.animationName === 'deecreseHeight') {
           if (handleAnimationEnd) {
-            handleAnimationEnd()
+            handleAnimationEnd();
           }
         }
       }}
@@ -48,7 +48,9 @@ const SingleReply = ({
             isAnimateRunning={isAnimateRunning}>
             <ThumbUpIcon onClick={() => {
               setAnimationRunning(true);
-              onLikeButtonClick();
+              if (onLikeButtonClick) {
+                onLikeButtonClick();
+              };
             }} color={isLikeDisabled ? "disabled" : "primary"} />
           </Styled.SingleReplyLikeButtonIcon>
         )}

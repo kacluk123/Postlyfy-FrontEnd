@@ -83,7 +83,7 @@ export const addComment = async (
     });
     return singleCommentUnpackerPatch(data);
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 

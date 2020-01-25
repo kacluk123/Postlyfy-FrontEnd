@@ -9,13 +9,13 @@ export interface ISingleReply {
   createdAt: string;
   content: string | React.ReactNodeArray;
   children?: React.ReactChildren;
-  type?: REPLY_TYPE;
-  onLikeButtonClick: () => void;
-  avatar: string | null;
+  type: REPLY_TYPE;
+  onLikeButtonClick?: () => void;
+  avatar?: string | null;
   likesCount?: number;
   isLiked?: boolean;
   isAuth?: boolean;
   isPostDeleting?: boolean;
   isPostDeleted?: boolean;
-  handleAnimationEnd?: () => void; 
+  handleAnimationEnd?: () => void;
 }

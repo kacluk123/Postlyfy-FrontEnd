@@ -10,7 +10,7 @@ interface InitialStateType {
   readonly isAuth: boolean;
 }
 
-const initialState = {
+const initialState: InitialStateType = {
   pending: false,
   userData: null,
   errors: [],
@@ -40,7 +40,7 @@ export function userReducer(
     case USER_ACTIONS_NAMES.USER_ERROR: {
       return {
         ...state,
-        errors: action.error,
+        errors: action.error.messages,
         pending: false,
         isAuth: false,
       };

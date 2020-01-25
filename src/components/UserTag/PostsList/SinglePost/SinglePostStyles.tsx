@@ -31,6 +31,10 @@ export const SinglePost = styled.div.attrs({
     "SinglePostUserAvatar Comments Comments Comments";
 `;
 
+export const SinglePostAdditionalContentContainer = styled.div.attrs({
+  className: "SinglePostAdditionalContentContainer"
+})``
+
 export const SinglePostUserAvatar = styled.div.attrs({
   className: "SinglePostUserAvatar"
 })`

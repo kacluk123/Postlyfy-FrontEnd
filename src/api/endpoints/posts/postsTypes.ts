@@ -1,11 +1,11 @@
-import { matchWithOperator, ISingleMatch } from '../../../redux/reducers/postsFilterReducer';
+import { ISingleMatch } from '../../../redux/reducers/postsFilterReducer';
 
 export interface GetPostsPayload {
   limit: number;
   offset: number;
   sorting: {
-    sort?: string[] ;
-    match?: matchWithOperator | ISingleMatch 
+    sort: string[] | null;
+    match: ISingleMatch[] | null;
   }
 }
 

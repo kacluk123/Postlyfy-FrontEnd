@@ -19,17 +19,14 @@ const selectDays = {
   allTime: 'allTime'
 };
 
-type selectDaysTypes = keyof typeof selectDays;
-
 const PostsFilters = ({}: Types.IPostsFilters) => {
   const dispatch = useDispatch();
   const sortingType = useSelector(getSortingType);
-  const [selectValue, setSelectValue] = React.useState<selectDaysTypes>("day");
+  const [selectValue, setSelectValue] = React.useState<string>(selectDays.allTime);
 
-  const handleSelect = (event: React.ChangeEvent<{value: selectDaysTypes}>) => {
+  const handleSelect = (event: React.ChangeEvent<{value: string}>) => {
     const value = event.target.value;
     setSelectValue(value);
-
 
     if (value === 'allTime') {
       dispatch(deleteMatch('addedAt'));
@@ -84,7 +81,7 @@ const PostsFilters = ({}: Types.IPostsFilters) => {
           <MenuItem value={selectDays.day}>1 day</MenuItem>
           <MenuItem value={selectDays.sevenDays}>7 days</MenuItem>
           <MenuItem value={selectDays.month}>1 Month</MenuItem>
-          <MenuItem value={selectDays.month}>All time</MenuItem>
+          <MenuItem value={selectDays.allTime}>All time</MenuItem>
         </Select>
     </Styled.PostsFilters>
   );

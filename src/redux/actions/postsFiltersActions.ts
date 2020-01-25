@@ -1,4 +1,4 @@
-import { ISingleMatch, matchWithOperator } from '../reducers/postsFilterReducer';
+import { ISingleMatch } from '../reducers/postsFilterReducer';
 
 export enum POSTS_FILTER_NAMES {
   CHANGE_SORTING = "CHANGE_SORTING",
@@ -33,14 +33,14 @@ export interface IPostsFiltersChangeAllSorting extends IPostsFiltersBaseAction {
   type: POSTS_FILTER_NAMES.CHANGE_ALL_SORTING;
   sorting: {
     sort: string[]
-    match: ISingleMatch[] | ISingleMatch
+    match: ISingleMatch[]
     sortingType: string;
   };
 }
 
-export type postsFilterActions = IPostsFiltersChangeSorting 
-  | IPostsFiltersChangeAllSorting 
-  | IPostsFiltersChangeMatch 
+export type postsFilterActions = IPostsFiltersChangeSorting
+  | IPostsFiltersChangeAllSorting
+  | IPostsFiltersChangeMatch
   | IPostsFiltersDeleteMatch;
 
 export function changeSorting(sorting: {
@@ -69,7 +69,7 @@ export function deleteMatch(matchField: string): IPostsFiltersDeleteMatch {
 
 export function changeAllSorting(sorting: {
   sort: string[]
-  match: ISingleMatch[] | ISingleMatch
+  match: ISingleMatch[]
   sortingType: string
 }): IPostsFiltersChangeAllSorting {
   return {
