@@ -63,7 +63,7 @@ const PostsListComponent = () => {
       socket.off('posts', socketCallback);
       dispatch(resetPosts());
     };
-  }, []);
+  }, [tag]);
 
   React.useEffect(() => {
     setServerTotalPostCount(0);
@@ -112,9 +112,11 @@ const PostsListComponent = () => {
         dispatch(
           changeAllSorting({
             sort: ['-addedAt'],
-            match: {
-              tags: tag
-            },
+            match: [
+              {
+                tags: tag
+              }
+            ],
             sortingType: 'newest',
           })
         );

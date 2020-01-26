@@ -16,6 +16,6 @@ export const getUser = async (): Promise<Types.IUIResponseUser | UIServerMessage
 
     return userUnpacker(data);
   } catch (err) {
-    return serverMessageUnpacker(err);
+    return serverMessageUnpacker(err.response.data);
   }
 }

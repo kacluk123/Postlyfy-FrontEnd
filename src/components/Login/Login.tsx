@@ -54,7 +54,6 @@ const Login = () => {
     } else {
       setApiResponseMessage(data);
     }
-    setButtonPending(false);
   };
 
   return (

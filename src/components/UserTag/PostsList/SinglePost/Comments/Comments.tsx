@@ -21,7 +21,6 @@ const Comments = ({
   totalComments
 }: Types.IComments) => {
   const dispatch = useDispatch();
-  
   const [canLoadMoreComment, setLoadMoreComment] = React.useState<boolean>(true);
 
   const {

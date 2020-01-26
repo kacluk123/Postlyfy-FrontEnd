@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
-import { NavbarStyles } from "./NavbarTypes";
+import { NavLink } from "react-router-dom";
 
 const activeRouteorHoveredStyles = css`
   &:after {
@@ -46,9 +45,12 @@ export const LinksGroup = styled.div.attrs({
   grid-auto-flow: column;
 `;
 
-export const NavbarLink = styled(Link).attrs({
-  className: "NavbarLink"
-})<NavbarStyles>`
+const activeClassName = 'NavbarLinkActive';
+
+export const NavbarLink = styled(NavLink).attrs({
+  className: "NavbarLink",
+  activeClassName,
+})`
   color: var(--color-white);
   text-decoration: none;
   font-size: 18px;
@@ -64,11 +66,9 @@ export const NavbarLink = styled(Link).attrs({
     }
   }
 
-  ${props =>
-    props.isActive &&
-    css`
-      ${activeRouteorHoveredStyles}
-    `}
+  &.${activeClassName} {
+    ${activeRouteorHoveredStyles}
+  }
 
   &:hover {
     ${activeRouteorHoveredStyles}

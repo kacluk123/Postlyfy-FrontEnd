@@ -8,7 +8,7 @@ export interface ISingleReply {
   author: string;
   createdAt: string;
   content: string | React.ReactNodeArray;
-  children?: React.ReactChildren;
+  children?: React.ReactNode;
   type: REPLY_TYPE;
   onLikeButtonClick?: () => void;
   avatar?: string | null;

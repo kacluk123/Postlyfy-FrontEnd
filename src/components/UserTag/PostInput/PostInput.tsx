@@ -8,6 +8,8 @@ import PostInputActions from "./PostInputActions";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewPost } from '../../../redux/actions/postActions';
 import { getUser } from '../../../redux/reducers/userReducer';
+import { changeAllSorting } from '../../../redux/actions/postsFiltersActions';
+import { getSortingType } from '../../../redux/reducers/postsFilterReducer';
 
 const hashTagsDirty = (value: string): RegExpMatchArray | [] => {
   const hashtagRegexp = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
@@ -24,6 +26,7 @@ const getHashTags = (post: string): string[] =>
 
 const PostInput = ({ tag }: Types.PostInput) => {
   const user = useSelector(getUser);
+  const sortingType = useSelector(getSortingType);
   const dispatch = useDispatch();
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
   const {
@@ -50,12 +53,26 @@ const PostInput = ({ tag }: Types.PostInput) => {
   }, [tag]);
 
   const addPost = async () => {
-    const post = await API.addPosts({
-      postContent: formValues.postInput,
-      tags: getHashTags(formValues.postInput)
-    }, tag);
-
     if (user) {
+      const post = await API.addPosts({
+        postContent: formValues.postInput,
+        tags: getHashTags(formValues.postInput)
+      }, tag);
+
+      if (sortingType !== 'newest') {
+        dispatch(
+          changeAllSorting({
+            sort: ['-addedAt'],
+            match: [
+              {
+                tags: tag
+              }
+            ],
+            sortingType: 'newest',
+          })
+        );
+      }
+
       const updatedPost = {
         ...post,
         author: user?.name,

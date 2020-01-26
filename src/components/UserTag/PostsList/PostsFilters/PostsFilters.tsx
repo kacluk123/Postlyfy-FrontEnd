@@ -12,6 +12,10 @@ import Select from '@material-ui/core/Select';
 import moment from 'moment';
 import MenuItem from '@material-ui/core/MenuItem';
 
+function isString(value: unknown): value is string {
+  return typeof value === 'string';
+}
+
 const selectDays = {
   day: moment().subtract(1, 'days').toString(),
   sevenDays: moment().subtract(7, 'days').toString(),
@@ -23,19 +27,21 @@ const PostsFilters = ({}: Types.IPostsFilters) => {
   const dispatch = useDispatch();
   const sortingType = useSelector(getSortingType);
   const [selectValue, setSelectValue] = React.useState<string>(selectDays.allTime);
-
-  const handleSelect = (event: React.ChangeEvent<{value: string}>) => {
+  
+  const handleSelect = (event: React.ChangeEvent<{value: unknown}>) => {
     const value = event.target.value;
-    setSelectValue(value);
+    if (isString(value)) {
+      setSelectValue(value);
 
-    if (value === 'allTime') {
-      dispatch(deleteMatch('addedAt'));
-    } else {
-      dispatch(changeMatch({
-        addedAt: {
-          "$gt": value,
-        }
-      }));
+      if (value === 'allTime') {
+        dispatch(deleteMatch('addedAt'));
+      } else {
+        dispatch(changeMatch({
+          addedAt: {
+            "$gt": value,
+          }
+        }));
+      }
     }
   };
 

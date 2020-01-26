@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Comments = styled.div.attrs({
-  className: "Comments"
+  className: "Comments",
 })`
   grid-area: Comments;
   width: 100%;
@@ -11,7 +11,7 @@ export const Comments = styled.div.attrs({
 `;
 
 export const CommentsInput = styled.div.attrs({
-  className: "CommentsInput"
+  className: "CommentsInput",
 })`
   width: 100%;
   margin-top: 30px;
