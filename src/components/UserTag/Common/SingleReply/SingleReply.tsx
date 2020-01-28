@@ -5,6 +5,7 @@ import * as Icon from "../../../Common/Icons/Icons";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { REPLY_TYPE } from "./SingleReplyTypes";
+import ReactTooltip from 'react-tooltip'
 
 const SingleReply = ({
   author,
@@ -29,7 +30,7 @@ const SingleReply = ({
       isPostDeleting={isPostDeleting}
       isPostDeleted={isPostDeleted}
       onAnimationEnd={(event: React.AnimationEvent<HTMLDivElement>) => {
-        if (event.animationName === 'deecreseHeight') {
+        if (event.animationName === 'deecreseHeight' && isAuth) {
           if (handleAnimationEnd) {
             handleAnimationEnd();
           }
@@ -46,12 +47,18 @@ const SingleReply = ({
           <Styled.SingleReplyLikeButtonIcon
             onAnimationEnd={() => setAnimationRunning(false)}
             isAnimateRunning={isAnimateRunning}>
-            <ThumbUpIcon onClick={() => {
-              setAnimationRunning(true);
-              if (onLikeButtonClick) {
-                onLikeButtonClick();
-              };
-            }} color={isLikeDisabled ? "disabled" : "primary"} />
+              {!isAuth && <ReactTooltip place="left" id="like-tooltip" />}
+              <ThumbUpIcon
+                data-for="like-tooltip"
+                data-tip="You've must be logged in to like a post"
+                onClick={() => {
+                  if (isAuth) {
+                    setAnimationRunning(true);
+                    if (onLikeButtonClick) {
+                      onLikeButtonClick();
+                    }
+                  }
+              }} color={isLikeDisabled ? "disabled" : "primary"} />
           </Styled.SingleReplyLikeButtonIcon>
         )}
         <Styled.SingleReplyLikeCount

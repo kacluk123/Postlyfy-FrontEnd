@@ -2,20 +2,31 @@ import * as React from "react";
 import * as Types from "./PostInputActionsTypes";
 import * as Styled from "./PostInputActionsStyles";
 import Button from "../../../Common/Button";
+import { isAuth } from '../../../../redux/reducers/userReducer';
+import { useSelector } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 
 const PostInputActions = ({
   onSendPostButtonClick,
   postInputValue,
   isSendPostButtonDisabled
 }: Types.PostInputActions) => {
+  const isUserAuth = useSelector(isAuth);
+
   return (
     <Styled.PostInputActions>
-      <Button
-        onClick={onSendPostButtonClick}
-        disabled={isSendPostButtonDisabled}
+      <div 
+        data-tip="You've must be logged in to add a comment"
+        data-for="add-post-button-tooltip"
       >
-        Send
-      </Button>
+        <Button
+          onClick={onSendPostButtonClick}
+          disabled={isSendPostButtonDisabled}
+        >
+          Send
+        </Button>
+      </div>
+      {!isUserAuth && <ReactTooltip id="add-post-button-tooltip"/>}
     </Styled.PostInputActions>
   );
 };

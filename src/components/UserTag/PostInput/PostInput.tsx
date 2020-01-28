@@ -7,7 +7,7 @@ import StandardTextArea from "../../Common/StandardTextArea";
 import PostInputActions from "./PostInputActions";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewPost } from '../../../redux/actions/postActions';
-import { getUser } from '../../../redux/reducers/userReducer';
+import { getUser, isAuth } from '../../../redux/reducers/userReducer';
 import { changeAllSorting } from '../../../redux/actions/postsFiltersActions';
 import { getSortingType } from '../../../redux/reducers/postsFilterReducer';
 
@@ -26,6 +26,7 @@ const getHashTags = (post: string): string[] =>
 
 const PostInput = ({ tag }: Types.PostInput) => {
   const user = useSelector(getUser);
+  const isUserAuth = useSelector(isAuth);
   const sortingType = useSelector(getSortingType);
   const dispatch = useDispatch();
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
@@ -81,7 +82,7 @@ const PostInput = ({ tag }: Types.PostInput) => {
       dispatch(addNewPost(updatedPost));
     }
   };
-
+  
   return (
     <Styled.PostInput>
       <StandardTextArea
@@ -92,7 +93,7 @@ const PostInput = ({ tag }: Types.PostInput) => {
       />
       <PostInputActions
         postInputValue={formValues.postInput}
-        isSendPostButtonDisabled={isButtonDisabled}
+        isSendPostButtonDisabled={!isUserAuth || isButtonDisabled}
         onSendPostButtonClick={onButtonClick(addPost)}
       />
     </Styled.PostInput>
