@@ -5,8 +5,8 @@ export const Register = styled.div.attrs({
 })`
   width: 300px;
   height: 600px;
-  grid-template-rows: repeat(4, max-content);
   display: grid;
+  grid-auto-rows: 65px;
   padding: 15px;
   border-radius: 5px;
   grid-row-gap: 30px;

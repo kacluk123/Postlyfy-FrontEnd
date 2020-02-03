@@ -19,7 +19,8 @@ const RegisterComponent = () => {
     initialValues: {
       formEmail: "",
       formPassword: "",
-      formName: ""
+      formName: "",
+      formUserPicture: "",
     },
     validationRules: {
       formEmail: {
@@ -32,6 +33,10 @@ const RegisterComponent = () => {
       },
       formName: {
         required: true,
+        minLength: 6
+      },
+      formUserPicture: {
+        required: false,
         minLength: 6
       }
     }
@@ -79,6 +84,14 @@ const RegisterComponent = () => {
           type="password"
           onChange={handleChangeFormValues}
           label="Password"
+        />
+        <StandardInput
+          value={formValues.formUserPicture}
+          errorMessage={errorValues.formUserPicture}
+          name="formUserPicture"
+          type="text"
+          onChange={handleChangeFormValues}
+          label="Avatar url"
         />
         <Button
           disabled={isButtonDisabled}
