@@ -37,7 +37,6 @@ const RegisterComponent = () => {
       },
       formUserPicture: {
         required: false,
-        minLength: 6
       }
     }
   }, []);

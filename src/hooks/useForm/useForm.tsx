@@ -103,7 +103,7 @@ const formReducer = <T extends {}>() => (
 
 const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitialValues: any[]) => {
   const firstUpdate = React.useRef(true);
-
+  
   const initialState = {
     formValues: {
       ...form.initialValues
@@ -125,13 +125,12 @@ const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitial
       firstUpdate.current = false;
       return;
     }
-
-    if (isFormDirty(state.errorValues)) {
+    if (isFormDirty(state.errorValues, form.validationRules)) {
       dispatch({ type: FORM_ACTIONS.DISABLE_BUTTON });
     } else {
       dispatch({ type: FORM_ACTIONS.ENABLE_BUTTON });
     }
-  }, [state.errorValues]);
+  }, [state.errorValues, state.formValues]);
 
   const handleChangeFormValues = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -139,7 +138,7 @@ const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitial
     const inputName = event.target.name;
     const value = event.target.value;
     const validationRulesOfCurrentInput = form.validationRules[inputName];
-
+    
     dispatch({
       type: FORM_ACTIONS.CHANGE_FORM_VALUE,
       fieldName: inputName,
@@ -171,7 +170,7 @@ const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitial
   const onButtonClick = (callback: Function) => () => {
     validateAllInputs();
 
-    if (!isFormDirty(state.errorValues)) {
+    if (!isFormDirty(state.errorValues, state.formValues)) {
       callback();
     }
   };

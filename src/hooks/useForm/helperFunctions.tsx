@@ -22,8 +22,9 @@ export const validateInput = (
   return;
 };
 
-export const isFormDirty = (errorObject: Types.ErrorValues): boolean => {
-  return Object.values(errorObject).some(error => {
-    return error !== undefined;
+export const isFormDirty = (errorObject: Types.ErrorValues, validationRules: {[k: string]: Types.ValidationRules }): boolean => {
+  return Object.entries(errorObject).some(([errorKey, errorValue]) => {
+    const isFormValueRequired = validationRules[errorKey].required;
+    return errorValue !== undefined && isFormValueRequired;
   });
 };
