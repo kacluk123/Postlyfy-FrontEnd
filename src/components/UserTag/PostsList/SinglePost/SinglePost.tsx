@@ -59,20 +59,21 @@ const SinglePostComponent = ({
   const isAuthor = user?.name === author;
 
   const toggleSinglePostLike = async () => {
-    if (user?.id) {
+    if (user) {
+      await toggleLike(postId);
+      
       dispatch(togglePostLike({
         userId: user?.id,
         postId,
       }));
     }
-    await toggleLike(postId);
   };
 
   const deletePostFromList = async () => {
     try {
       setPostDeleting(true);
       await deletePost(postId);
-      setPostDeleted(true);
+      setPostDeleted(false);
     } catch {
       console.log('failed to delete post')
     }

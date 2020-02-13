@@ -16,7 +16,7 @@ const PostInputActions = ({
   return (
     <Styled.PostInputActions>
       <div 
-        data-tip="You've must be logged in to add a comment"
+        data-tip="You've must be logged in to add a post"
         data-for="add-post-button-tooltip"
       >
         <Button
