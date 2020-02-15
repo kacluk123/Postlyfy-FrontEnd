@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as Styled from "./CommentsStyles";
 import * as Types from "./CommentsTypes";
-import * as API from "../../../../../api/endpoints/posts/posts";
-import useForm from "../../../../../hooks/useForm";
+import * as API from "../../../../../../api/endpoints/posts/posts";
+import useForm from "../../../../../../hooks/useForm";
 import ReplyForm from "../../../Common/ReplyForm";
 import SingleReply from "../../../Common/SingleReply";
-import { getComments } from '../../../../../api/endpoints/posts/posts';
+import { getComments } from '../../../../../../api/endpoints/posts/posts';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { addNewComment, loadMoreComments } from '../../../../../redux/actions/postActions';
+import { addNewComment, loadMoreComments } from '../../../../../../redux/actions/postActions';
 import { SinglePostReplyText as LoadMoreComments } from '../../SinglePost/SinglePostStyles';
 import { REPLY_TYPE } from '../../../Common/SingleReply/SingleReplyTypes';
 

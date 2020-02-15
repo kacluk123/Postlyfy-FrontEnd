@@ -1,13 +1,13 @@
 import * as React from "react";
-import UserTag from "./UserTag";
+import UserTag from "./Pages/UserTag";
 import { Route, Switch, Redirect } from "react-router-dom";
 import * as Styled from "./AppStyles";
-import Login from "./Login";
-import Register from "./Register";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 import Navbar from "./Navbar";
-import PostsList from "./UserTag/PostsList";
+import PostsList from "./Pages/UserTag/PostsList";
 import { useDispatch } from 'react-redux';
-import { fetchUser } from '../redux/async/fetchUser'
+import { fetchUser } from '../redux/async/fetchUser';
 
 const App = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as Types from "./PostInputActionsTypes";
 import * as Styled from "./PostInputActionsStyles";
-import Button from "../../../Common/Button";
-import { isAuth } from '../../../../redux/reducers/userReducer';
+import Button from "../../../../Common/Button";
+import { isAuth } from '../../../../../redux/reducers/userReducer';
 import { useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 

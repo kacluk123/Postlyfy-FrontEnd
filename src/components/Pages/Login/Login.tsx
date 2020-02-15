@@ -1,15 +1,15 @@
 import * as React from "react";
 import * as Styled from "./LoginStyles";
-import StandardInput from "../Common/StandardInput/StandardInput";
-import Button from "../Common/Button";
-import useForm from "../../hooks/useForm";
-import * as API from "../../api/endpoints/auth/login/login";
+import StandardInput from "../../Common/StandardInput/StandardInput";
+import Button from "../../Common/Button";
+import useForm from "../../../hooks/useForm";
+import * as API from "../../../api/endpoints/auth/login/login";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { fetchUser } from '../../redux/async/fetchUser';
-import ServerMessageViewComponent from "../Common/ServerMessageView";
-import { UIServerMessages } from "../../api/endpoints/common/errorDataUnpacker";
-import { isApiResonseHasError } from '../../api/endpoints/common/errorDataUnpacker';
+import { fetchUser } from '../../../redux/async/fetchUser';
+import ServerMessageViewComponent from "../../Common/ServerMessageView";
+import { UIServerMessages } from "../../../api/endpoints/common/errorDataUnpacker";
+import { isApiResonseHasError } from '../../../api/endpoints/common/errorDataUnpacker';
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();

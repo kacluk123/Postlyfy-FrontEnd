@@ -7,14 +7,14 @@ import { addPostsTypes } from '../actions/postActions';
 interface InitialStateType {
   readonly pending: boolean;
   readonly posts: SingleUIPostsResponse[];
-  readonly errors: UIServerMessages["messages"];
+  readonly errors: UIServerMessages["messages"] | null;
   readonly totalNumberOfPosts: number;
 }
 
 export const initialState = {
   pending: false,
   posts: [],
-  errors: [],
+  errors: null,
   totalNumberOfPosts: 0
 };
 

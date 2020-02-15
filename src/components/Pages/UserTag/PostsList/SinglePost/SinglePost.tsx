@@ -1,15 +1,15 @@
 import * as React from "react";
 import * as Styled from "./SinglePostStyles";
-import { SingleUIPostsResponse } from "../../../../api/endpoints/posts/postsTypes";
-import { toggleLike, deletePost } from "../../../../api/endpoints/posts/posts";
+import { SingleUIPostsResponse } from "../../../../../api/endpoints/posts/postsTypes";
+import { toggleLike, deletePost } from "../../../../../api/endpoints/posts/posts";
 import moment from "moment";
 import reactStringReplace from "react-string-replace";
 import Comments from "./Comments";
 import SingleReply from "../../Common/SingleReply";
 import { REPLY_TYPE } from "../../Common/SingleReply/SingleReplyTypes";
 import { useSelector, useDispatch } from 'react-redux';
-import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
-import { togglePostLike, deletePostAction } from '../../../../redux/actions/postActions';
+import { getUser, isAuth } from '../../../../../redux/reducers/userReducer';
+import { togglePostLike, deletePostAction } from '../../../../../redux/actions/postActions';
 import ReplyIcon from '@material-ui/icons/Reply';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
@@ -53,7 +53,7 @@ const SinglePostComponent = ({
   const [isPostDeleted, setPostDeleted] = React.useState<boolean>(false);
 
   const hideCommentInput = React.useCallback(() => {
-    setVisibilityOfCommentInput(false)
+    setVisibilityOfCommentInput(false);
   }, []);
 
   const isAuthor = user?.name === author;
@@ -61,7 +61,6 @@ const SinglePostComponent = ({
   const toggleSinglePostLike = async () => {
     if (user) {
       await toggleLike(postId);
-      
       dispatch(togglePostLike({
         userId: user?.id,
         postId,

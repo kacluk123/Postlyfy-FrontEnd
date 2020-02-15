@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as Styled from "./TagsListStyles";
 import moment from 'moment';
-import { UIResponseTags } from "../../../api/endpoints/tags/tagsTypes";
-import { isApiResonseHasError } from "../../../api/endpoints/common/errorDataUnpacker";
-import { getTags } from "../../../api/endpoints/tags/tags";
-import Button from '../../Common/Button';
-import StandardInput from '../../Common/StandardInput';
+import { UIResponseTags } from "../../../../api/endpoints/tags/tagsTypes";
+import { isApiResonseHasError } from "../../../../api/endpoints/common/errorDataUnpacker";
+import { getTags } from "../../../../api/endpoints/tags/tags";
+import Button from '../../../Common/Button';
+import StandardInput from '../../../Common/StandardInput';
 import { useHistory } from 'react-router-dom';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Select from '@material-ui/core/Select';

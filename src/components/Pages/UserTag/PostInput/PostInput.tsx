@@ -1,15 +1,15 @@
 import * as React from "react";
 import * as Styled from "./PostInputStyles";
 import * as Types from "./PostInputTypes";
-import * as API from "../../../api/endpoints/posts/posts";
-import useForm from "../../../hooks/useForm";
-import StandardTextArea from "../../Common/StandardTextArea";
+import * as API from "../../../../api/endpoints/posts/posts";
+import useForm from "../../../../hooks/useForm";
+import StandardTextArea from "../../../Common/StandardTextArea";
 import PostInputActions from "./PostInputActions";
 import { useSelector, useDispatch } from "react-redux";
-import { addNewPost } from '../../../redux/actions/postActions';
-import { getUser, isAuth } from '../../../redux/reducers/userReducer';
-import { changeAllSorting } from '../../../redux/actions/postsFiltersActions';
-import { getSortingType } from '../../../redux/reducers/postsFilterReducer';
+import { addNewPost } from '../../../../redux/actions/postActions';
+import { getUser, isAuth } from '../../../../redux/reducers/userReducer';
+import { changeAllSorting } from '../../../../redux/actions/postsFiltersActions';
+import { getSortingType } from '../../../../redux/reducers/postsFilterReducer';
 
 const hashTagsDirty = (value: string): RegExpMatchArray | [] => {
   const hashtagRegexp = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;

@@ -6,8 +6,8 @@ import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AssistantIcon from '@material-ui/icons/Assistant';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSorting, changeMatch, deleteMatch } from '../../../../redux/actions/postsFiltersActions';
-import { getSortingType } from '../../../../redux/reducers/postsFilterReducer';
+import { changeSorting, changeMatch, deleteMatch } from '../../../../../redux/actions/postsFiltersActions';
+import { getSortingType } from '../../../../../redux/reducers/postsFilterReducer';
 import Select from '@material-ui/core/Select';
 import moment from 'moment';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -45,6 +45,27 @@ const PostsFilters = ({}: Types.IPostsFilters) => {
     }
   };
 
+  const sortFromNewest = () => {
+    dispatch(changeSorting({
+      sort: ['-addedAt'],
+      sortingType: 'newest'
+    }));
+  };
+
+  const sortFromOldest = () => {
+    dispatch(changeSorting({
+      sort: ['addedAt'],
+      sortingType: 'oldest'
+    }));
+  };
+
+  const sortByLikes = () => {
+    dispatch(changeSorting({
+      sort: ['-likesCount'],
+      sortingType: 'mostLiked'
+    }));
+  };
+
   return (
     <Styled.PostsFilters>
       <SinglePostFilter
@@ -53,10 +74,7 @@ const PostsFilters = ({}: Types.IPostsFilters) => {
         />}
         filterText='Newest'
         isFilterActive= {sortingType === 'newest'}
-        onFilterClick={() => { dispatch(changeSorting({
-          sort: ['-addedAt'],
-          sortingType: 'newest'
-        })); }}
+        onFilterClick={sortFromNewest}
       />
       <SinglePostFilter
         icon={<AssistantIcon
@@ -64,20 +82,14 @@ const PostsFilters = ({}: Types.IPostsFilters) => {
         />}
         filterText='Oldest'
         isFilterActive= {sortingType === 'oldest'}
-        onFilterClick={() => { dispatch(changeSorting({
-          sort: ['addedAt'],
-          sortingType: 'oldest'
-        })); }}
+        onFilterClick={sortFromOldest}
       />
       <SinglePostFilter
         icon={<FavoriteIcon
           color='disabled'
         />}
         filterText='Most liked'
-        onFilterClick={() => { dispatch(changeSorting({
-          sort: ['-likesCount'],
-          sortingType: 'mostLiked'
-        })); }}
+        onFilterClick={sortByLikes}
         isFilterActive= {sortingType === 'mostLiked'}
       />
        <Select

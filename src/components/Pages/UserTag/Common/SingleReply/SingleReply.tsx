@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as Styled from "./SingleReplyStyles";
 import * as Types from "./SingleReplyTypes";
-import * as Icon from "../../../Common/Icons/Icons";
+import * as Icon from "../../../../Common/Icons/Icons";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { REPLY_TYPE } from "./SingleReplyTypes";
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 const SingleReply = ({
   author,

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Styled from "./ReplyFormStyles";
 import * as Types from "./ReplyFormTypes";
-import StandardTextArea from "../../../Common/StandardTextArea";
+import StandardTextArea from "../../../../Common/StandardTextArea";
 import ReplyFormActions from "./ReplyFormActions";
 
 const ReplyForm = ({

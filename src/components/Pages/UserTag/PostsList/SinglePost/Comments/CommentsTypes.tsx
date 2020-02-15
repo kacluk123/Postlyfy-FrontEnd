@@ -1,4 +1,4 @@
-import { UIResponseComment } from "../../../../../api/endpoints/posts/postsTypes";
+import { UIResponseComment } from "../../../../../../api/endpoints/posts/postsTypes";
 
 export interface IComments {
   isCommentInputShowed: boolean;
