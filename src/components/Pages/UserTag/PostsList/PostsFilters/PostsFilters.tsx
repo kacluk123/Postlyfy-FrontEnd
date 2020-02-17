@@ -11,6 +11,7 @@ import { getSortingType } from '../../../../../redux/reducers/postsFilterReducer
 import Select from '@material-ui/core/Select';
 import moment from 'moment';
 import MenuItem from '@material-ui/core/MenuItem';
+import usePostsFilter from '../../Common/usePostsFilter';
 
 function isString(value: unknown): value is string {
   return typeof value === 'string';
@@ -24,46 +25,27 @@ const selectDays = {
 };
 
 const PostsFilters = ({}: Types.IPostsFilters) => {
-  const dispatch = useDispatch();
   const sortingType = useSelector(getSortingType);
   const [selectValue, setSelectValue] = React.useState<string>(selectDays.allTime);
-  
+  const {
+    sortFromNewest,
+    sortFromOldest,
+    sortByLikes,
+    deleteSortingByPostCreateDate,
+    sortByPostCreateDate
+  } = usePostsFilter();
+
   const handleSelect = (event: React.ChangeEvent<{value: unknown}>) => {
     const value = event.target.value;
     if (isString(value)) {
       setSelectValue(value);
 
       if (value === 'allTime') {
-        dispatch(deleteMatch('addedAt'));
+        deleteSortingByPostCreateDate();
       } else {
-        dispatch(changeMatch({
-          addedAt: {
-            "$gt": value,
-          }
-        }));
+        sortByPostCreateDate(value);
       }
     }
-  };
-
-  const sortFromNewest = () => {
-    dispatch(changeSorting({
-      sort: ['-addedAt'],
-      sortingType: 'newest'
-    }));
-  };
-
-  const sortFromOldest = () => {
-    dispatch(changeSorting({
-      sort: ['addedAt'],
-      sortingType: 'oldest'
-    }));
-  };
-
-  const sortByLikes = () => {
-    dispatch(changeSorting({
-      sort: ['-likesCount'],
-      sortingType: 'mostLiked'
-    }));
   };
 
   return (

@@ -14,6 +14,7 @@ import {
   getPostsPending,
   getTotalPosts
 } from "../../../../redux/reducers/postReducer";
+import usePostsFilter from '../Common/usePostsFilter';
 
 interface IPostsSocketIoData {
   action: 'create';
@@ -30,7 +31,7 @@ const usePostsList = () => {
   const sortingType = useSelector(getSortingType);
   const [serverTotalPostCount, setServerTotalPostCount] = React.useState<number>(0);
   const [onScrollPending, setOnScrollPending] = React.useState<boolean>(false);
-  
+  const { sortPostInitialByTag } = usePostsFilter();
   const postListCountDifference = serverTotalPostCount - localTotalPostCount;
 
   const onTagPostLoad = (tag: string) => {
@@ -43,15 +44,7 @@ const usePostsList = () => {
     };
 
     socket.on('posts', socketCallback);
-    dispatch(
-      changeAllSorting({
-        sort: ['-addedAt'],
-        match: [{
-          tags: tag
-        }],
-        sortingType: 'newest',
-      })
-    );
+    sortPostInitialByTag(tag);
     return () => {
       socket.off('posts', socketCallback);
       dispatch(resetPosts());
@@ -103,17 +96,7 @@ const usePostsList = () => {
         })
       );
     } else {
-      dispatch(
-        changeAllSorting({
-          sort: ['-addedAt'],
-          match: [
-            {
-              tags: tag
-            }
-          ],
-          sortingType: 'newest',
-        })
-      );
+      sortPostInitialByTag(tag);
     }
   };
   
