@@ -26,6 +26,7 @@ const Navbar = () => {
             <React.Fragment>
               <Styled.NavbarLink
                 to={routes.LOGIN}
+                data-testid="loginPage"
               >
                 Login
               </Styled.NavbarLink>

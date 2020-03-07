@@ -7,7 +7,7 @@ const ServerMessageViewComponent = ({
   messages
 }: Types.ServerMessageView) => {
   return (
-    <Styled.ServerMessageViewList>
+    <Styled.ServerMessageViewList data-testid="messagesList">
       {messages.map((message: string) => (
         <Styled.ServerMessageSingleMessage isError={isError} key={message}>
           {message}

@@ -18,4 +18,4 @@ const StandardInputComponent = ({ value, label, name, onChange, errorMessage, ty
     </Styled.StandardInputContainer>
 )
 
-export default StandardInputComponent
+export default StandardInputComponent;

@@ -10,6 +10,7 @@ import { fetchUser } from '../../../redux/async/fetchUser';
 import ServerMessageViewComponent from "../../Common/ServerMessageView";
 import { UIServerMessages } from "../../../api/endpoints/common/errorDataUnpacker";
 import { isApiResonseHasError } from '../../../api/endpoints/common/errorDataUnpacker';
+
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -47,11 +48,11 @@ const Login = () => {
   const handleButtonClick = async () => {
     setButtonPending(true);
     const data = await API.login(formValues);
-
     if (isApiResonseHasError(data)) {
       dispatch(fetchUser());
       history.push('/taglist');
     } else {
+      setButtonPending(false);
       setApiResponseMessage(data);
     }
   };

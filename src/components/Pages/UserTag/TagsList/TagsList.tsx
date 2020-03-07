@@ -34,14 +34,12 @@ const TagsList = () => {
 
   const fetchTags = async () => {
     setLoading(true);
-    try {
-      const tags = await getTags(selectDateValue);
-      if (isApiResonseHasError(tags)) {
-        setTags(tags);
-      }
-    } finally {
-      setLoading(false);
+
+    const tags = await getTags(selectDateValue);
+    if (isApiResonseHasError(tags)) {
+      setTags(tags);
     }
+    setLoading(false);
   };
 
   const handleSearchTag = (event: React.ChangeEvent<HTMLInputElement>) => {

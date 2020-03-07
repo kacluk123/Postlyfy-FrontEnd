@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { useParams } from "react-router";
 import { getSorting, getSortingType } from '../../../../redux/reducers/postsFilterReducer';
 import { resetPosts } from '../../../../redux/actions/postActions';
-import { changeAllSorting } from '../../../../redux/actions/postsFiltersActions';
-import PostsFilters from './PostsFilters';
 import { useSelector, useDispatch } from "react-redux";
 import useWindowScroll from "../../../../hooks/useWindowScroll";
 import { MAIN_API_URL } from '../../../../api/axios-instances';
@@ -11,7 +8,6 @@ import openSocket from 'socket.io-client';
 import fetchPostsTHUNK from "../../../../redux/async/fetchPosts";
 import {
   getPosts,
-  getPostsPending,
   getTotalPosts
 } from "../../../../redux/reducers/postReducer";
 import usePostsFilter from '../Common/usePostsFilter';

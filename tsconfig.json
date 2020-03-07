@@ -53,7 +53,8 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts"
+    "src/setupTests.ts",
+    "**/*.spec.ts"
   ],
-  "include": ["src"]
+  "include": ["src", "__mocks__"]
 }
