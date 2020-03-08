@@ -8,13 +8,15 @@ const ButtonComponent = ({
   isPending,
   onClick,
   disabled = false,
-  type
+  type,
+  testId
 }: Types.StandardButton) => (
   <Styled.StandardButton
     variant="outlined"
     color="primary"
     disabled={disabled || isPending}
     onClick={onClick}
+    data-testid={testId}
     type={type ? type : 'button'}
   >
     {isPending ? <CircularProgress /> : children}

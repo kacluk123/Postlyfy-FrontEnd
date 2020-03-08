@@ -68,6 +68,7 @@ const RegisterComponent = () => {
           name="formName"
           onChange={handleChangeFormValues}
           label="Name"
+          testId='registerFormName'
         />
         <StandardInput
           value={formValues.formEmail}
@@ -75,6 +76,7 @@ const RegisterComponent = () => {
           name="formEmail"
           onChange={handleChangeFormValues}
           label="Email"
+          testId='registerFormEmail'
         />
         <StandardInput
           value={formValues.formPassword}
@@ -83,6 +85,7 @@ const RegisterComponent = () => {
           type="password"
           onChange={handleChangeFormValues}
           label="Password"
+          testId='registerFormPassword'
         />
         <StandardInput
           value={formValues.formUserPicture}
@@ -91,11 +94,13 @@ const RegisterComponent = () => {
           type="text"
           onChange={handleChangeFormValues}
           label="Avatar url"
+          testId='registerFormAvatarUrl'
         />
         <Button
           disabled={isButtonDisabled}
           onClick={onButtonClick(createUserOnButtonClick)}
           isPending={buttonPending}
+          testId='registerSubmitButton'
         >
           Register
         </Button>

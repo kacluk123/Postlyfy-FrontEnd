@@ -3,11 +3,10 @@ import { render, fireEvent, wait } from '@testing-library/react';
 import { Provider } from "react-redux";
 import { store } from "../../../redux/store";
 import { BrowserRouter } from "react-router-dom";
-import App from '../../App';
-import GlobalStyles from '../../../globalStyles';
 import { login } from '../../../api/endpoints/auth/login/login';
 import { fetchUser } from '../../../redux/async/fetchUser';
-// import { isApiResonseHasError } from '../../../api/endpoints/common/errorDataUnpacker';
+import App from '../../App';
+import GlobalStyles from '../../../globalStyles';
 
 import {
   getUser,

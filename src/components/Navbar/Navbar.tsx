@@ -32,6 +32,7 @@ const Navbar = () => {
               </Styled.NavbarLink>
               <Styled.NavbarLink
                 to={routes.REGISTER}
+                data-testid="registerPage"
               >
                 Register
               </Styled.NavbarLink>
