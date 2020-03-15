@@ -30,7 +30,7 @@ const SingleReply = ({
       isPostDeleting={isPostDeleting}
       isPostDeleted={isPostDeleted}
       onAnimationEnd={(event: React.AnimationEvent<HTMLDivElement>) => {
-        if (event.animationName === 'deecreseHeight' && isAuth) {
+        if (event.animationName === 'deecreseHeight') {
           if (handleAnimationEnd) {
             handleAnimationEnd();
           }

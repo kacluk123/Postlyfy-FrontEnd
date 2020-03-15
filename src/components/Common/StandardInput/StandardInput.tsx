@@ -9,7 +9,7 @@ const StandardInputComponent = ({ value, label, name, onChange, errorMessage, te
             label={label}
             name={name}
             type={type}
-            data-testid={testId}
+            inputProps={{ "data-testid": testId }}
             error={!!errorMessage}
             onChange={onChange}
         />
@@ -17,6 +17,6 @@ const StandardInputComponent = ({ value, label, name, onChange, errorMessage, te
             {errorMessage}
         </Styled.StandardInputErrorMessage>
     </Styled.StandardInputContainer>
-)
+);
 
 export default StandardInputComponent;

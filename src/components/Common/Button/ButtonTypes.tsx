@@ -3,6 +3,6 @@ export interface StandardButton {
   children: string;
   disabled?: boolean;
   testId?: string;
-  onClick?: () => void;
+  onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'reset' | 'submit';
 }

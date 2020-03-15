@@ -69,12 +69,12 @@ const SinglePostComponent = ({
   };
 
   const deletePostFromList = async () => {
+    setPostDeleting(true);
     try {
-      setPostDeleting(true);
       await deletePost(postId);
-      setPostDeleted(false);
+      setPostDeleted(true);
     } catch {
-      console.log('failed to delete post')
+      setPostDeleting(false);
     }
   };
 
@@ -85,46 +85,48 @@ const SinglePostComponent = ({
   const isLikedByUser = user && likes.includes(user.id);
 
   return (
-    <SingleReply
-      author={author}
-      content={replaceHashTags(addNewLine(content))}
-      createdAt={moment(createdAt).format("MMM Do YY")}
-      avatar={userPicture}
-      isLiked={isLikedByUser}
-      isAuth={isUserAuth}
-      onLikeButtonClick={toggleSinglePostLike}
-      likesCount={likesCount}
-      isPostDeleting={isPostDeleting}
-      isPostDeleted={isPostDeleted}
-      handleAnimationEnd={deletePostLocal}
-      type={REPLY_TYPE.POST}
-    >
-      <Comments
-        isCommentInputShowed={isCommentInputShowed}
-        postId={postId}
-        comments={comments}
-        commentsAddedInCurrentSession={commentsAddedInCurrentSession}
-        hideCommentInput={hideCommentInput}
-        totalComments={totalComments}
-      />
+    <Styled.SinglePostContainer data-testid='post'>
+      <SingleReply
+        author={author}
+        content={replaceHashTags(addNewLine(content))}
+        createdAt={moment(createdAt).format("MMM Do YY")}
+        avatar={userPicture}
+        isLiked={isLikedByUser}
+        isAuth={isUserAuth}
+        onLikeButtonClick={toggleSinglePostLike}
+        likesCount={likesCount}
+        isPostDeleting={isPostDeleting}
+        isPostDeleted={isPostDeleted}
+        handleAnimationEnd={deletePostLocal}
+        type={REPLY_TYPE.POST}
+      >
+        <Comments
+          isCommentInputShowed={isCommentInputShowed}
+          postId={postId}
+          comments={comments}
+          commentsAddedInCurrentSession={commentsAddedInCurrentSession}
+          hideCommentInput={hideCommentInput}
+          totalComments={totalComments}
+        />
 
-      <Styled.SinglePostActions>
-        <Styled.SinglePostAction onClick={() => setVisibilityOfCommentInput(visible => !visible)}>
-          <Styled.SinglePostReplyText>
-            Reply
-          </Styled.SinglePostReplyText>
-          <ReplyIcon color='disabled' />
-        </Styled.SinglePostAction>
-        {isAuthor && (
-          <Styled.SinglePostAction onClick={deletePostFromList}>
+        <Styled.SinglePostActions>
+          <Styled.SinglePostAction onClick={() => setVisibilityOfCommentInput(visible => !visible)}>
             <Styled.SinglePostReplyText>
-              Delete post
+              Reply
             </Styled.SinglePostReplyText>
-            <DeleteOutlineIcon color='disabled' />
+            <ReplyIcon color='disabled' />
           </Styled.SinglePostAction>
-        )}
-      </Styled.SinglePostActions>
-    </SingleReply>
+          {isAuthor && (
+            <Styled.SinglePostAction onClick={deletePostFromList}>
+              <Styled.SinglePostDeletePost>
+                Delete post
+              </Styled.SinglePostDeletePost>
+              <DeleteOutlineIcon color='disabled' />
+            </Styled.SinglePostAction>
+          )}
+        </Styled.SinglePostActions>
+      </SingleReply>
+    </Styled.SinglePostContainer>
   );
 };
 

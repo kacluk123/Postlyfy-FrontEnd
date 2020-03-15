@@ -56,9 +56,7 @@ export const SingleReply = styled.div.attrs({
   @keyframes deecreseHeight {
     0% {
       height: 100%;
-    }
-
-    100% {
+    } 100% {
       height: 0%;
     }
   }

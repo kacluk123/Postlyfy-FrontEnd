@@ -12,6 +12,14 @@ export const SinglePostReplyText = styled.div.attrs({
   className: "SinglePostReplyText"
 })``;
 
+export const SinglePostDeletePost = styled.div.attrs({
+  className: "SinglePostDeletePost"
+})``;
+
+export const SinglePostContainer = styled.div.attrs({
+  className: "SinglePostContainer"
+})``;
+
 export const SinglePost = styled.div.attrs({
   className: "SinglePost"
 })`

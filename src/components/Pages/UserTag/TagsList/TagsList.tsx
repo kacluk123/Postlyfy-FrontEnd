@@ -65,14 +65,15 @@ const TagsList = () => {
         ? <CircularProgress />
         : (
           <>
-            <Styled.TagForm onSubmit={handleFormSubmit}>
+            <Styled.TagForm data-testid='searchTagForm' onSubmit={handleFormSubmit}>
               <StandardInput
                 label='Search'
                 value={searchTagValue}
                 name='searchTag'
                 onChange={handleSearchTag}
+                testId='searchTagInput'
               />
-              <Button type='submit'>Go to tag</Button>
+              <Button type='submit' testId='submitButton'>Go to tag</Button>
             </Styled.TagForm>
             <Styled.MostActive>
             <Styled.TagsText>
@@ -89,7 +90,7 @@ const TagsList = () => {
             </Styled.MostActive>
             <Styled.TagsListElements>
               {tags?.tags.map(({ tagName, count }: { tagName: string, count: number }) => (
-                <Styled.HashtagLink key={tagName} to={"/posts/" + tagName}>
+                <Styled.HashtagLink data-testid='tagLink' key={tagName} to={"/posts/" + tagName}>
                   {""} #{tagName}({count})
                 </Styled.HashtagLink>
               ))}
