@@ -50,7 +50,6 @@ const SinglePostComponent = ({
     boolean
   >(false);
   const [isPostDeleting, setPostDeleting] = React.useState<boolean>(false);
-  const [isPostDeleted, setPostDeleted] = React.useState<boolean>(false);
 
   const hideCommentInput = React.useCallback(() => {
     setVisibilityOfCommentInput(false);
@@ -72,14 +71,10 @@ const SinglePostComponent = ({
     setPostDeleting(true);
     try {
       await deletePost(postId);
-      setPostDeleted(true);
+      dispatch(deletePostAction(postId));
     } catch {
       setPostDeleting(false);
     }
-  };
-
-  const deletePostLocal = () => {
-    dispatch(deletePostAction(postId));
   };
 
   const isLikedByUser = user && likes.includes(user.id);
@@ -96,8 +91,7 @@ const SinglePostComponent = ({
         onLikeButtonClick={toggleSinglePostLike}
         likesCount={likesCount}
         isPostDeleting={isPostDeleting}
-        isPostDeleted={isPostDeleted}
-        handleAnimationEnd={deletePostLocal}
+        handleAnimationEnd={() => {}}
         type={REPLY_TYPE.POST}
       >
         <Comments
@@ -108,7 +102,6 @@ const SinglePostComponent = ({
           hideCommentInput={hideCommentInput}
           totalComments={totalComments}
         />
-
         <Styled.SinglePostActions>
           <Styled.SinglePostAction onClick={() => setVisibilityOfCommentInput(visible => !visible)}>
             <Styled.SinglePostReplyText>
@@ -117,8 +110,8 @@ const SinglePostComponent = ({
             <ReplyIcon color='disabled' />
           </Styled.SinglePostAction>
           {isAuthor && (
-            <Styled.SinglePostAction onClick={deletePostFromList}>
-              <Styled.SinglePostDeletePost>
+            <Styled.SinglePostAction>
+              <Styled.SinglePostDeletePost onClick={deletePostFromList}>
                 Delete post
               </Styled.SinglePostDeletePost>
               <DeleteOutlineIcon color='disabled' />

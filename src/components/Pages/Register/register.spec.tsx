@@ -21,6 +21,12 @@ jest.mock('../../../api/endpoints/tags/tags', () => {
     };
   });  
 
+jest.mock('../../../redux/async/fetchUser', () => {
+  return {
+    fetchUser: jest.fn()
+  };
+});
+
   jest.mock('../../../api/endpoints/auth/signup/signup', () => {
     return {
       createUser: jest.fn()

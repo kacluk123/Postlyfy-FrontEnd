@@ -35,7 +35,7 @@ jest.mock('../../../../api/endpoints/posts/posts', () => {
 const leftClick = { button: 0 };
 
 it('Should test post list component', async () => {
-  const { history, getAllByTestId, getByText } = renderWithRouter(
+  const { history, getAllByTestId, queryByText } = renderWithRouter(
     <Provider store={store}>
       <GlobalStyles />
       <App />
@@ -64,9 +64,9 @@ it('Should test post list component', async () => {
 
   const [firstPost] = getAllByTestId('post');
   const deleteFirstPost = firstPost.querySelector('.SinglePostDeletePost');
-  
+
   expect(firstPost.textContent).toContain('Delete post');
-  
+
   if (deleteFirstPost) {
     fireEvent.click(deleteFirstPost, leftClick);
     const postLoadingSpinner = firstPost.querySelector('.SingleReplyLoader') as HTMLDivElement;
@@ -77,10 +77,8 @@ it('Should test post list component', async () => {
 
     await wait(() => {
       expect(deletePost).toHaveBeenCalledWith("1");
-    })
-    jest.setTimeout(30000);
-    await wait(() => {
-      expect(getByText('Hello im John')).toBeFalsy();
     });
+
+    expect(queryByText('Hello im John')).toBeNull();
   }
 });

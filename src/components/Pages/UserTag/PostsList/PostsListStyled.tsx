@@ -17,14 +17,17 @@ export const Posts = styled.div.attrs({
   }
 `;
 
-export const PostsList = styled.div.attrs({
+export const PostsList = styled.ul.attrs({
   className: "PostsList"
 })`
   margin-top: 50px;
   display: grid;
   width: 100%;
-  grid-row-gap: 10px;
+  grid-row-gap: 15px;
   height: auto;
+  list-style: none;
+  margin: 50px 0 0 0;
+  padding: 0;
   transition: .5s ease-out;
 `;
 

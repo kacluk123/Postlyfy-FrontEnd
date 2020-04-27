@@ -43,24 +43,6 @@ export const SingleReplyLoader = styled.div.attrs({
 export const SingleReply = styled.div.attrs({
   className: "SingleReply"
 })<{ type: string, isPostDeleting: boolean, isPostDeleted: boolean }>`
-  @keyframes slide-fwd-bottom {
-    0% {
-      opacity: 0;
-      transform: translateY(0px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(10px);
-    }
-  }
-  @keyframes deecreseHeight {
-    0% {
-      height: 100%;
-    } 100% {
-      height: 0%;
-    }
-  }
-  animation: slide-fwd-bottom 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   width: 100%;
   position: relative;
   padding: 10px 20px 10px 20px;
@@ -76,12 +58,6 @@ export const SingleReply = styled.div.attrs({
   ${(props: { isPostDeleting: boolean }) => props.isPostDeleting && css`
     transition: .5s ease;
     filter: opacity(.3);
-  `}
-
-  ${(props: { isPostDeleted: boolean }) => props.isPostDeleted && css`
-    min-height: 0px;
-    overflow: hidden;
-    animation: deecreseHeight .6s alternate;
   `}
 
   ${(props: { type: string }) => props.type === REPLY_TYPE.DEFAULT && css`

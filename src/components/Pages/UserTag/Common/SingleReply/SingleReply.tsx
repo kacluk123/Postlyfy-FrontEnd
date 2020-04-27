@@ -19,7 +19,6 @@ const SingleReply = ({
   likesCount,
   onLikeButtonClick,
   isPostDeleting = false,
-  isPostDeleted = false,
   handleAnimationEnd
 }: Types.ISingleReply) => {
   const isLikeDisabled = !isAuth || !isLiked;
@@ -28,14 +27,6 @@ const SingleReply = ({
     <Styled.SingleReply
       type={type}
       isPostDeleting={isPostDeleting}
-      isPostDeleted={isPostDeleted}
-      onAnimationEnd={(event: React.AnimationEvent<HTMLDivElement>) => {
-        if (event.animationName === 'deecreseHeight') {
-          if (handleAnimationEnd) {
-            handleAnimationEnd();
-          }
-        }
-      }}
     >
       {children}
       <Styled.SingleReplyUserName>{author}</Styled.SingleReplyUserName>

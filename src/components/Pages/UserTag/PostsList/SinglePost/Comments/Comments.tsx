@@ -9,7 +9,7 @@ import { getComments } from '../../../../../../api/endpoints/posts/posts';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { addNewComment, loadMoreComments } from '../../../../../../redux/actions/postActions';
-import { SinglePostReplyText as LoadMoreComments } from '../../SinglePost/SinglePostStyles';
+import { SinglePostReplyText as LoadMoreComments, SinglePostAction } from '../../SinglePost/SinglePostStyles';
 import { REPLY_TYPE } from '../../../Common/SingleReply/SingleReplyTypes';
 
 const Comments = ({
@@ -40,7 +40,6 @@ const Comments = ({
     }
   }, []);
   
-
   const sendComment = async () => {
     const comment = await API.addComment({ comment: formValues.comment }, postId);
     if (comment) {
@@ -83,7 +82,11 @@ const Comments = ({
           />
         ))}
       </Styled.CommentsList>
-      {isNotAllCommentsLoaded && <LoadMoreComments onClick={fetchComments}> Load more comments </LoadMoreComments>}
+      {isNotAllCommentsLoaded && 
+        <SinglePostAction>
+          <LoadMoreComments onClick={fetchComments}> Load more comments </LoadMoreComments>
+        </SinglePostAction>
+      }
       <Styled.CommentsList>
         {commentsAddedInCurrentSession.map(({ content, createdAt, author, commentId }) => (
           <SingleReply

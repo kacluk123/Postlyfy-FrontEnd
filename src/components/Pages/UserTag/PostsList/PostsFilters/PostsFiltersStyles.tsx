@@ -12,4 +12,12 @@ export const PostsFilters = styled.div.attrs({
   grid-auto-flow: column;
   grid-column-gap: 15px;
   justify-content: center;
+
+  @media (max-width: 550px) {
+    & {
+      grid-auto-flow: row;
+      grid-row-gap: 10px;
+      height: auto;
+    }
+  }
 `;
