@@ -42,7 +42,7 @@ export const SingleReplyLoader = styled.div.attrs({
 
 export const SingleReply = styled.div.attrs({
   className: "SingleReply"
-})<{ type: string, isPostDeleting: boolean, isPostDeleted: boolean }>`
+})<{ type: string, isPostDeleting: boolean }>`
   width: 100%;
   position: relative;
   padding: 10px 20px 10px 20px;

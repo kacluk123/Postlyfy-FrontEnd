@@ -6,8 +6,8 @@ import App from '../../../App';
 import GlobalStyles from '../../../../globalStyles';
 import renderWithRouter from '../../../../testsUtils/renderWithRouter';
 import postsListPayload from '../../../../testsUtils/mockPayload/postsList';
-import { wait, fireEvent, waitForElement } from '@testing-library/dom';
-import { getPosts, deletePost } from '../../../../api/endpoints/posts/posts';
+import { wait, fireEvent, waitForElement, waitForElementToBeRemoved } from '@testing-library/dom';
+import { getPosts, deletePost, addPosts } from '../../../../api/endpoints/posts/posts';
 
 jest.mock('../../../../api/endpoints/user/user', () => {
   return {
@@ -22,12 +22,27 @@ jest.mock('../../../../api/endpoints/user/user', () => {
     })),
   };
 });
-
+const newPost = `
+  New post added second ago
+  #cats
+`;
 jest.mock('../../../../api/endpoints/posts/posts', () => {
   return {
     getPosts: jest.fn(() => Promise.resolve(postsListPayload)),
     deletePost: jest.fn(() => Promise.resolve({
       isError: false
+    })),
+    addPosts: jest.fn(() => Promise.resolve({
+      postId: "3213",
+      author: "John",
+      content: newPost,
+      createdAt: new Date(),
+      comments: [],
+      commentsAddedInCurrentSession: [],
+      totalComments: 0,
+      userPicture: null,
+      likes: [],
+      likesCount: 0
     }))
   };
 });
@@ -35,7 +50,7 @@ jest.mock('../../../../api/endpoints/posts/posts', () => {
 const leftClick = { button: 0 };
 
 it('Should test post list component', async () => {
-  const { history, getAllByTestId, queryByText } = renderWithRouter(
+  const { history, getAllByTestId, getByText, getByTestId } = renderWithRouter(
     <Provider store={store}>
       <GlobalStyles />
       <App />
@@ -79,6 +94,23 @@ it('Should test post list component', async () => {
       expect(deletePost).toHaveBeenCalledWith("1");
     });
 
-    expect(queryByText('Hello im John')).toBeNull();
+    await waitForElementToBeRemoved(() => getByText("Hello im John"));
   }
+
+  const postInput = getByTestId('post-input');
+  const postButton = getByTestId('post-button');
+
+  fireEvent.change(postInput, { target: { value: newPost } });
+  fireEvent.click(postButton, leftClick);
+
+  await wait(() => {
+    expect(addPosts).toHaveBeenCalledWith({
+      postContent: newPost,
+      tags: ['#cats']
+    }, 'cats');
+  });
+
+  waitForElement(() => {
+    return getByText(newPost);
+  });
 });

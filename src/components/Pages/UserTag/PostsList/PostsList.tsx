@@ -60,6 +60,7 @@ const PostsListComponent = () => {
     }) => (
       <AnimatedItem key={postId}>
         <SinglePost
+          key={postId}
           postId={postId}
           {...params}
         />

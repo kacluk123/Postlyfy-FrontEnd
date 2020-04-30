@@ -22,6 +22,7 @@ const PostInputActions = ({
         <Button
           onClick={onSendPostButtonClick}
           disabled={isSendPostButtonDisabled}
+          testId='post-button'
         >
           Send
         </Button>

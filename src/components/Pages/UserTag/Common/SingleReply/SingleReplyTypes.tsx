@@ -13,6 +13,7 @@ export interface ISingleReply {
   onLikeButtonClick?: () => void;
   avatar?: string | null;
   likesCount?: number;
+  postId?: string;
   isLiked?: boolean;
   isAuth?: boolean;
   isPostDeleting?: boolean;

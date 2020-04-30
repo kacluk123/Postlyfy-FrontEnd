@@ -90,6 +90,7 @@ const PostInput = ({ tag }: Types.PostInput) => {
         value={formValues.postInput}
         onChange={handleChangeFormValues}
         textAreaRef={textAreaRef}
+        data-testid='post-input'
       />
       <PostInputActions
         postInputValue={formValues.postInput}
