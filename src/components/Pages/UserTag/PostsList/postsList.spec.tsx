@@ -109,8 +109,6 @@ it('Should test post list component', async () => {
       tags: ['#cats']
     }, 'cats');
   });
-
-  waitForElement(() => {
-    return getByText(newPost);
-  });
+  const [firstPostAfterSend] = getAllByTestId('post');
+  expect(firstPostAfterSend).toHaveTextContent('New post added second ago #cats');
 });

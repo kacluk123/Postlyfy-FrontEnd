@@ -5,6 +5,7 @@ import Button from "../../../../Common/Button";
 import { isAuth } from '../../../../../redux/reducers/userReducer';
 import { useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
+import PostInputFileUpload from './PostInputFileUpload';
 
 const PostInputActions = ({
   onSendPostButtonClick,
@@ -26,6 +27,7 @@ const PostInputActions = ({
         >
           Send
         </Button>
+        <PostInputFileUpload />
       </div>
       {!isUserAuth && <ReactTooltip id="add-post-button-tooltip"/>}
     </Styled.PostInputActions>

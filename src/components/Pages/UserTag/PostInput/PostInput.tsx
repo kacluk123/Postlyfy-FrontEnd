@@ -34,7 +34,8 @@ const PostInput = ({ tag }: Types.PostInput) => {
     formValues,
     handleChangeFormValues,
     onButtonClick,
-    isButtonDisabled
+    isButtonDisabled,
+    changeFormValue
   } = useForm({
     initialValues: {
       postInput: `
@@ -59,6 +60,10 @@ const PostInput = ({ tag }: Types.PostInput) => {
         postContent: formValues.postInput,
         tags: getHashTags(formValues.postInput)
       }, tag);
+      
+      changeFormValue('postInput', `
+#${tag}
+      `);
 
       if (sortingType !== 'newest') {
         dispatch(

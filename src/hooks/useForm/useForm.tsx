@@ -132,6 +132,17 @@ const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitial
     }
   }, [state.errorValues, state.formValues]);
 
+  const changeFormValue = (fieldName: string, value: string) => {
+    const validationRulesOfCurrentInput = form.validationRules[fieldName];
+    
+    dispatch({
+      type: FORM_ACTIONS.CHANGE_FORM_VALUE,
+      fieldName,
+      value,
+      validationRules: validationRulesOfCurrentInput
+    });
+  };
+
   const handleChangeFormValues = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -180,7 +191,8 @@ const useForm = <T extends {}>(form: Types.UseFormParams<T>, forceToResetInitial
     errorValues: state.errorValues,
     handleChangeFormValues,
     onButtonClick,
-    isButtonDisabled: state.isButtonDisabled
+    isButtonDisabled: state.isButtonDisabled,
+    changeFormValue
   };
 };
 
