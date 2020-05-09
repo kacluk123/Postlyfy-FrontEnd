@@ -19,6 +19,7 @@ const deletePostUrl = (postId: string) => `/posts/delete-post/${postId}`;
 const addCommentUrl = (postId: string) => `/posts/add-comment/${postId}`;
 const getCommentsURL = (postId: string) => `/posts/comments/${postId}`;
 const toggleLikeUrl = (postId: string) => `/posts/toggle-like/${postId}`;
+const uploadImageURL = () => `/posts/upload-image`;
 
 export const getPosts = async (
   payload: Types.GetPostsPayload
@@ -31,7 +32,6 @@ export const getPosts = async (
         sorting: payload.sorting
       }
     });
-
     return postsUnpacker(data);
   } catch (err) {
     return serverMessageUnpacker(err.response.data);
@@ -108,6 +108,18 @@ export const toggleLike = async (
 ) => {
   try {
     await mainApi.post(toggleLikeUrl(postId), {elo: "siema"}, {
+      withCredentials: true
+    });
+  } catch {
+    console.log('error');
+  }
+};
+
+export const uploadImage = async (
+  imageFile: FormData,
+) => {
+  try {
+    await mainApi.post(uploadImageURL(), imageFile, {
       withCredentials: true
     });
   } catch {

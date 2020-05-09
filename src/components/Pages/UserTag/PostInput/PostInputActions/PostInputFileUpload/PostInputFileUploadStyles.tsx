@@ -6,7 +6,7 @@ export const PostInputFileUpload = styled.label.attrs({
   cursor: pointer;
   & {
     input[type="file"] {
-      display: none;
+      visibility: hidden;
     }
   }
 `;

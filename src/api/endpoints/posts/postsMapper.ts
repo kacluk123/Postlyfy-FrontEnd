@@ -2,30 +2,34 @@ import * as Types from "./postsTypes";
 
 export const postsUnpacker = (
   response: Types.ServerPostsResponse
-): Types.UIPostsResponse => ({
-  postsList: response.posts.map((post: Types.SingleServerPostsResponse) =>
-    singlePostUnpacker(post)
-  ),
-  totalNumberOfPosts: response.total,
-  offset: response.offset,
-  limit: response.limit,
-  isError: response.isError
-});
+): Types.UIPostsResponse => {
+  return {
+    postsList: response.posts.map((post: Types.SingleServerPostsResponse) =>
+      singlePostUnpacker(post)
+    ),
+    totalNumberOfPosts: response.total,
+    offset: response.offset,
+    limit: response.limit,
+    isError: response.isError
+  }
+};
 
 export const singlePostUnpacker = (
   post: Types.SingleServerPostsResponse
-): Types.SingleUIPostsResponse => ({
-  postId: post._id,
-  author: post.createdBy,
-  content: post.postContent,
-  createdAt: post.addedAt,
-  comments: post.comments.map(comment => singleCommentUnpacker(comment)),
-  commentsAddedInCurrentSession: [],
-  totalComments: post.totalComments,
-  userPicture: post.userPicture,
-  likes: post.likes,
-  likesCount: post.likesCount
-});
+): Types.SingleUIPostsResponse => {
+  return {
+    postId: post._id,
+    author: post.createdBy,
+    content: post.postContent,
+    createdAt: post.addedAt,
+    comments: post.comments.map(comment => singleCommentUnpacker(comment)),
+    commentsAddedInCurrentSession: [],
+    totalComments: post.totalComments,
+    userPicture: post.userPicture,
+    likes: post.likes,
+    likesCount: post.likesCount
+  };
+};
 
 export const addPostPacker = (
   payload: Types.IAddPostParams
@@ -42,13 +46,20 @@ export const addCommentPacker = (
 
 export const singleCommentUnpacker = (
   payload: Types.SingleServerResponseComment
-): Types.UIResponseComment => ({
-  commentId: payload._id,
-  content: payload.content,
-  postId: payload.postId,
-  author: payload.author,
-  createdAt: payload.addedAt
-});
+): Types.UIResponseComment => {
+  return {
+    commentId: payload._id,
+    postId: payload.postId,
+    commentAuthor: {
+      name: payload.commentAuthor.name,
+      picture: payload.commentAuthor.picture || ""
+    },
+    commentData: {
+      addedAt: payload.commentData.addedAt,
+      content: payload.commentData.content,
+    }
+  };
+};
 
 export const singleCommentUnpackerPatch = (
   payload: Types.SingleServerResponseCommentPatch

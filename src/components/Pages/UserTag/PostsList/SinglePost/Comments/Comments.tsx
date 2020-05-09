@@ -42,6 +42,7 @@ const Comments = ({
   
   const sendComment = async () => {
     const comment = await API.addComment({ comment: formValues.comment }, postId);
+    
     if (comment) {
       dispatch(addNewComment(comment));
     }
@@ -72,12 +73,12 @@ const Comments = ({
         </React.Fragment>
       )}
       <Styled.CommentsList>
-        {comments.map(({ content, createdAt, author, commentId }) => (
+        {comments.map(({ commentAuthor, commentData, commentId }) => (
           <SingleReply
             key={commentId}
-            createdAt={moment(createdAt).format("MMM DD YY")}
-            author={author}
-            content={content}
+            createdAt={moment(commentData.addedAt).format("MMM DD YY")}
+            author={commentAuthor.name}
+            content={commentData.content}
             type={REPLY_TYPE.DEFAULT}
           />
         ))}
@@ -88,12 +89,12 @@ const Comments = ({
         </SinglePostAction>
       }
       <Styled.CommentsList>
-        {commentsAddedInCurrentSession.map(({ content, createdAt, author, commentId }) => (
+        {commentsAddedInCurrentSession.map(({  commentAuthor, commentData, commentId }) => (
           <SingleReply
             key={commentId}
-            createdAt={moment(createdAt).format("MMM DD YY")}
-            author={author}
-            content={content}
+            createdAt={moment(commentData.addedAt).format("MMM DD YY")}
+            author={commentAuthor.name}
+            content={commentData.content}
             type={REPLY_TYPE.DEFAULT}
           />
         ))}

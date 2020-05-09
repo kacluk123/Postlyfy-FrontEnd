@@ -35,23 +35,32 @@ export interface SingleUIPostsResponse {
 }
 
 export interface SingleServerResponseComment {
-  addedAt: string;
-  postId: string;
-  author: string;
-  content: string;
   _id: string;
+  postId: string;
+  commentData: {
+    addedAt: string;
+    content: string;
+  };
+  commentAuthor: {
+    name: string;
+    picture?: string;
+  };
 }
-
 export interface SingleServerResponseCommentPatch {
   isError: boolean;
   comment: SingleServerResponseComment;
 }
 export interface UIResponseComment {
-  createdAt: string;
-  author: string;
-  content: string;
-  postId: string;
   commentId: string;
+  postId: string;
+  commentData: {
+    addedAt: string;
+    content: string;
+  };
+  commentAuthor: {
+    name: string;
+    picture: string | null;
+  };
 }
 
 export interface UIResponseCommentPatch {

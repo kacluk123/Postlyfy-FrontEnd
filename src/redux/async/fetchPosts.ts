@@ -34,7 +34,7 @@ export const fetchPosts = ({
       dispatch(fetchProductsPending());
     }
     const data = await getPosts({ offset, limit, sorting });
-    
+   
     if (isApiResonseHasError(data)) {
       dispatch(fetchProductsSuccess(data, postsModifyType));
     } else {
