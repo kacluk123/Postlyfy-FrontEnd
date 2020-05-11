@@ -10,7 +10,8 @@ import PostInputFileUpload from './PostInputFileUpload';
 const PostInputActions = ({
   onSendPostButtonClick,
   postInputValue,
-  isSendPostButtonDisabled
+  isSendPostButtonDisabled,
+  setImage
 }: Types.PostInputActions) => {
   const isUserAuth = useSelector(isAuth);
 
@@ -27,9 +28,9 @@ const PostInputActions = ({
         >
           Send
         </Button>
-        <PostInputFileUpload />
       </div>
       {!isUserAuth && <ReactTooltip id="add-post-button-tooltip"/>}
+      <PostInputFileUpload setImage={setImage} />
     </Styled.PostInputActions>
   );
 };

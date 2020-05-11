@@ -86,11 +86,13 @@ export interface UIPostsResponse {
 
 export interface IAddPostParams {
   postContent: string;
+  postImage: string | null;
   tags: string[];
 }
 
 export interface IAddPostServerRequestParams {
   post: string;
+  postImage: string | null;
   tags: string[];
 }
 

@@ -30,6 +30,13 @@ const PostInput = ({ tag }: Types.PostInput) => {
   const sortingType = useSelector(getSortingType);
   const dispatch = useDispatch();
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
+  const [ { dataUrl, fileName }, setImage ] = React.useState<{
+    dataUrl: string | null
+    fileName: string
+  }>({
+    dataUrl: null,
+    fileName: ""
+  });
   const {
     formValues,
     handleChangeFormValues,
@@ -58,7 +65,8 @@ const PostInput = ({ tag }: Types.PostInput) => {
     if (user) {
       const post = await API.addPosts({
         postContent: formValues.postInput,
-        tags: getHashTags(formValues.postInput)
+        tags: getHashTags(formValues.postInput),
+        postImage: dataUrl
       }, tag);
       
       changeFormValue('postInput', `
@@ -101,7 +109,14 @@ const PostInput = ({ tag }: Types.PostInput) => {
         postInputValue={formValues.postInput}
         isSendPostButtonDisabled={!isUserAuth || isButtonDisabled}
         onSendPostButtonClick={onButtonClick(addPost)}
+        setImage={setImage}
       />
+      <Styled.ImagePreviewContainer>
+        {dataUrl && <Styled.ImagePreview src={dataUrl} />}
+        <Styled.ImagePreviewImageName>
+          {fileName}
+        </Styled.ImagePreviewImageName>
+      </Styled.ImagePreviewContainer>
     </Styled.PostInput>
   );
 };
